@@ -1,0 +1,19 @@
+{
+  "name": "node-gcm",
+  "description": "a Node.JS library-port for Google Cloud Messaging for Android",
+  "version": "0.1.0",
+  "author": "Marcus Farkas <marcus.farkas@spaceteam.at>",
+  "homepage": "https://github.com/ToothlessGear/node-gcm",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ToothlessGear/node-gcm.git"
+  },
+  "keywords": ["google", "push", "notifications", "android", "c2dm", "gcm"],
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
