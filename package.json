@@ -1,9 +1,12 @@
 {
   "name": "node-gcm",
   "description": "a Node.JS library-port for Google Cloud Messaging for Android",
-  "version": "0.1.0",
+  "version": "0.9.1",
   "author": "Marcus Farkas <marcus.farkas@spaceteam.at>",
   "homepage": "https://github.com/ToothlessGear/node-gcm",
+  "contributors": [ 
+    { "name": "Marcus Farkas", "email": "marcus.farkas@spaceteam.at" }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ToothlessGear/node-gcm.git"
@@ -14,6 +17,6 @@
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
-    "node": "*"
+    "node": ">= 0.6.0"
   }
 }
