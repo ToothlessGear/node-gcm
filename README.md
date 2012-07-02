@@ -2,6 +2,36 @@
 
 node-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](http://developer.android.com/guide/google/gcm/index.html), which replaces Cloud 2 Device Messaging (C2DM).
 
+## Usage
+
+More features will come soon...
+
+```js
+var gcm = require('./lib/node-gcm');
+var registrationId = 'insert yours here'; 
+
+
+var message = new gcm.Message();
+var sender = new gcm.Sender('insert Google Server API Key here');
+
+
+message.addData('key1','message1');
+message.addData('key2','message2');
+
+/**
+ * Parameters: Message-literal, registrationId, No. of retries, callback-function
+ *
+ */
+sender.send(message, registrationId, 4, function (result) {
+	console.log(result);
+});
+
+// without retries
+sender.sendNoRetry(message, registrationId, function (result) {
+	console.log(result);
+});
+```
+
 ## License 
 
 (The MIT License)
