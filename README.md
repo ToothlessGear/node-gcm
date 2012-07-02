@@ -4,7 +4,7 @@ node-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](http:
 
 ## Usage
 
-More features will come soon...
+More features, such as multicast-messaging and a sample webserver, will come soon.
 
 ```js
 var gcm = require('./lib/node-gcm');
