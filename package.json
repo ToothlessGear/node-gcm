@@ -4,7 +4,8 @@
   "version": "0.9.1",
   "author": "Marcus Farkas <marcus.farkas@spaceteam.at>",
   "contributors": [ 
-    { "name": "Marcus Farkas", "email": "marcus.farkas@spaceteam.at" }
+    { "name": "Marcus Farkas", "email": "marcus.farkas@spaceteam.at" },
+    { "name": "monkbroc", "email": "" }
   ],
   "repository": {
     "type": "git",
