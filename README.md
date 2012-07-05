@@ -15,7 +15,6 @@ An Android device running 2.0 or newer and an API key as per [GCM getting starte
 ```js
 var gcm = require('node-gcm');
 
-
 var message = new gcm.Message();
 var sender = new gcm.Sender('insert Google Server API Key here');
 var registrationIds = [];
@@ -74,8 +73,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ## Changelog
 
 0.9.2:
-	- added Multicast-Messaging
+    * added multicast-messaging
 
 0.9.1:
-	- First release
+    * First release
 
