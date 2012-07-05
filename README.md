@@ -12,30 +12,36 @@ An Android device running 2.0 or newer and an API key as per [GCM getting starte
 
 ## Usage
 
-More features, such as multicast-messaging and a sample webserver, will come soon.
 ```js
 var gcm = require('node-gcm');
-var registrationId = 'insert yours here'; 
 
 
 var message = new gcm.Message();
 var sender = new gcm.Sender('insert Google Server API Key here');
+var registrationIds = [];
 
-
+// Optional
 message.addData('key1','message1');
 message.addData('key2','message2');
+message.collapseKey = 'demo';
+message.delayWhileIdle = true;
+message.timeToLive = 3;
+
+// At least one required
+registrationIds.push('regId1');
+registrationIds.push('regId2'); 
 
 /**
- * Parameters: Message-literal, registrationId, No. of retries, callback-function
+ * Parameters: message-literal, registrationIds-array, No. of retries, callback-function
  */
-sender.send(message, registrationId, 4, function (result) {
+sender.send(message, registrationIds, 4, function (result) {
 	console.log(result);
 });
 ```
 
 And without retries
 ```js
-sender.sendNoRetry(message, registrationId, function (result) {
+sender.sendNoRetry(message, registrationIds-array, function (result) {
 	console.log(result);
 });
 ```
@@ -64,3 +70,12 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Changelog
+
+0.9.2:
+	- added Multicast-Messaging
+
+0.9.1:
+	- First release
+
