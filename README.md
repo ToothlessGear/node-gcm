@@ -8,7 +8,7 @@ $ npm install node-gcm
 ```
 ##Requirements
 
-An Android device running 2.0 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
+An Android device running 2.2 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
 
 ## Usage
 
@@ -71,10 +71,9 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
-
 0.9.2:
-    * added multicast-messaging
+ * added multicast-messaging
 
 0.9.1:
-    * First release
+ * First release
 
