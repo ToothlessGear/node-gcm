@@ -71,9 +71,10 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
-0.9.2:
+**0.9.2:**
+ * added error handler to HTTPS request to handle DNS exceptions (Thanks goes to [monkbroc](https://github.com/monkbroc))
  * added multicast-messaging
 
-0.9.1:
+**0.9.1:**
  * First release
 
