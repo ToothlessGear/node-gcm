@@ -33,14 +33,14 @@ registrationIds.push('regId2');
 /**
  * Parameters: message-literal, registrationIds-array, No. of retries, callback-function
  */
-sender.send(message, registrationIds, 4, function (result) {
+sender.send(message, registrationIds, 4, function (err, result) {
 	console.log(result);
 });
 ```
 
 And without retries
 ```js
-sender.sendNoRetry(message, registrationIds-array, function (result) {
+sender.sendNoRetry(message, registrationIds-array, function (err, result) {
 	console.log(result);
 });
 ```
