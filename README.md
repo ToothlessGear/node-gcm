@@ -45,6 +45,12 @@ sender.sendNoRetry(message, registrationIds-array, function (result) {
 });
 ```
 
+## Contributors
+ * [monkbroc](https://github.com/monkbroc)
+ * [zlyinfinite](https://github.com/zlyinfinite)
+ * [Yann Biancheri](https://github.com/yannooo)
+ * [Hamid Palo](https://github.com/hamidp)
+
 ## License 
 
 (The MIT License)
