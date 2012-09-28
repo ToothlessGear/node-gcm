@@ -12,8 +12,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "http://github.com/ToothlessGear/node-gcm.git",
-    "web": "http://github.com/ToothlessGear/node-gcm"
+    "url": "http://github.com/georgeye/node-gcm.git",
+    "web": "http://github.com/georgeye/node-gcm"
   },
   "keywords": ["google", "cloud", "push", "notifications", "android", "c2dm", "gcm"],
   "main": "index",
