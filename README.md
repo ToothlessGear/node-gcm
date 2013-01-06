@@ -50,6 +50,7 @@ sender.sendNoRetry(message, registrationIds-array, function (err, result) {
  * [zlyinfinite](https://github.com/zlyinfinite)
  * [Yann Biancheri](https://github.com/yannooo)
  * [Hamid Palo](https://github.com/hamidp)
+ * [Dotan J.Nahum](https://github.com/jondot)
 
 ## License 
 
@@ -77,6 +78,11 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.3:**
+ * new callback-style (Please check the example above)
+ * fixes various issues (Read commit messages)
+ * not making a distinction between a single and multiple result makes it easier for application-land code to handle
+
 **0.9.2:**
  * added error handler to HTTPS request to handle DNS exceptions (Thanks goes to [monkbroc](https://github.com/monkbroc))
  * added multicast-messaging
