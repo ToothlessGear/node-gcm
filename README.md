@@ -45,18 +45,29 @@ sender.sendNoRetry(message, registrationIds-array, function (err, result) {
 });
 ```
 
+## Contribute!
+
+If you don't want to create a GitHub-Account, but still feel the urge to contribute... no problem!
+Just send me an [email](mailto:marcus.farkas@spaceteam.at) with your pull request from your private repository.
+Of course, you can also send me a patch directly inline your mail.
+Any help is much appreciated!
+
 ## Contributors
  * [monkbroc](https://github.com/monkbroc)
  * [zlyinfinite](https://github.com/zlyinfinite)
  * [Yann Biancheri](https://github.com/yannooo)
  * [Hamid Palo](https://github.com/hamidp)
  * [Dotan J.Nahum](https://github.com/jondot)
+ * [Olivier Poitrey](https://github.com/rs)
+ * [Max Rabin](https://github.com/maxrabin)
+ * [George Miroshnykov](https://github.com/laggyluke)
+ * [Alejandro Garcia](https://github.com/Alegege)
 
 ## License 
 
 (The MIT License)
 
-Copyright (c) 2012 Marcus Farkas &lt;marcus.farkas@spaceteam.at&gt;
+Copyright (c) 2013 Marcus Farkas &lt;marcus.farkas@spaceteam.at&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -78,15 +89,19 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.4:**
+ * fix TypeError
+ * updated contributors
+ * updated README
+
 **0.9.3:**
  * new callback-style (Please check the example above)
  * fixes various issues (Read commit messages)
  * not making a distinction between a single and multiple result makes it easier for application-land code to handle
 
 **0.9.2:**
- * added error handler to HTTPS request to handle DNS exceptions (Thanks goes to [monkbroc](https://github.com/monkbroc))
+ * added error handler to HTTPS request to handle DNS exceptions
  * added multicast-messaging
 
 **0.9.1:**
- * First release
-
+ * first release
