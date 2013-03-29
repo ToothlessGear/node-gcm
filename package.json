@@ -1,15 +1,19 @@
 {
   "name": "node-gcm",
   "description": "a Node.JS wrapper library-port for Google Cloud Messaging for Android",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "author": "Marcus Farkas <marcus.farkas@spaceteam.at>",
   "contributors": [ 
     { "name": "Marcus Farkas", "email": "marcus.farkas@spaceteam.at" },
-    { "name": "monkbroc", "email": "" },
+    { "name": "monkbroc", "email": "jvanier@gmail.com" },
     { "name": "zlyinfinite", "email": ""},
     { "name": "Yann Biancheri", "email": "yann.biancheri@gmail.com" },
-    { "name": "Hamid Palo", "email": ""},
-    { "name": "Dotan J. Nahum", "email": "jondotan@gmail.com" }
+    { "name": "Hamid Palo", "email": "hamid@fogcreek.com"},
+    { "name": "Dotan J. Nahum", "email": "jondotan@gmail.com" },
+    { "name": "Max Rabin", "email": "rabin.max@gmail.com" },
+    { "name": "Olivier Poitrey", "email": "rs@dailymotion.com" },
+    { "name": "George Miroshnykov", "email": "george.miroshnykov@gmail.com" },
+    { "name": "Alejandro Garcia Gil", "email": "alejandro@ideaknow.com" }
   ],
   "repository": {
     "type": "git",
