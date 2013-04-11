@@ -84,6 +84,7 @@ Any help is much appreciated!
  * [Max Rabin](https://github.com/maxrabin)
  * [George Miroshnykov](https://github.com/laggyluke)
  * [Alejandro Garcia](https://github.com/Alegege)
+ * [Ismael Gorissen](https://github.com/igorissen)
 
 ## License 
 
@@ -111,6 +112,12 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.5:**
+ * change addData to addDataWithKeyValue
+ * add new function addDataWithObject
+ * message object can be initialised with another object
+ * updated contributors
+
 **0.9.4:**
  * fix TypeError
  * updated contributors
