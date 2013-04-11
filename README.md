@@ -15,13 +15,35 @@ An Android device running 2.2 or newer and an API key as per [GCM getting starte
 ```js
 var gcm = require('node-gcm');
 
+// create a message with default values
 var message = new gcm.Message();
+
+// or with object values
+var message = new gcm.Message({
+	collapseKey: 'demo',
+	delayWhileIdle: true,
+	timeToLive: 3,
+	data: {
+		key1: 'message1',
+		key2: 'message2'
+	}
+});
+
 var sender = new gcm.Sender('insert Google Server API Key here');
 var registrationIds = [];
 
 // Optional
-message.addData('key1','message1');
-message.addData('key2','message2');
+
+// add new key-value in data object
+message.addDataWithKeyValue('key1','message1');
+message.addDataWithKeyValue('key2','message2');
+
+// or add a data object
+message.addDataWithObject({
+	key1: 'message1',
+	key2: 'message2'
+});
+
 message.collapseKey = 'demo';
 message.delayWhileIdle = true;
 message.timeToLive = 3;
