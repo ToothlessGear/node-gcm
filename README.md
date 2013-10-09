@@ -33,7 +33,6 @@ var sender = new gcm.Sender('insert Google Server API Key here');
 var registrationIds = [];
 
 // Optional
-
 // add new key-value in data object
 message.addDataWithKeyValue('key1','message1');
 message.addDataWithKeyValue('key2','message2');
@@ -44,9 +43,15 @@ message.addDataWithObject({
 	key2: 'message2'
 });
 
+// or with backwards compability of previous versions
+message.addData('key1','message1');
+message.addData('key2','message2');
+
+
 message.collapseKey = 'demo';
 message.delayWhileIdle = true;
 message.timeToLive = 3;
+// END Optional
 
 // At least one required
 registrationIds.push('regId1');
@@ -70,7 +75,8 @@ sender.sendNoRetry(message, registrationIds-array, function (err, result) {
 ## Contribute!
 
 If you don't want to create a GitHub-Account, but still feel the urge to contribute... no problem!
-Just send me an [email](mailto:marcus.farkas@spaceteam.at) with your pull request from your private repository.
+Just send me an [email](mailto:toothlessgear@finitebox.com) with your 
+pull request from your private repository.
 Of course, you can also send me a patch directly inline your mail.
 Any help is much appreciated!
 
@@ -85,12 +91,13 @@ Any help is much appreciated!
  * [George Miroshnykov](https://github.com/laggyluke)
  * [Alejandro Garcia](https://github.com/Alegege)
  * [Ismael Gorissen](https://github.com/igorissen)
+ * [Joris Verbogt](https://github.com/silentjohnny)
 
 ## License 
 
 (The MIT License)
 
-Copyright (c) 2013 Marcus Farkas &lt;marcus.farkas@spaceteam.at&gt;
+Copyright (c) 2013 Marcus Farkas &lt;toothlessgear@finitebox.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -112,6 +119,13 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.6:**
+ * fixed undefined "data" var
+ * made constructor argument optional
+ * added back addData method
+ * updated README
+ * updated contributors
+
 **0.9.5:**
  * change addData to addDataWithKeyValue
  * add new function addDataWithObject

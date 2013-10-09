@@ -1,6 +1,6 @@
 /*!
  * node-gcm
- * Copyright(c) 2012 Marcus Farkas <marcus.farkas@spaceteam.at>
+ * Copyright(c) 2013 Marcus Farkas <toothlessgear@finitebox.com>
  * MIT Licensed
  */
  
