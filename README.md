@@ -32,7 +32,7 @@ var message = new gcm.Message({
 var sender = new gcm.Sender('insert Google Server API Key here');
 var registrationIds = [];
 
-// Optional
+// OPTIONAL
 // add new key-value in data object
 message.addDataWithKeyValue('key1','message1');
 message.addDataWithKeyValue('key2','message2');
@@ -51,15 +51,15 @@ message.addData('key2','message2');
 message.collapseKey = 'demo';
 message.delayWhileIdle = true;
 message.timeToLive = 3;
-// END Optional
+// END OPTIONAL
 
 // At least one required
 registrationIds.push('regId1');
 registrationIds.push('regId2'); 
 
 /**
- * Parameters: message-literal, registrationIds-array, No. of retries, callback-function
- */
+ * Params: message-literal, registrationIds-array, No. of retries, callback-function
+ **/
 sender.send(message, registrationIds, 4, function (err, result) {
 	console.log(result);
 });
@@ -92,6 +92,8 @@ Any help is much appreciated!
  * [Alejandro Garcia](https://github.com/Alegege)
  * [Ismael Gorissen](https://github.com/igorissen)
  * [Joris Verbogt](https://github.com/silentjohnny)
+ * [goelvivek](https://github.com/goelvivek)
+ * [Lars Jacob](https://github.com/jaclar)
 
 ## License 
 
