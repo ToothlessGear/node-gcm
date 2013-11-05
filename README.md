@@ -121,6 +121,11 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.7**
+ * move callback outside of try catch block
+ * updated README
+ * updated contributors
+ 
 **0.9.6:**
  * fixed undefined "data" var
  * made constructor argument optional
