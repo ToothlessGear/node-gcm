@@ -72,6 +72,10 @@ sender.sendNoRetry(message, registrationIds-array, function (err, result) {
 });
 ```
 
+## Donate
+
+ Bitcoin: [13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ](https://blockchain.info/address/13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ)
+
 ## Contribute!
 
 If you don't want to create a GitHub-Account, but still feel the urge to contribute... no problem!
