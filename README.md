@@ -98,6 +98,7 @@ Any help is much appreciated!
  * [Joris Verbogt](https://github.com/silentjohnny)
  * [goelvivek](https://github.com/goelvivek)
  * [Lars Jacob](https://github.com/jaclar)
+ * [Roman Iakovlev](https://github.com/RomanIakovlev) 
 
 ## License 
 

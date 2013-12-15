@@ -17,7 +17,8 @@
     { "name": "Ismael Gorissen", "email": "ismael.gorissen@gmail.com" },
     { "name": "Joris Verbogt", "email": "joris@notifica.re" },
 	{ "name": "goelvivek", "email": "goelvivek2011@gmail.com" },
-	{ "name": "Lars Jacob", "email": "lars@jaclar.net" }
+	{ "name": "Lars Jacob", "email": "lars@jaclar.net" },
+	{ "name": "Roman Iakovlev", "email": "roman.iakovlev@here.com" }
   ],
   "repository": {
     "type": "git",
