@@ -126,6 +126,10 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.8**
+ * Added support for sending POSTs to GCM through http/https proxies.
+ * updated contributors
+
 **0.9.7**
  * move callback outside of try catch block
  * updated README
