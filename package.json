@@ -16,9 +16,10 @@
     { "name": "Alejandro Garcia Gil", "email": "alejandro@ideaknow.com" },
     { "name": "Ismael Gorissen", "email": "ismael.gorissen@gmail.com" },
     { "name": "Joris Verbogt", "email": "joris@notifica.re" },
-	{ "name": "goelvivek", "email": "goelvivek2011@gmail.com" },
-	{ "name": "Lars Jacob", "email": "lars@jaclar.net" },
-	{ "name": "Roman Iakovlev", "email": "roman.iakovlev@here.com" }
+    { "name": "goelvivek", "email": "goelvivek2011@gmail.com" },
+    { "name": "Lars Jacob", "email": "lars@jaclar.net" },
+    { "name": "Roman Iakovlev", "email": "roman.iakovlev@here.com" },
+    { "name": "Roman Skvazh", "email": "roman.skvazh@gmail.com" }
   ],
   "repository": {
     "type": "git",

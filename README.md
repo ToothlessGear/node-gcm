@@ -99,6 +99,7 @@ Any help is much appreciated!
  * [goelvivek](https://github.com/goelvivek)
  * [Lars Jacob](https://github.com/jaclar)
  * [Roman Iakovlev](https://github.com/RomanIakovlev) 
+ * [Roman Skvazh](https://github.com/rskvazh)
 
 ## License 
 
