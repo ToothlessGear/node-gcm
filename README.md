@@ -127,6 +127,11 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.9**
+ * fix satusCode logging
+ * Added a call of a callback function in case when no registration id were given
+ * updated contributors
+ 
 **0.9.8**
  * Added support for sending POSTs to GCM through http/https proxies.
  * updated contributors
