@@ -51,6 +51,7 @@ message.addData('key2','message2');
 message.collapseKey = 'demo';
 message.delayWhileIdle = true;
 message.timeToLive = 3;
+message.dryRun = true;
 // END OPTIONAL
 
 // At least one required
@@ -100,7 +101,8 @@ Any help is much appreciated!
  * [Lars Jacob](https://github.com/jaclar)
  * [Roman Iakovlev](https://github.com/RomanIakovlev) 
  * [Roman Skvazh](https://github.com/rskvazh)
-
+ * [Jeremy Goldstein](https://github.com/hg10)
+ 
 ## License 
 
 (The MIT License)
@@ -127,6 +129,11 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.10**
+ * Added dryRun message parameter
+ * updated README
+ * updated contributors
+ 
 **0.9.9**
  * fix satusCode logging
  * Added a call of a callback function in case when no registration id were given
