@@ -101,7 +101,7 @@ Any help is much appreciated!
  * [Lars Jacob](https://github.com/jaclar)
  * [Roman Iakovlev](https://github.com/RomanIakovlev) 
  * [Roman Skvazh](https://github.com/rskvazh)
- * [Jeremy Goldstein](https://github.com/hg10)
+ * [Jeremy Goldstein](https://github.com/jg10)
  
 ## License 
 
@@ -135,7 +135,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * updated contributors
  
 **0.9.9**
- * fix satusCode logging
+ * fix statusCode logging
  * Added a call of a callback function in case when no registration id were given
  * updated contributors
  
