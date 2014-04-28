@@ -102,7 +102,8 @@ Any help is much appreciated!
  * [Roman Iakovlev](https://github.com/RomanIakovlev) 
  * [Roman Skvazh](https://github.com/rskvazh)
  * [Jeremy Goldstein](https://github.com/jg10)
- 
+ * [Adam Patacchiola](https://github.com/surespot)
+
 ## License 
 
 (The MIT License)
@@ -129,6 +130,15 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.11**
+ * check >= 500 error status
+ * just reassign id array on err, don't iterate
+ * send err to callback
+ * resend if send multiple errs
+ * check for not result instead of result === undefined
+ * updated README
+ * updated contributors
+
 **0.9.10**
  * Added dryRun message parameter
  * updated README
