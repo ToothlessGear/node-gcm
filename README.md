@@ -72,6 +72,8 @@ sender.sendNoRetry(message, registrationIds-array, function (err, result) {
 	console.log(result);
 });
 ```
+### Debug
+For enabling debug mode set environment flag ```DEBUG=node-gcm```
 
 ## Donate
 
