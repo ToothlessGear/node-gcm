@@ -1,30 +1,101 @@
 {
   "name": "node-gcm",
   "description": "a Node.JS wrapper library-port for Google Cloud Messaging for Android",
-  "version": "0.9.6",
+  "version": "0.9.11",
   "author": "Marcus Farkas <toothlessgear@finitebox.com>",
-  "contributors": [ 
-    { "name": "Marcus Farkas", "email": "toothlessgear@finitebox.com" },
-    { "name": "monkbroc", "email": "jvanier@gmail.com" },
-    { "name": "zlyinfinite", "email": ""},
-    { "name": "Yann Biancheri", "email": "yann.biancheri@gmail.com" },
-    { "name": "Hamid Palo", "email": "hamid@fogcreek.com"},
-    { "name": "Dotan J. Nahum", "email": "jondotan@gmail.com" },
-    { "name": "Max Rabin", "email": "rabin.max@gmail.com" },
-    { "name": "Olivier Poitrey", "email": "rs@dailymotion.com" },
-    { "name": "George Miroshnykov", "email": "george.miroshnykov@gmail.com" },
-    { "name": "Alejandro Garcia Gil", "email": "alejandro@ideaknow.com" },
-    { "name": "Ismael Gorissen", "email": "ismael.gorissen@gmail.com" },
-    { "name": "Joris Verbogt", "email": "joris@notifica.re" }
+  "contributors": [
+    {
+      "name": "Marcus Farkas",
+      "email": "toothlessgear@finitebox.com"
+    },
+    {
+      "name": "monkbroc",
+      "email": "jvanier@gmail.com"
+    },
+    {
+      "name": "zlyinfinite",
+      "email": ""
+    },
+    {
+      "name": "Yann Biancheri",
+      "email": "yann.biancheri@gmail.com"
+    },
+    {
+      "name": "Hamid Palo",
+      "email": "hamid@fogcreek.com"
+    },
+    {
+      "name": "Dotan J. Nahum",
+      "email": "jondotan@gmail.com"
+    },
+    {
+      "name": "Max Rabin",
+      "email": "rabin.max@gmail.com"
+    },
+    {
+      "name": "Olivier Poitrey",
+      "email": "rs@dailymotion.com"
+    },
+    {
+      "name": "George Miroshnykov",
+      "email": "george.miroshnykov@gmail.com"
+    },
+    {
+      "name": "Alejandro Garcia Gil",
+      "email": "alejandro@ideaknow.com"
+    },
+    {
+      "name": "Ismael Gorissen",
+      "email": "ismael.gorissen@gmail.com"
+    },
+    {
+      "name": "Joris Verbogt",
+      "email": "joris@notifica.re"
+    },
+    {
+      "name": "goelvivek",
+      "email": "goelvivek2011@gmail.com"
+    },
+    {
+      "name": "Lars Jacob",
+      "email": "lars@jaclar.net"
+    },
+    {
+      "name": "Roman Iakovlev",
+      "email": "roman.iakovlev@here.com"
+    },
+    {
+      "name": "Roman Skvazh",
+      "email": "roman.skvazh@gmail.com"
+    },
+    {
+      "name": "Jeremy Goldstein",
+      "email": "jg-dev@live.com"
+    },
+    {
+      "name": "Adam Patacchiola",
+      "email": "adam@2fours.com"
+    }
   ],
   "repository": {
     "type": "git",
     "url": "http://github.com/ToothlessGear/node-gcm.git",
     "web": "http://github.com/ToothlessGear/node-gcm"
   },
-  "keywords": ["google", "cloud", "push", "notifications", "android", "c2dm", "gcm"],
+  "keywords": [
+    "google",
+    "cloud",
+    "push",
+    "notifications",
+    "android",
+    "c2dm",
+    "gcm"
+  ],
   "main": "index",
-  "dependencies": {},
+  "dependencies": {
+    "request": "2.27.x",
+    "debug": "^0.8.1"
+  },
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {

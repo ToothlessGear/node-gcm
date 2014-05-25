@@ -32,7 +32,7 @@ var message = new gcm.Message({
 var sender = new gcm.Sender('insert Google Server API Key here');
 var registrationIds = [];
 
-// Optional
+// OPTIONAL
 // add new key-value in data object
 message.addDataWithKeyValue('key1','message1');
 message.addDataWithKeyValue('key2','message2');
@@ -51,15 +51,16 @@ message.addData('key2','message2');
 message.collapseKey = 'demo';
 message.delayWhileIdle = true;
 message.timeToLive = 3;
-// END Optional
+message.dryRun = true;
+// END OPTIONAL
 
 // At least one required
 registrationIds.push('regId1');
 registrationIds.push('regId2'); 
 
 /**
- * Parameters: message-literal, registrationIds-array, No. of retries, callback-function
- */
+ * Params: message-literal, registrationIds-array, No. of retries, callback-function
+ **/
 sender.send(message, registrationIds, 4, function (err, result) {
 	console.log(result);
 });
@@ -71,6 +72,12 @@ sender.sendNoRetry(message, registrationIds-array, function (err, result) {
 	console.log(result);
 });
 ```
+### Debug
+For enabling debug mode set environment flag ```DEBUG=node-gcm```
+
+## Donate
+
+ Bitcoin: [13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ](https://blockchain.info/address/13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ)
 
 ## Contribute!
 
@@ -92,6 +99,12 @@ Any help is much appreciated!
  * [Alejandro Garcia](https://github.com/Alegege)
  * [Ismael Gorissen](https://github.com/igorissen)
  * [Joris Verbogt](https://github.com/silentjohnny)
+ * [goelvivek](https://github.com/goelvivek)
+ * [Lars Jacob](https://github.com/jaclar)
+ * [Roman Iakovlev](https://github.com/RomanIakovlev) 
+ * [Roman Skvazh](https://github.com/rskvazh)
+ * [Jeremy Goldstein](https://github.com/jg10)
+ * [Adam Patacchiola](https://github.com/surespot)
 
 ## License 
 
@@ -119,6 +132,34 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.11**
+ * check >= 500 error status
+ * just reassign id array on err, don't iterate
+ * send err to callback
+ * resend if send multiple errs
+ * check for not result instead of result === undefined
+ * updated README
+ * updated contributors
+
+**0.9.10**
+ * Added dryRun message parameter
+ * updated README
+ * updated contributors
+ 
+**0.9.9**
+ * fix statusCode logging
+ * Added a call of a callback function in case when no registration id were given
+ * updated contributors
+ 
+**0.9.8**
+ * Added support for sending POSTs to GCM through http/https proxies.
+ * updated contributors
+
+**0.9.7**
+ * move callback outside of try catch block
+ * updated README
+ * updated contributors
+ 
 **0.9.6:**
  * fixed undefined "data" var
  * made constructor argument optional
