@@ -93,7 +93,7 @@
   ],
   "main": "index",
   "dependencies": {
-    "request": "2.27.x",
+    "request": "^2.27.0",
     "debug": "^0.8.1"
   },
   "devDependencies": {},
