@@ -105,6 +105,8 @@ Any help is much appreciated!
  * [Roman Skvazh](https://github.com/rskvazh)
  * [Jeremy Goldstein](https://github.com/jg10)
  * [Adam Patacchiola](https://github.com/surespot)
+ * [Ivan Longin](https://github.com/ilongin)
+ * [Paul Bininda](https://github.com/pbininda)
 
 ## License 
 
@@ -132,6 +134,17 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.12**
+ * added debug module and removed console-logs
+ * use exponential retry instead of linear
+ * update request module with most recent compatible one
+ * remove require on global timers
+ * various cleanups
+ * add maxSockets option
+ * keep 'this' on Sender object in retries
+ * updated README
+ * updated contributors
+
 **0.9.11**
  * check >= 500 error status
  * just reassign id array on err, don't iterate
