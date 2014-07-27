@@ -172,7 +172,8 @@ describe('UNIT Sender', function () {
   });
 
   describe('send()', function () {
-    var restore = {};
+    var restore = {},
+        backoff = Constants.BACKOFF_INITIAL_DELAY;
     // Set args passed into sendNoRetry
     function setArgs(err, result) {
       args = {
@@ -185,6 +186,7 @@ describe('UNIT Sender', function () {
     before( function () {
       restore.sendNoRetry = Sender.prototype.sendNoRetry;
       Sender.prototype.sendNoRetry = function (message, reg_ids, callback) {
+        console.log('Firing send');
         args.message = message;
         args.reg_ids = reg_ids;
         args.tries++;
@@ -270,6 +272,43 @@ describe('UNIT Sender', function () {
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.equal(error);
       expect(args.tries).to.equal(1);
+    });
+
+    it('should retry number of times passed into call and do exponential backoff', function (done) {
+      var start = new Date();
+      var callback = function () {
+        expect(args.tries).to.equal(2);
+        expect(new Date() - start).to.be.gte(Math.pow(2, 0) * backoff);
+        done();
+      };
+      var sender = new Sender('myKey');
+      setArgs('my error');
+      sender.send({ data: {}}, [1], 1, callback);
+    });
+
+    it('should retry if not all regIds were successfully sent', function (done) {
+      var callback = function () {
+        expect(args.tries).to.equal(2);
+        // Last call of sendNoRetry should be for only failed regIds
+        expect(args.reg_ids.length).to.equal(1);
+        expect(args.reg_ids[0]).to.equal(3);
+        done();
+      };
+      var sender = new Sender('myKey');
+      setArgs(null, { results: [{}, {}, { error: 'Unavailable' }]});
+      sender.send({ data: {}}, [1,2,3], 1, callback);
+    });
+
+    it('should retry all regIds in event of an error', function (done) {
+      var start = new Date();
+      var callback = function () {
+        expect(args.tries).to.equal(2);
+        expect(args.reg_ids.length).to.equal(3);
+        done();
+      };
+      var sender = new Sender('myKey');
+      setArgs('my error');
+      sender.send({ data: {}}, [1,2,3], 1, callback);
     });
   });
 });
