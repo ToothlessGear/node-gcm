@@ -83,6 +83,10 @@
     {
       "name": "Paul Bininda",
       "email": "paul@bininda.com"
+    },
+    {
+      "name": "Matt Merkes",
+      "email": "matt.merkes@gmail.com"
     }
   ],
   "repository": {
@@ -100,11 +104,19 @@
     "gcm"
   ],
   "main": "index",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -R spec test/**/*Spec.js"
+  },
   "dependencies": {
     "request": "^2.27.0",
     "debug": "^0.8.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "mocha": "^1.21.0",
+    "proxyquire": "^1.0.1",
+    "sinon": "^1.10.3"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": ">= 0.6.0"
