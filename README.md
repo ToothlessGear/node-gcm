@@ -56,7 +56,7 @@ message.dryRun = true;
 
 // At least one required
 registrationIds.push('regId1');
-registrationIds.push('regId2'); 
+registrationIds.push('regId2');
 
 /**
  * Params: message-literal, registrationIds-array, No. of retries, callback-function
