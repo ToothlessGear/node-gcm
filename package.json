@@ -1,7 +1,7 @@
 {
   "name": "node-gcm",
   "description": "a Node.JS wrapper library-port for Google Cloud Messaging for Android",
-  "version": "0.9.14",
+  "version": "1.0.0",
   "author": "Marcus Farkas <toothlessgear@finitebox.com>",
   "contributors": [
     {
