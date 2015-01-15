@@ -72,6 +72,21 @@ describe('UNIT Message', function () {
     it.skip('should do something if not called properly');
   });
 
+  describe('addDataWithKeyValue()', function () {
+    it('should add properties to the message data object given a key and value', function () {
+      var mess = new Message();
+      mess.addDataWithKeyValue('myKey', 'Message');
+      expect(mess.data.myKey).to.equal('Message');
+    });
+
+    it('should only set values on data object, not top level message', function () {
+      var mess = new Message();
+      mess.addDataWithKeyValue('collapseKey', 'Message');
+      expect(mess.collapseKey).to.not.equal('Message');
+      expect(mess.data.collapseKey).to.equal('Message');
+    });
+  });
+
   describe('addDataWithObject()', function () {
     it('should set the data property to the object passed in', function () {
       var mess = new Message();
