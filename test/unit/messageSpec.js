@@ -80,6 +80,8 @@ describe('UNIT Message', function () {
       expect(mess.collapseKey).to.not.equal('Message');
       expect(mess.data.collapseKey).to.equal('Message');
     });
+
+    it.skip('should do something if not called properly');
   });
 
   describe('addDataWithObject()', function () {
