@@ -134,6 +134,11 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+**0.9.13**
+ * print server responses on invalid requests while in debug mode
+ * fixed engine version in package.json (now correctly states >= 10)
+ * callbacks to `Sender#send` and `Sender#sendNoRetry` are now optional
+
 **0.9.12**
  * added debug module and removed console-logs
  * use exponential retry instead of linear
