@@ -51,11 +51,6 @@ describe('UNIT Message', function () {
   });
 
   describe('addData()', function () {
-    it('should be the same as addDataWithKeyValue', function () {
-      var mess = new Message();
-      expect(mess.addData).to.equal(mess.addDataWithKeyValue);
-    });
-
     it('should add properties to the message data object given a key and value', function () {
       var mess = new Message();
       mess.addData('myKey', 'Message');
