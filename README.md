@@ -107,6 +107,7 @@ Any help is much appreciated!
  * [Adam Patacchiola](https://github.com/surespot)
  * [Ivan Longin](https://github.com/ilongin)
  * [Paul Bininda](https://github.com/pbininda)
+ * [Niels Roesen Abildgaard](https://github.com/hypesystem)
 
 ## License 
 
