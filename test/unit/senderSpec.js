@@ -151,7 +151,7 @@ describe('UNIT Sender', function () {
     it('should pass an error into the callback if resBody cannot be parsed', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
-      setArgs(null, { statusCode: 200 }, { parse: false });
+      setArgs(null, { statusCode: 200 }, "non-JSON string.");
       sender.sendNoRetry({ data: {} }, '', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.be.a('string');
