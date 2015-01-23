@@ -70,7 +70,12 @@ sender.send(message, registrationIds, 4, function (err, result) {
 ```
 
 ### Debug
-For enabling debug mode set environment flag ```DEBUG=node-gcm```
+To enable debug mode (print requests and responses to and from GCM),
+set the `DEBUG` environment flag when running your app (assuming you use `node app.js` to run your app):
+
+```bash
+DEBUG=node-gcm node app.js
+```
 
 ## Donate
 
