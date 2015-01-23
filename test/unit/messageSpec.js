@@ -51,11 +51,6 @@ describe('UNIT Message', function () {
   });
 
   describe('addData()', function () {
-    it('should be the same as addDataWithKeyValue', function () {
-      var mess = new Message();
-      expect(mess.addData).to.equal(mess.addDataWithKeyValue);
-    });
-
     it('should add properties to the message data object given a key and value', function () {
       var mess = new Message();
       mess.addData('myKey', 'Message');
@@ -65,6 +60,63 @@ describe('UNIT Message', function () {
     it('should only set values on data object, not top level message', function () {
       var mess = new Message();
       mess.addData('collapseKey', 'Message');
+      expect(mess.collapseKey).to.not.equal('Message');
+      expect(mess.data.collapseKey).to.equal('Message');
+    });
+
+    it('should set the data property to the object passed in', function () {
+      var mess = new Message();
+      var obj = {
+        message: 'hello',
+        key: 'value'
+      };
+      mess.addData(obj);
+      expect(mess.data).to.deep.equal(obj);
+    });
+
+    it('should overwrite data object when an object is passed in', function () {
+      var data = {
+        message: 'hello',
+        key: 'value'
+      };
+      var mess = new Message({ data: { message: 'bye', prop: 'none' } });
+      mess.addData(data);
+      expect(mess.data).to.deep.equal(data);
+    });
+
+    it('should not overwrite data if not passed an object', function () {
+      var data = {
+        message: 'hello',
+        key: 'value'
+      };
+      var mess = new Message({ data: data });
+      mess.addData('adding');
+      expect(mess.data).to.deep.equal(data);
+    });
+
+    it('should not overwrite data if passed an empty object', function () {
+      var data = {
+        message: 'hello',
+        key: 'value'
+      };
+      var mess = new Message({ data: data });
+      mess.addData({});
+      expect(mess.data).to.deep.equal(data);
+    });
+
+    it.skip('should do something if not called properly');
+  });
+
+  describe('addDataWithKeyValue()', function () {
+    it('should add properties to the message data object given a key and value', function () {
+      var mess = new Message();
+      mess.addDataWithKeyValue('myKey', 'Message');
+      expect(mess.data.myKey).to.equal('Message');
+    });
+
+    it('should only set values on data object, not top level message', function () {
+      var mess = new Message();
+      mess.addDataWithKeyValue('collapseKey', 'Message');
       expect(mess.collapseKey).to.not.equal('Message');
       expect(mess.data.collapseKey).to.equal('Message');
     });

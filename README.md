@@ -15,10 +15,11 @@ An Android device running 2.2 or newer and an API key as per [GCM getting starte
 ```js
 var gcm = require('node-gcm');
 
-// create a message with default values
+// Create a message
+// ... with default values
 var message = new gcm.Message();
 
-// or with object values
+// ... or some given values
 var message = new gcm.Message({
 	collapseKey: 'demo',
 	delayWhileIdle: true,
@@ -29,49 +30,45 @@ var message = new gcm.Message({
 	}
 });
 
-var sender = new gcm.Sender('insert Google Server API Key here');
-var registrationIds = [];
+// Change the message data
+// ... as key-value
+message.addData('key1','message1');
+message.addData('key2','message2');
 
-// OPTIONAL
-// add new key-value in data object
-message.addDataWithKeyValue('key1','message1');
-message.addDataWithKeyValue('key2','message2');
-
-// or add a data object
-message.addDataWithObject({
+// ... or as a data object (overwrites previous data object)
+message.addData({
 	key1: 'message1',
 	key2: 'message2'
 });
 
-// or with backwards compability of previous versions
-message.addData('key1','message1');
-message.addData('key2','message2');
-
-
+// Change the message variables
 message.collapseKey = 'demo';
 message.delayWhileIdle = true;
 message.timeToLive = 3;
 message.dryRun = true;
-// END OPTIONAL
 
-// At least one required
+// Set up the sender with you API key
+var sender = new gcm.Sender('insert Google Server API Key here');
+
+// Add the registration IDs of the devices you want to send to
+var registrationIds = [];
 registrationIds.push('regId1');
 registrationIds.push('regId2');
 
-/**
- * Params: message-literal, registrationIds-array, No. of retries, callback-function
- **/
+// Send the message
+// ... trying only once
+sender.sendNoRetry(message, registrationIds, function(err, result) {
+  if(err) console.error(err);
+  else    console.log(result);
+});
+
+// ... or retrying 4 times
 sender.send(message, registrationIds, 4, function (err, result) {
-	console.log(result);
+	if(err) console.error(err);
+  else    console.log(result);
 });
 ```
 
-And without retries
-```js
-sender.sendNoRetry(message, registrationIds-array, function (err, result) {
-	console.log(result);
-});
-```
 ### Debug
 For enabling debug mode set environment flag ```DEBUG=node-gcm```
 
