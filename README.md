@@ -62,9 +62,15 @@ sender.sendNoRetry(message, registrationIds, function(err, result) {
   else    console.log(result);
 });
 
-// ... or retrying 4 times
-sender.send(message, registrationIds, 4, function (err, result) {
-	if(err) console.error(err);
+// ... or retrying
+sender.send(message, registrationIds, function (err, result) {
+  if(err) console.error(err);
+  else    console.log(result);
+});
+
+// ... or retrying a specific number of times (10)
+sender.send(message, registrationIds, 10, function (err, result) {
+  if(err) console.error(err);
   else    console.log(result);
 });
 ```
