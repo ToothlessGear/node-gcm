@@ -58,7 +58,7 @@ describe('UNIT Sender', function () {
         timeout: 1000
       };
       var sender = new Sender('mykey', options);
-      sender.sendNoRetry({ data: {} }, '', function () {});
+      sender.sendNoRetry({ data: {} }, 'myRegId', function () {});
       expect(args.options.proxy).to.equal(options.proxy);
       expect(args.options.maxSockets).to.equal(options.maxSockets);
       expect(args.options.timeout).to.equal(options.timeout);
@@ -66,13 +66,13 @@ describe('UNIT Sender', function () {
 
     it('should set the API key of req object if passed in API key', function () {
       var sender = new Sender('myKey');
-      sender.sendNoRetry({ data: {} }, '', function () {});
+      sender.sendNoRetry({ data: {} }, 'myRegId', function () {});
       expect(args.options.headers.Authorization).to.equal('key=myKey');
     });
 
     it('should stringify body of req before it is sent', function () {
       var sender = new Sender('mykey');
-      sender.sendNoRetry({ collapseKey: 'Message', data: {} }, '', function () {});
+      sender.sendNoRetry({ collapseKey: 'Message', data: {} }, 'myRegId', function () {});
       expect(args.options.body).to.be.a('string');
     });
 
@@ -87,7 +87,7 @@ describe('UNIT Sender', function () {
         }
       };
       var sender = new Sender('mykey');
-      sender.sendNoRetry(mess, '', function () {});
+      sender.sendNoRetry(mess, 'myRegId', function () {});
       var body = JSON.parse(args.options.body);
       expect(body[Constants.PARAM_DELAY_WHILE_IDLE]).to.equal(mess.delayWhileIdle);
       expect(body[Constants.PARAM_COLLAPSE_KEY]).to.equal(mess.collapseKey);
@@ -107,7 +107,7 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs('an error', {}, {});
-      sender.sendNoRetry({ data: {} }, '', callback);
+      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.calledWith('an error')).to.be.ok;
     });
@@ -116,7 +116,7 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, undefined, {});
-      sender.sendNoRetry({ data: {} }, '', callback);
+      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.be.a('string');
     });
@@ -125,7 +125,7 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 500 }, {});
-      sender.sendNoRetry({ data: {} }, '', callback);
+      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.equal(500);
     });
@@ -134,7 +134,7 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 401 }, {});
-      sender.sendNoRetry({ data: {} }, '', callback);
+      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.equal(401);
     });
@@ -143,7 +143,7 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 400 }, {});
-      sender.sendNoRetry({ data: {} }, '', callback);
+      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.equal(400);
     });
@@ -152,7 +152,7 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 200 }, "non-JSON string.");
-      sender.sendNoRetry({ data: {} }, '', callback);
+      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.be.a('string');
     });
@@ -165,7 +165,7 @@ describe('UNIT Sender', function () {
       };
       var sender = new Sender('myKey');
       setArgs(null, { statusCode: 200 }, JSON.stringify(resBody));
-      sender.sendNoRetry({ data: {} }, '', callback);
+      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][1]).to.deep.equal(resBody);
     });
@@ -184,18 +184,18 @@ describe('UNIT Sender', function () {
     };
 
     before( function () {
-      restore.sendNoRetry = Sender.prototype.sendNoRetry;
-      Sender.prototype.sendNoRetry = function (message, reg_ids, callback) {
+      restore.sendBaseNoRetry = Sender.prototype.sendBaseNoRetry;
+      Sender.prototype.sendBaseNoRetry = function (message, recipient, callback) {
         console.log('Firing send');
         args.message = message;
-        args.reg_ids = reg_ids;
+        args.reg_ids = recipient.registrationIds;
         args.tries++;
         callback( args.err, args.result );
       };
     });
 
     after( function () {
-      Sender.prototype.sendNoRetry = restore.sendNoRetry;
+      Sender.prototype.sendBaseNoRetry = restore.sendBaseNoRetry;
     });
 
     it.skip('should do something if passed not an array for regIds');
