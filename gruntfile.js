@@ -13,7 +13,7 @@ module.exports = function(grunt) {
                 ui: 'bdd',
                 reporter: 'tap'
             },
-            all: { src: ['test/unit/senderBaseSpec.js'] }
+            all: { src: ['test/**/*.js'] }
         },
         watch: {
             scripts: {

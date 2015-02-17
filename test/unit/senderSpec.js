@@ -3,22 +3,14 @@
 var chai = require('chai'),
     expect = chai.expect,
     sinon = require('sinon'),
-    proxyquire = require('proxyquire'),
-    senderPath = '../../lib/sender',
+    Sender = require('../../lib/sender'),
     Constants = require('../../lib/constants');
 
 describe('UNIT Sender', function () {
   // Use object to set arguments passed into callback
   var args = {};
-  var requestStub = function (options, callback) {
-    args.options = options;
-    return callback( args.err, args.res, args.resBody );
-  };
-  var Sender = proxyquire(senderPath, { 'request': requestStub });
 
   describe('constructor', function () {
-    var Sender = require(senderPath);
-
     it('should call new on constructor if user does not', function () {
       var sender = Sender();
       expect(sender).to.not.be.undefined;
@@ -42,6 +34,7 @@ describe('UNIT Sender', function () {
   });
 
   describe('sendNoRetry()', function () {
+    var restore = {};
     // Set arguments passed in request proxy
     function setArgs(err, res, resBody) {
       args = {
@@ -51,129 +44,36 @@ describe('UNIT Sender', function () {
       };
     };
 
-    it('should set proxy, maxSockets, and/or timeout of req object if passed into constructor', function () {
-      var options = {
-        proxy: 'http://myproxy.com',
-        maxSockets: 100,
-        timeout: 1000
+    before( function () {
+      restore.sendBaseNoRetry = Sender.prototype.sendBaseNoRetry;
+      Sender.prototype.sendBaseNoRetry = function (message, recipient, callback) {
+        console.log('Firing send');
+        args.message = message;
+        args.recipient = recipient;
+        callback( args.err, args.result );
       };
-      var sender = new Sender('mykey', options);
-      sender.sendNoRetry({ data: {} }, 'myRegId', function () {});
-      expect(args.options.proxy).to.equal(options.proxy);
-      expect(args.options.maxSockets).to.equal(options.maxSockets);
-      expect(args.options.timeout).to.equal(options.timeout);
     });
 
-    it('should set the API key of req object if passed in API key', function () {
-      var sender = new Sender('myKey');
-      sender.sendNoRetry({ data: {} }, 'myRegId', function () {});
-      expect(args.options.headers.Authorization).to.equal('key=myKey');
+    after( function () {
+      Sender.prototype.sendBaseNoRetry = restore.sendBaseNoRetry;
     });
 
-    it('should stringify body of req before it is sent', function () {
-      var sender = new Sender('mykey');
-      sender.sendNoRetry({ collapseKey: 'Message', data: {} }, 'myRegId', function () {});
-      expect(args.options.body).to.be.a('string');
-    });
-
-    it('should set properties of body with message properties', function () {
-      var mess = {
-        delayWhileIdle: true,
-        collapseKey: 'Message',
-        timeToLive: 100,
-        dryRun: true,
-        data: {
-          name: 'Matt'
-        }
-      };
-      var sender = new Sender('mykey');
-      sender.sendNoRetry(mess, 'myRegId', function () {});
-      var body = JSON.parse(args.options.body);
-      expect(body[Constants.PARAM_DELAY_WHILE_IDLE]).to.equal(mess.delayWhileIdle);
-      expect(body[Constants.PARAM_COLLAPSE_KEY]).to.equal(mess.collapseKey);
-      expect(body[Constants.PARAM_TIME_TO_LIVE]).to.equal(mess.timeToLive);
-      expect(body[Constants.PARAM_DRY_RUN]).to.equal(mess.dryRun);
-      expect(body[Constants.PARAM_PAYLOAD_KEY]).to.deep.equal(mess.data);
-    });
-
-    it('should set the registration ids to reg ids passed in', function () {
-      var sender = new Sender('myKey');
-      sender.sendNoRetry({ data: {} }, 12, function () {});
-      var body = JSON.parse(args.options.body);
-      expect(body[Constants.JSON_REGISTRATION_IDS]).to.equal(12);
-    });
-
-    it('should pass an error into callback if request returns an error', function () {
+    it('should pass a message, recipient with regIDs, and callback to sendBaseNoRetry', function() {
       var callback = sinon.spy(),
+          recipient = { registrationIds: [1, 2, 3] },
+          message = "hello",
           sender = new Sender('myKey');
-      setArgs('an error', {}, {});
-      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.calledWith('an error')).to.be.ok;
-    });
 
-    it('should pass an error into callback if response does not exist', function () {
-      var callback = sinon.spy(),
-          sender = new Sender('myKey');
-      setArgs(null, undefined, {});
-      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('string');
+      sender.sendNoRetry(message, [1, 2, 3], callback);
+      expect(callback.calledOnce).to.be.true;
+      expect(args.message).to.equal.message;
+      expect(args.recipient).to.equal.recipient;
     });
-
-    it('should return the status code as an error if returned a 500', function () {
-      var callback = sinon.spy(),
-          sender = new Sender('myKey');
-      setArgs(null, { statusCode: 500 }, {});
-      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.equal(500);
-    });
-
-    it('should return the status code as an error if returned a 401', function () {
-      var callback = sinon.spy(),
-          sender = new Sender('myKey');
-      setArgs(null, { statusCode: 401 }, {});
-      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.equal(401);
-    });
-
-    it('should return the status code as an error if returned a 400', function () {
-      var callback = sinon.spy(),
-          sender = new Sender('myKey');
-      setArgs(null, { statusCode: 400 }, {});
-      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.equal(400);
-    });
-
-    it('should pass an error into the callback if resBody cannot be parsed', function () {
-      var callback = sinon.spy(),
-          sender = new Sender('myKey');
-      setArgs(null, { statusCode: 200 }, "non-JSON string.");
-      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('string');
-    });
-
-    it('should pass in parsed resBody into callback on success', function () {
-      var callback = sinon.spy();
-      var resBody = {
-        message: 'woohoo!',
-        success: true
-      };
-      var sender = new Sender('myKey');
-      setArgs(null, { statusCode: 200 }, JSON.stringify(resBody));
-      sender.sendNoRetry({ data: {} }, 'myRegId', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][1]).to.deep.equal(resBody);
-    });
+    
   });
 
   describe('send()', function () {
-    var restore = {},
-        backoff = Constants.BACKOFF_INITIAL_DELAY;
+    var restore = {};
     // Set args passed into sendNoRetry
     function setArgs(err, result) {
       args = {
@@ -184,131 +84,35 @@ describe('UNIT Sender', function () {
     };
 
     before( function () {
-      restore.sendBaseNoRetry = Sender.prototype.sendBaseNoRetry;
-      Sender.prototype.sendBaseNoRetry = function (message, recipient, callback) {
+      restore.sendBase = Sender.prototype.sendBase;
+      Sender.prototype.sendBase = function (message, recipient, retryCount, callback) {
         console.log('Firing send');
         args.message = message;
-        args.reg_ids = recipient.registrationIds;
-        args.tries++;
+        args.recipient = recipient;
+        args.retryCount = retryCount;
         callback( args.err, args.result );
       };
     });
 
     after( function () {
-      Sender.prototype.sendBaseNoRetry = restore.sendBaseNoRetry;
+      Sender.prototype.sendBase = restore.sendBase;
     });
 
-    it.skip('should do something if passed not an array for regIds');
-
-    it('should pass an error into callback if array has no regIds', function () {
+    it('should pass a message, recipient with regDs, retry count, and callback to sendBase', function() {
       var callback = sinon.spy(),
+          recipient = { registrationIds: [1, 2, 3] },
+          message = "hello",
           sender = new Sender('myKey');
-      sender.send({}, [], 0, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('string');
-    });
 
-    it('should pass the message and the regId to sendNoRetry on call', function () {
-      var sender = new Sender('myKey'),
-          message = { data: {} },
-          regId = [24];
-      setArgs(null, {});
-      sender.send(message, regId, 0, function () {});
-      expect(args.message).to.equal(message);
-      expect(args.reg_ids).to.equal(regId);
-      expect(args.tries).to.equal(1);
-    });
-
-    it('should pass the message and the regIds to sendNoRetry on call', function () {
-      var sender = new Sender('myKey'),
-          message = { data: {} },
-          regIds = [24, 34, 44];
-      setArgs(null, {});
-      sender.send(message, regIds, 0, function () {});
-      expect(args.message).to.equal(message);
-      expect(args.reg_ids).to.equal(regIds);
-      expect(args.tries).to.equal(1);
-    });
-
-    it('should pass the result into callback if successful for id', function () {
-      var callback = sinon.spy(),
-          result = { success: true },
-          sender = new Sender('myKey');
-      setArgs(null, result);
-      sender.send({}, [1], 0, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][1]).to.equal(result);
-      expect(args.tries).to.equal(1);
-    });
-
-    it('should pass the result into callback if successful for ids', function () {
-      var callback = sinon.spy(),
-          result = { success: true },
-          sender = new Sender('myKey');
-      setArgs(null, result);
-      sender.send({}, [1, 2, 3], 0, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][1]).to.equal(result);
-      expect(args.tries).to.equal(1);
-    });
-
-    it('should pass the error into callback if failure and no retry for id', function () {
-      var callback = sinon.spy(),
-          error = 'my error',
-          sender = new Sender('myKey');
-      setArgs(error);
-      sender.send({}, [1], 0, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.equal(error);
-      expect(args.tries).to.equal(1);
-    });
-
-    it('should pass the error into callback if failure and no retry for ids', function () {
-      var callback = sinon.spy(),
-          error = 'my error',
-          sender = new Sender('myKey');
-      setArgs(error);
-      sender.send({}, [1, 2, 3], 0, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.equal(error);
-      expect(args.tries).to.equal(1);
-    });
-
-    it('should retry number of times passed into call and do exponential backoff', function (done) {
-      var start = new Date();
-      var callback = function () {
-        expect(args.tries).to.equal(2);
-        expect(new Date() - start).to.be.gte(Math.pow(2, 0) * backoff);
-        done();
-      };
-      var sender = new Sender('myKey');
-      setArgs('my error');
-      sender.send({ data: {}}, [1], 1, callback);
-    });
-
-    it('should retry if not all regIds were successfully sent', function (done) {
-      var callback = function () {
-        expect(args.tries).to.equal(2);
-        // Last call of sendNoRetry should be for only failed regIds
-        expect(args.reg_ids.length).to.equal(1);
-        expect(args.reg_ids[0]).to.equal(3);
-        done();
-      };
-      var sender = new Sender('myKey');
-      setArgs(null, { results: [{}, {}, { error: 'Unavailable' }]});
-      sender.send({ data: {}}, [1,2,3], 1, callback);
-    });
-
-    it('should retry all regIds in event of an error', function (done) {
-      var start = new Date();
-      var callback = function () {
-        expect(args.tries).to.equal(2);
-        expect(args.reg_ids.length).to.equal(3);
-        done();
-      };
-      var sender = new Sender('myKey');
-      setArgs('my error');
-      sender.send({ data: {}}, [1,2,3], 1, callback);
+      sender.sendBase(message, [1, 2, 3], 1, callback);
+      expect(callback.calledOnce).to.be.true;
+      expect(args.message).to.equal.message;
+      expect(args.recipient).to.equal.recipient;
+      expect(args.retryCount).to.equal(1);
     });
   });
+
 });
+
+
+
