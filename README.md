@@ -79,27 +79,27 @@ sender.send(message, registrationIds, 10, function (err, result) {
 
 ### User Notifications
 
+User notifications were initially introduced at Google I/O 2013 and became available to all developers in late 2014. At its core, user notifications provide developers a way to associate multiple devices to a single key (often associated with an individual app user). This adds a layer of notification key management but potentially removes the burden of maintaining a local list of all registration IDs for a particular user. Using notification keys also opens up the possibility of implementing upstream messaging. Further explanation can be found within the [Official GCM User Notification docs](https://developer.android.com/google/gcm/notifications.html). Additionally, Brian Bowden's [guide for implementing User Notifications](https://medium.com/@Bicx/adventures-in-android-user-notifications-e6568871d9be) may provide some insight into the intricacies of the system.
+
 #### Managing Notification Keys
 
 ```js
 var gcm = require('node-gcm');
 
-// Operation runner for performing notification key operations
+// Create an operation runner for performing notification key operations
 var opRunner = new gcm.OperationRunner(
   'insert Google project number here', 
   'insert Google Server API Key here'
   );
 
-// Operation for creating a notification key
+// Define a 'create' operation for creating a notification key
 var createOperation = new gcm.Operation({
   operationType: 'create',
   notificationKeyName: 'appUser-Chris',
   registrationIds: ['regId1', 'regId2']
 });
 
-
-
-// Run an operation
+// Run the 'create' operation
 opRunner.performOperation(createOperation, function(err, result) {
   if (err) console.error(err);
   if (result.notification_key) {
@@ -115,7 +115,7 @@ opRunner.performOperation(createOperation, function(err, result) {
 ```
 #### Operation Types
 
-**Create**: The 'create' operation creates a new notification key with provided registration IDs
+**Create**: Creates a new notification key with provided registration IDs
 ```js
 var createOperation = new gcm.Operation({
   operationType: 'create',
@@ -124,7 +124,7 @@ var createOperation = new gcm.Operation({
 });
 ```
 
-**Add**: The 'add' operation adds new registration IDs to an existing notification key
+**Add**: Adds new registration IDs to an existing notification key
 ```js
 // Set recreateKeyIfMissing to true if you want to automatically retry as a
 // create operation if GCM has deleted your original notification key.
@@ -137,20 +137,29 @@ var addOperation = new gcm.Operation({
 });
 ```
 
-**Remove**: The 'remove' operation removes registration IDs from an existing notification key
+**Remove**: Removes registration IDs from an existing notification key
 ```js
 // A notification key will be automatically deleted if all registrationIDs are removed.
 var addOperation = new gcm.Operation({
   operationType: 'remove',
   notificationKeyName: 'appUser-Chris',
-  notificationKey: 'yourlongnotificationkeystring',
+  notificationKey: 'yournotificationkey',
   registrationIds: ['regId3']
 });
 ```
 
 #### Sending a Message
+Sending a message using a notification key is nearly identical to sending a message with a registration ID array. However, rather than using `Sender`, you must use `UserNotificationSender`.
 ```js
-
+// Create a message
+var message = new gcm.Message({data: data});
+// Initiate a UserNotificationSender
+var userSender  = new gcm.UserNotificationSender('insert Google Server API Key here');
+    
+userSender.send(message, 'yournotificationkey', function(err, results) {
+  if (err) console.error(err);
+  // Do something upon successful operation
+});
 ```
 
 ### Debug
