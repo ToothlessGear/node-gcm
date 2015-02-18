@@ -10,7 +10,9 @@ $ npm install node-gcm
 
 An Android device running 2.2 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
 
-## Basic Usage
+## Usage
+
+### Standard Push Notifications
 
 ```js
 var gcm = require('node-gcm');
@@ -75,7 +77,10 @@ sender.send(message, registrationIds, 10, function (err, result) {
 });
 ```
 
-## User Notifications: Managing Notification Keys
+### User Notifications
+
+#### Managing Notification Keys
+
 ```js
 var gcm = require('node-gcm');
 
@@ -92,28 +97,7 @@ var createOperation = new gcm.Operation({
   registrationIds: ['regId1', 'regId2']
 });
 
-// Operation for adding registration IDs to an existing notification key
-//
-// Set recreateKeyIfMissing to true if you want to automatically retry as a
-// create operation if GCM has deleted your original notification key.
-var addOperation = new gcm.Operation({
-  operationType: 'add',
-  notificationKeyName: 'appUser-Chris',
-  notificationKey: 'yourlongnotificationkeystring',
-  registrationIds: ['regId2', 'regId3'],
-  recreateKeyIfMissing: true
-});
 
-// Operation for removing registration IDs form an existing notification key
-//
-// A notification key will be automatically deleted if all registrationIDs
-// are removed.
-var addOperation = new gcm.Operation({
-  operationType: 'remove',
-  notificationKeyName: 'appUser-Chris',
-  notificationKey: 'yourlongnotificationkeystring',
-  registrationIds: ['regId3']
-});
 
 // Run an operation
 opRunner.performOperation(createOperation, function(err, result) {
@@ -129,8 +113,42 @@ opRunner.performOperation(createOperation, function(err, result) {
 });
 
 ```
+#### Operation Types
 
-## User Notifications: Sending a Message
+**Create**: The 'create' operation creates a new notification key with provided registration IDs
+```js
+var createOperation = new gcm.Operation({
+  operationType: 'create',
+  notificationKeyName: 'appUser-Chris',
+  registrationIds: ['regId1', 'regId2']
+});
+```
+
+**Add**: The 'add' operation adds new registration IDs to an existing notification key
+```js
+// Set recreateKeyIfMissing to true if you want to automatically retry as a
+// create operation if GCM has deleted your original notification key.
+var addOperation = new gcm.Operation({
+  operationType: 'add',
+  notificationKeyName: 'appUser-Chris',
+  notificationKey: 'yourlongnotificationkeystring',
+  registrationIds: ['regId2', 'regId3'],
+  recreateKeyIfMissing: true
+});
+```
+
+**Remove**: The 'remove' operation removes registration IDs from an existing notification key
+```js
+// A notification key will be automatically deleted if all registrationIDs are removed.
+var addOperation = new gcm.Operation({
+  operationType: 'remove',
+  notificationKeyName: 'appUser-Chris',
+  notificationKey: 'yourlongnotificationkeystring',
+  registrationIds: ['regId3']
+});
+```
+
+#### Sending a Message
 ```js
 
 ```
