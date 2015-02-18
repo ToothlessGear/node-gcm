@@ -10,7 +10,7 @@ $ npm install node-gcm
 
 An Android device running 2.2 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
 
-## Usage
+## Basic Usage
 
 ```js
 var gcm = require('node-gcm');
@@ -75,6 +75,51 @@ sender.send(message, registrationIds, 10, function (err, result) {
 });
 ```
 
+## User Notifications: Managing Notification Keys
+```js
+var gcm = require('node-gcm');
+
+// Instantiate an operation runner
+var opRunner = new gcm.OperationRunner(
+  'insert Google project number here', 
+  'insert Google Server API Key here'
+  );
+
+// Define an operation for creating a notification key
+var createOperation = new gcm.Operation({
+  operationType: 'create',
+  notificationKeyName: 'appUser-Chris',
+  registrationIds: ['regId1', 'regId2']
+});
+
+// Define an operation for adding registration IDs to an existing notificationKey.
+// Set recreateKeyIfMissing to true if you want to automatically retry as a
+// 'create' operation if GCM has deleted your original notification key.
+var addOperation = new gcm.Operation({
+  operationType: 'add',
+  notificationKeyName: 'appUser-Chris',
+  notificationKey: 'yourlongnotificationkeystring',
+  registrationIds: ['regId2', 'regId3'],
+  recreateKeyIfMissing: true
+});
+
+// Run an operation
+opRunner.performOperation(operation, function(err, result) {
+  if (err) console.error(err);
+  if (result.notification_key) {
+    // store the notification key for later use
+  } else {
+    console.error('Did not receive notification key');
+  }
+});
+
+```
+
+## User Notifications: Sending a Message
+```js
+
+```
+
 ### Debug
 To enable debug mode (print requests and responses to and from GCM),
 set the `DEBUG` environment flag when running your app (assuming you use `node app.js` to run your app):
@@ -116,6 +161,7 @@ Any help is much appreciated!
  * [Ivan Longin](https://github.com/ilongin)
  * [Paul Bininda](https://github.com/pbininda)
  * [Niels Roesen Abildgaard](https://github.com/hypesystem)
+ * [Brian Bowden](https://github.com/brianbowden)
 
 ## License 
 
