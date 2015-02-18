@@ -81,7 +81,7 @@ sender.send(message, registrationIds, 10, function (err, result) {
 
 User notifications were initially introduced at Google I/O 2013 and became available to all developers in late 2014. At its core, user notifications provide developers a way to associate multiple devices to a single key (often associated with an individual app user). This adds a layer of notification key management but potentially removes the burden of maintaining a local list of all registration IDs for a particular user. Using notification keys also opens up the possibility of implementing upstream messaging. Further explanation can be found within the [Official GCM User Notification docs](https://developer.android.com/google/gcm/notifications.html). If you are new to user notifications, it is highly recommended that you read Brian Bowden's [guide for implementing User Notifications](https://medium.com/@Bicx/adventures-in-android-user-notifications-e6568871d9be) which explains some key points unmentioned in the official documentation.
 
-#### Managing Notification Keys
+#### Performing Notification Key Operations
 
 ```js
 var gcm = require('node-gcm');
@@ -148,11 +148,11 @@ var addOperation = new gcm.Operation({
 });
 ```
 
-#### Sending a Message
+#### Sending a Message via Notification Key
 Sending a message using a notification key is nearly identical to sending a message with a registration ID array. However, rather than using `Sender`, you must use `UserNotificationSender`.
 ```js
 // Create a message
-var message = new gcm.Message({data: data});
+var message = new gcm.Message({data: {...}});
 // Initiate a UserNotificationSender
 var userSender  = new gcm.UserNotificationSender('insert Google Server API Key here');
     
@@ -231,6 +231,17 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+
+**0.9.15**
+ * added support for user notifications
+ * introduced `OperationRunner` and `Operation` to allow for notification key operations
+ * moved core 'send' logic to `SenderBase` to allow for backwards compatibility while sharing send logic
+ * moved from a registrationIds array in `SenderBase` to a recipient object that may contain regIds or a notification key
+ * rewrote `Sender` to be backwards compatible while extending `SenderBase`
+ * introduced `UserNotificationSender` (extending `SenderBase`) for sending notifications via notification key
+ * added a gruntfile and grunt dev dependency for automated testing
+ * updated README
+ * update contributors
 
 **0.9.14**
  * `Message#addData` is now multi-purpose (works as either `Message#addDataWithObject` or `Message#addDataWithKeyValue`)
