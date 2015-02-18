@@ -92,9 +92,9 @@ var createOperation = new gcm.Operation({
   registrationIds: ['regId1', 'regId2']
 });
 
-// Define an operation for adding registration IDs to an existing notificationKey.
+// Define an operation for adding registration IDs to an existing notification key.
 // Set recreateKeyIfMissing to true if you want to automatically retry as a
-// 'create' operation if GCM has deleted your original notification key.
+// create operation if GCM has deleted your original notification key.
 var addOperation = new gcm.Operation({
   operationType: 'add',
   notificationKeyName: 'appUser-Chris',
