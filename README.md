@@ -79,20 +79,21 @@ sender.send(message, registrationIds, 10, function (err, result) {
 ```js
 var gcm = require('node-gcm');
 
-// Instantiate an operation runner
+// Operation runner for performing notification key operations
 var opRunner = new gcm.OperationRunner(
   'insert Google project number here', 
   'insert Google Server API Key here'
   );
 
-// Define an operation for creating a notification key
+// Operation for creating a notification key
 var createOperation = new gcm.Operation({
   operationType: 'create',
   notificationKeyName: 'appUser-Chris',
   registrationIds: ['regId1', 'regId2']
 });
 
-// Define an operation for adding registration IDs to an existing notification key.
+// Operation for adding registration IDs to an existing notification key
+//
 // Set recreateKeyIfMissing to true if you want to automatically retry as a
 // create operation if GCM has deleted your original notification key.
 var addOperation = new gcm.Operation({
@@ -103,11 +104,25 @@ var addOperation = new gcm.Operation({
   recreateKeyIfMissing: true
 });
 
+// Operation for removing registration IDs form an existing notification key
+//
+// A notification key will be automatically deleted if all registrationIDs
+// are removed.
+var addOperation = new gcm.Operation({
+  operationType: 'remove',
+  notificationKeyName: 'appUser-Chris',
+  notificationKey: 'yourlongnotificationkeystring',
+  registrationIds: ['regId3']
+});
+
 // Run an operation
-opRunner.performOperation(operation, function(err, result) {
+opRunner.performOperation(createOperation, function(err, result) {
   if (err) console.error(err);
   if (result.notification_key) {
-    // store the notification key for later use
+    // Store the notification key for later use. 
+    // Each successful operation returns a notification_key, and
+    // it is recommended that the stored notification key be updated
+    // with the returned value.
   } else {
     console.error('Did not receive notification key');
   }
