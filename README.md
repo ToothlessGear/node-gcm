@@ -239,6 +239,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * moved from a registrationIds array in `SenderBase` to a recipient object that may contain regIds or a notification key
  * rewrote `Sender` to be backwards compatible while extending `SenderBase`
  * introduced `UserNotificationSender` (extending `SenderBase`) for sending notifications via notification key
+ * moved existing senderSpec.js tests ot senderBaseSpec.js and added support for new functionality
+ * rewrote senderSpec.js to perform simple tests to ensure proper data passback to `SenderBase` methods
  * added a gruntfile and grunt dev dependency for automated testing
  * updated README
  * update contributors
