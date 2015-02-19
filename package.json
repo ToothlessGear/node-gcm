@@ -1,7 +1,7 @@
 {
   "name": "yodel-gcm",
   "description": "A Node.JS wrapper for Google Cloud Messaging for Android based on node-gcm",
-  "version": "0.9.17",
+  "version": "0.9.18",
   "author": "Brian Bowden <brian@spire.me>",
   "contributors": [
     {
