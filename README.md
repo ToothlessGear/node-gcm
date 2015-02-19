@@ -7,7 +7,7 @@ yodel-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](http
 $ npm install yodel-gcm
 ```
 
-##Requirements
+## Requirements
 
 An Android device running 2.2 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
 
