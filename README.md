@@ -1,19 +1,22 @@
-# node-gcm
+# yodel-gcm
 
-node-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](http://developer.android.com/guide/google/gcm/index.html), which replaces Cloud 2 Device Messaging (C2DM).
+yodel-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](http://developer.android.com/guide/google/gcm/index.html), which replaces Cloud 2 Device Messaging (C2DM).
 
 ## Installation
 ```bash
-$ npm install node-gcm
+$ npm install yodel-gcm
 ```
-##Requirements
+
+## Requirements
 
 An Android device running 2.2 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
 
 ## Usage
 
+### Standard Push Notifications
+
 ```js
-var gcm = require('node-gcm');
+var gcm = require('yodel-gcm');
 
 // Create a message
 // ... with default values
@@ -75,25 +78,98 @@ sender.send(message, registrationIds, 10, function (err, result) {
 });
 ```
 
+### User Notifications
+
+User notifications were initially introduced at Google I/O 2013 and became available to all developers in late 2014. At its core, user notifications provide developers a way to associate multiple devices to a single key (often associated with an individual app user). This adds a layer of notification key management but potentially removes the burden of maintaining a local list of all registration IDs for a particular user. Using notification keys also opens up the possibility of implementing upstream messaging. Further explanation can be found within the [Official GCM User Notification docs](https://developer.android.com/google/gcm/notifications.html). If you are new to user notifications, it is highly recommended that you read Brian Bowden's [guide for implementing User Notifications](https://medium.com/@Bicx/adventures-in-android-user-notifications-e6568871d9be) which explains some key points unmentioned in the official documentation.
+
+#### Performing Notification Key Operations
+
+```js
+var gcm = require('yodel-gcm');
+
+// Create an operation runner for performing notification key operations
+var opRunner = new gcm.OperationRunner(
+  'insert Google project number here', 
+  'insert Google Server API Key here'
+  );
+
+// Define a 'create' operation for creating a notification key
+var createOperation = new gcm.Operation({
+  operationType: 'create',
+  notificationKeyName: 'appUser-Chris',
+  registrationIds: ['regId1', 'regId2']
+});
+
+// Run the 'create' operation
+opRunner.performOperation(createOperation, function(err, result) {
+  if (err) console.error(err);
+  if (result.notification_key) {
+    // Store the notification key for later use. 
+    // Each successful operation returns a notification_key, and
+    // it is recommended that the stored notification key be updated
+    // with the returned value.
+  } else {
+    console.error('Did not receive notification key');
+  }
+});
+
+```
+#### Operation Types
+
+**Create**: Creates a new notification key with provided registration IDs
+```js
+var createOperation = new gcm.Operation({
+  operationType: 'create',
+  notificationKeyName: 'appUser-Chris',
+  registrationIds: ['regId1', 'regId2']
+});
+```
+
+**Add**: Adds new registration IDs to an existing notification key
+```js
+// Set recreateKeyIfMissing to true if you want to automatically retry as a
+// create operation if GCM has deleted your original notification key.
+var addOperation = new gcm.Operation({
+  operationType: 'add',
+  notificationKeyName: 'appUser-Chris',
+  notificationKey: 'yourlongnotificationkeystring',
+  registrationIds: ['regId2', 'regId3'],
+  recreateKeyIfMissing: true
+});
+```
+
+**Remove**: Removes registration IDs from an existing notification key
+```js
+// A notification key will be automatically deleted if all registrationIDs are removed.
+var addOperation = new gcm.Operation({
+  operationType: 'remove',
+  notificationKeyName: 'appUser-Chris',
+  notificationKey: 'yournotificationkey',
+  registrationIds: ['regId3']
+});
+```
+
+#### Sending a Message via Notification Key
+Sending a message using a notification key is nearly identical to sending a message with a registration ID array. However, rather than using `Sender`, you must use `UserNotificationSender`.
+```js
+// Create a message
+var message = new gcm.Message({data: {...}});
+// Initiate a UserNotificationSender
+var userSender  = new gcm.UserNotificationSender('insert Google Server API Key here');
+    
+userSender.send(message, 'yournotificationkey', function(err, results) {
+  if (err) console.error(err);
+  // Do something upon successful operation
+});
+```
+
 ### Debug
 To enable debug mode (print requests and responses to and from GCM),
 set the `DEBUG` environment flag when running your app (assuming you use `node app.js` to run your app):
 
 ```bash
-DEBUG=node-gcm node app.js
+DEBUG=yodel-gcm node app.js
 ```
-
-## Donate
-
- Bitcoin: [13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ](https://blockchain.info/address/13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ)
-
-## Contribute!
-
-If you don't want to create a GitHub-Account, but still feel the urge to contribute... no problem!
-Just send me an [email](mailto:toothlessgear@finitebox.com) with your 
-pull request from your private repository.
-Of course, you can also send me a patch directly inline your mail.
-Any help is much appreciated!
 
 ## Contributors
  * [monkbroc](https://github.com/monkbroc)
@@ -116,6 +192,7 @@ Any help is much appreciated!
  * [Ivan Longin](https://github.com/ilongin)
  * [Paul Bininda](https://github.com/pbininda)
  * [Niels Roesen Abildgaard](https://github.com/hypesystem)
+ * [Brian Bowden](https://github.com/brianbowden)
 
 ## License 
 
@@ -143,6 +220,19 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
+
+**0.9.15**
+ * added support for user notifications
+ * introduced `OperationRunner` and `Operation` to allow for notification key operations
+ * moved core 'send' logic to `SenderBase` to allow for backwards compatibility while sharing send logic
+ * moved from a registrationIds array in `SenderBase` to a recipient object that may contain regIds or a notification key
+ * rewrote `Sender` to be backwards compatible while extending `SenderBase`
+ * introduced `UserNotificationSender` (extending `SenderBase`) for sending notifications via notification key
+ * moved existing senderSpec.js tests ot senderBaseSpec.js and added support for new functionality
+ * rewrote senderSpec.js to perform simple tests to ensure proper data passback to `SenderBase` methods
+ * added a gruntfile and grunt dev dependency for automated testing
+ * updated README
+ * update contributors
 
 **0.9.14**
  * `Message#addData` is now multi-purpose (works as either `Message#addDataWithObject` or `Message#addDataWithKeyValue`)
