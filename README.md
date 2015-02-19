@@ -170,18 +170,6 @@ set the `DEBUG` environment flag when running your app (assuming you use `node a
 DEBUG=yodel-gcm node app.js
 ```
 
-## Donate
-
- Bitcoin: [13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ](https://blockchain.info/address/13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ)
-
-## Contribute!
-
-If you don't want to create a GitHub-Account, but still feel the urge to contribute... no problem!
-Just send me an [email](mailto:toothlessgear@finitebox.com) with your 
-pull request from your private repository.
-Of course, you can also send me a patch directly inline your mail.
-Any help is much appreciated!
-
 ## Contributors
  * [monkbroc](https://github.com/monkbroc)
  * [zlyinfinite](https://github.com/zlyinfinite)

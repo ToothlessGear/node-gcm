@@ -1,7 +1,7 @@
 {
   "name": "yodel-gcm",
   "description": "A Node.JS wrapper for Google Cloud Messaging for Android based on node-gcm",
-  "version": "0.9.15",
+  "version": "0.9.17",
   "author": "Brian Bowden <brian@spire.me>",
   "contributors": [
     {
@@ -99,8 +99,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "http://github.com/ToothlessGear/node-gcm.git",
-    "web": "http://github.com/ToothlessGear/node-gcm"
+    "url": "http://github.com/SpireTeam/yodel-gcm.git",
+    "web": "http://github.com/SpireTeam/yodel-gcm"
   },
   "keywords": [
     "google",
@@ -117,7 +117,6 @@
   },
   "dependencies": {
     "debug": "^0.8.1",
-    "grunt": "^0.4.5",
     "request": "^2.27.0"
   },
   "devDependencies": {
