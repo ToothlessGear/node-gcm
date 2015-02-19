@@ -1,8 +1,8 @@
 {
-  "name": "node-gcm",
-  "description": "a Node.JS wrapper library-port for Google Cloud Messaging for Android",
+  "name": "yodel-gcm",
+  "description": "A Node.JS wrapper for Google Cloud Messaging for Android based on node-gcm",
   "version": "0.9.15",
-  "author": "Marcus Farkas <toothlessgear@finitebox.com>",
+  "author": "Brian Bowden <brian@spire.me>",
   "contributors": [
     {
       "name": "Marcus Farkas",
