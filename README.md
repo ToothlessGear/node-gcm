@@ -1,10 +1,10 @@
-# node-gcm
+# yodel-gcm
 
-node-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](http://developer.android.com/guide/google/gcm/index.html), which replaces Cloud 2 Device Messaging (C2DM).
+yodel-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](http://developer.android.com/guide/google/gcm/index.html), which replaces Cloud 2 Device Messaging (C2DM).
 
 ## Installation
 ```bash
-$ npm install node-gcm
+$ npm install yodel-gcm
 ```
 ##Requirements
 
@@ -15,7 +15,7 @@ An Android device running 2.2 or newer and an API key as per [GCM getting starte
 ### Standard Push Notifications
 
 ```js
-var gcm = require('node-gcm');
+var gcm = require('yodel-gcm');
 
 // Create a message
 // ... with default values
@@ -84,7 +84,7 @@ User notifications were initially introduced at Google I/O 2013 and became avail
 #### Performing Notification Key Operations
 
 ```js
-var gcm = require('node-gcm');
+var gcm = require('yodel-gcm');
 
 // Create an operation runner for performing notification key operations
 var opRunner = new gcm.OperationRunner(
@@ -167,7 +167,7 @@ To enable debug mode (print requests and responses to and from GCM),
 set the `DEBUG` environment flag when running your app (assuming you use `node app.js` to run your app):
 
 ```bash
-DEBUG=node-gcm node app.js
+DEBUG=yodel-gcm node app.js
 ```
 
 ## Donate
