@@ -87,7 +87,7 @@ DEBUG=node-gcm node app.js
 
  Bitcoin: [13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ](https://blockchain.info/address/13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ)
 
-## Contribute!
+## Contributing
 
 If you don't want to create a GitHub-Account, but still feel the urge to contribute... no problem!
 Just send me an [email](mailto:toothlessgear@finitebox.com) with your 
