@@ -329,5 +329,21 @@ describe('UNIT Sender', function () {
       setArgs('my error');
       sender.send({ data: {}}, [1,2,3], 1, callback);
     });
+
+    it('should update the failures and successes correctly when retrying', function (done) {
+      var callback = function(error, result) {
+        expect(error).to.equal(null);
+        expect(result.canonical_ids).to.equal(1);
+        expect(result.success).to.equal(2);
+        expect(result.failure).to.equal(0);
+        done();
+      };
+      var sender = new Sender('myKey');
+      setArgs(null, [
+        { success: 1, failure: 2, canonical_ids: 0, results: [ {}, { error: 'Unavailable' }, { error: 'Unavailable' } ] },
+        { success: 1, canonical_ids: 1, failure: 0, results: [ {}, {} ] }
+      ]);
+      sender.send({ data: {}}, [1,2,3], 3, callback);
+    });
   });
 });
