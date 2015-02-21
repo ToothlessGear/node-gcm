@@ -190,7 +190,22 @@ describe('UNIT Sender', function () {
         args.message = message;
         args.reg_ids = reg_ids;
         args.tries++;
-        callback( args.err, args.result );
+        var nextResult;
+        if(!args.result) {
+          nextResult = args.result;
+        }
+        else if(args.result.length > 1) {
+          nextResult = args.result.slice(0,1)[0];
+          args.result = args.result.slice(1,args.result.length - 1);
+        }
+        else if(args.result.length == 1) {
+          args.result = args.result[0];
+          nextResult = args.result;
+        }
+        else {
+          nextResult = args.result;
+        }
+        callback( args.err, nextResult );
       };
     });
 
@@ -288,15 +303,18 @@ describe('UNIT Sender', function () {
 
     it('should retry if not all regIds were successfully sent', function (done) {
       var callback = function () {
-        expect(args.tries).to.equal(2);
+        expect(args.tries).to.equal(3);
         // Last call of sendNoRetry should be for only failed regIds
         expect(args.reg_ids.length).to.equal(1);
         expect(args.reg_ids[0]).to.equal(3);
         done();
       };
       var sender = new Sender('myKey');
-      setArgs(null, { results: [{}, {}, { error: 'Unavailable' }]});
-      sender.send({ data: {}}, [1,2,3], 1, callback);
+      setArgs(null, [{ results: [{}, { error: 'Unavailable' }, { error: 'Unavailable' }]}, { results: [ {}, { error: 'Unavailable' } ] }, { results: [ {} ] } ]);
+      sender.send({ data: {}}, [1,2,3], {
+        retries: 5,
+        backoff: 100
+      }, callback);
     });
 
     it('should retry all regIds in event of an error', function (done) {
