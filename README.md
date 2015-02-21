@@ -150,6 +150,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
 
+**0.9.15**
+ * Updated *Contributing* section in README
+ * Rewrote `Sender#send`, so it returns the correct result ordered as expected, even after retrying.
+   The initial backoff time can now be specified, by passing an options object to the function.
+ * Updated `Sender#send` and `Sender#sendNoRetry` to allow passing a single Registration ID without wrapping it in an array.
+
 **0.9.14**
  * `Message#addData` is now multi-purpose (works as either `Message#addDataWithObject` or `Message#addDataWithKeyValue`)
  * clarified README usage example
