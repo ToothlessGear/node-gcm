@@ -215,12 +215,13 @@ describe('UNIT Sender', function () {
 
     it.skip('should do something if passed not an array for regIds');
 
-    it('should pass an error into callback if array has no regIds', function () {
-      var callback = sinon.spy(),
-          sender = new Sender('myKey');
+    it('should pass an error into callback if array has no regIds', function (done) {
+      var callback = function(error) {
+        expect(error).to.be.a('string');
+        done();
+      };
+      var sender = new Sender('myKey');
       sender.send({}, [], 0, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('string');
     });
 
     it('should pass the message and the regId to sendNoRetry on call', function () {
