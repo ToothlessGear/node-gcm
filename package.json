@@ -109,7 +109,7 @@
   ],
   "main": "index",
   "scripts": {
-    "test": "./node_modules/.bin/mocha -R spec test/**/*Spec.js"
+    "test": "sh node_modules/.bin/mocha -R spec test/**/*Spec.js"
   },
   "dependencies": {
     "request": "^2.27.0",
