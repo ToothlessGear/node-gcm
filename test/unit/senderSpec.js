@@ -196,7 +196,7 @@ describe('UNIT Sender', function () {
         }
         else if(args.result.length > 1) {
           nextResult = args.result.slice(0,1)[0];
-          args.result = args.result.slice(1,args.result.length - 1);
+          args.result = args.result.slice(1,args.result.length);
         }
         else if(args.result.length == 1) {
           args.result = args.result[0];
