@@ -78,7 +78,29 @@ sender.send(message, registrationIds, 10, function (err, result) {
 Notice that [you can *at most* send notifications to 1000 registration ids at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
 This is due to [a restriction](http://developer.android.com/training/cloudsync/gcm.html) on the side of the GCM API.
 
-### Debug
+## Example application
+According to above **Usage** reference, we could create such application:
+
+```js
+var gcm = require('node-gcm');
+
+var message = new gcm.Message();
+message.addData({
+	key1: 'msg1'
+});
+
+var regIds = ['YOUR_REG_ID_HERE'];
+
+var sender = new gcm.Sender('YOUR_API_KEY_HERE');
+sender.sendNoRetry(message, regIds, function (err, result) {
+	if(err)
+		console.error(err);
+	else
+		console.log(result);
+});
+```
+
+## Debug
 To enable debug mode (print requests and responses to and from GCM),
 set the `DEBUG` environment flag when running your app (assuming you use `node app.js` to run your app):
 
