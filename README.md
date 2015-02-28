@@ -150,6 +150,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changelog
 
+**0.10.0**
+ * Deprecated `Message#addDataWithKeyValue` and `Message#addDataWithObject`:
+   both of these now print an message to the log when used.
+
 **0.9.15**
  * Updated *Contributing* section in README
  * Rewrote `Sender#send`, so it returns the correct result ordered as expected, even after retrying.
