@@ -11,7 +11,7 @@ See the [GCM server reference](https://developer.android.com/google/gcm/server-r
 
  - `collapseKey` identifies a group of messages that can be collapsed.
    If you send several notifications with the same notification key to a device that is offline, it will only show the most recent when it comes back online.
- - When `delayWhileIdle` is set to `true`, it indicates that the message shuold not be sent until the device becomes active.
+ - When `delayWhileIdle` is set to `true`, it indicates that the message should not be sent until the device becomes active.
  - `time_to_live` specifies how long (in seconds) the message should be kept in GCM storage if the device is offline.
    The maximum time to live supported is 4 weeks (which is also the default).
  - `dry_run` indicates whether or not this is a test request.
