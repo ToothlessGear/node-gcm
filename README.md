@@ -142,6 +142,7 @@ Any help is much appreciated!
  * [Ivan Longin](https://github.com/ilongin)
  * [Paul Bininda](https://github.com/pbininda)
  * [Niels Roesen Abildgaard](https://github.com/hypesystem)
+ * [Nonemoticoner](https://github.com/Nonemoticoner)
 
 ## License 
 
