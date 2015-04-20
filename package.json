@@ -56,10 +56,10 @@
     "debug": "^0.8.1"
   },
   "devDependencies": {
-    "chai": "^1.9.1",
-    "mocha": "^1.21.0",
-    "proxyquire": "^1.0.1",
-    "sinon": "^1.10.3"
+    "chai": "^2.2.0",
+    "mocha": "^2.2.4",
+    "proxyquire": "^1.4.0",
+    "sinon": "^1.14.1"
   },
   "optionalDependencies": {},
   "engines": {
