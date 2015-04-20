@@ -143,6 +143,7 @@ Any help is much appreciated!
  * [Paul Bininda](https://github.com/pbininda)
  * [Niels Roesen Abildgaard](https://github.com/hypesystem)
  * [Nonemoticoner](https://github.com/Nonemoticoner)
+ * [Simen Bekkhus](https://github.com/SimenB)
 
 ## License 
 
