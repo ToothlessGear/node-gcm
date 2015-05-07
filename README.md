@@ -174,7 +174,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 **0.10.0**
  * Deprecated `Message#addDataWithKeyValue` and `Message#addDataWithObject`:
-   both of these now print an message to the log when used.
+   both of these now print a message to the log when used.
 
 **0.9.15**
  * Updated *Contributing* section in README
