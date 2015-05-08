@@ -31,7 +31,7 @@ describe('UNIT Sender', function () {
         maxSockets: 100,
         timeout: 100
       };
-      var key = 'myAPIKey', 
+      var key = 'myAPIKey',
           sender = new Sender(key, options);
       expect(sender).to.be.instanceOf(Sender);
       expect(sender.key).to.equal(key);
@@ -154,7 +154,7 @@ describe('UNIT Sender', function () {
       setArgs(null, { statusCode: 200 }, "non-JSON string.");
       sender.sendNoRetry({ data: {} }, '', callback);
       expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('string');
+      expect(callback.args[0][0]).to.eq('Error parsing GCM response');
     });
 
     it('should pass in parsed resBody into callback on success', function () {
