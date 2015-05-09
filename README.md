@@ -144,6 +144,7 @@ Any help is much appreciated!
  * [Niels Roesen Abildgaard](https://github.com/hypesystem)
  * [Nonemoticoner](https://github.com/Nonemoticoner)
  * [Simen Bekkhus](https://github.com/SimenB)
+ * [Alexander Johansson](https://github.com/KATT)
 
 ## License 
 
