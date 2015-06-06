@@ -67,6 +67,9 @@ message.delayWhileIdle = true;
 message.timeToLive = 3;
 message.dryRun = true;
 
+// Add notification
+message.addNotification('Title', 'ic_launcher', 'Text');
+
 // Set up the sender with you API key
 var sender = new gcm.Sender('insert Google Server API Key here');
 
