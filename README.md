@@ -67,9 +67,6 @@ message.delayWhileIdle = true;
 message.timeToLive = 3;
 message.dryRun = true;
 
-// Add notification
-message.addNotification('Title', 'ic_launcher', 'Text');
-
 // Set up the sender with you API key
 var sender = new gcm.Sender('insert Google Server API Key here');
 
@@ -97,9 +94,31 @@ sender.send(message, registrationIds, 10, function (err, result) {
   else    console.log(result);
 });
 ```
-
 Notice that [you can *at most* send notifications to 1000 registration ids at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
 This is due to [a restriction](http://developer.android.com/training/cloudsync/gcm.html) on the side of the GCM API.
+
+
+#Notification usage
+
+```js
+
+var message = new gcm.Message();
+
+// Add notification payload as key value
+message.addNotification('title', 'Alert!!!');
+message.addNotification('body', 'Abnormal data access');
+message.addNotification('icon', 'ic_launcher');
+
+// as object
+message.addNotification({
+	title: 'Alert!!!',
+  body: 'Abnormal data access',
+  icon: 'ic_launcher'
+});
+
+```
+Notice notification payload defined in [GCM Connection Server Reference](https://developers.google.com/cloud-messaging/server-ref#table1)
+
 
 ## Debug
 To enable debug mode (print requests and responses to and from GCM),
