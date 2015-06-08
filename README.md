@@ -22,9 +22,16 @@ message.addData('key1', 'msg1');
 
 var regIds = ['YOUR_REG_ID_HERE'];
 
+// Set up the sender with you API key
 var sender = new gcm.Sender('YOUR_API_KEY_HERE');
 
+//Now the sender can be used to send messages
 sender.send(message, regIds, function (err, result) {
+	if(err) console.error(err);
+	else 	console.log(result);
+});
+
+sender.sendNoRetry(message, regIds, function (err, result) {
 	if(err) console.error(err);
 	else 	console.log(result);
 });
@@ -145,6 +152,7 @@ Any help is much appreciated!
  * [Nonemoticoner](https://github.com/Nonemoticoner)
  * [Simen Bekkhus](https://github.com/SimenB)
  * [Alexander Johansson](https://github.com/KATT)
+ * [Ashwin R](https://github.com/ashrko619)
 
 ## License 
 
