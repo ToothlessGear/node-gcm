@@ -29,7 +29,8 @@ describe('UNIT Message', function () {
         dryRun: true,
         data: {
           score: 98
-        }
+        },
+        notification: {}
       };
       var mess = new Message(obj);
       expect(JSON.stringify(mess)).to.equal(JSON.stringify(obj));
@@ -41,7 +42,8 @@ describe('UNIT Message', function () {
         delayWhileIdle: true,
         data: {
           score: 98
-        }
+        },
+        notification: {}
       };
       var mess = new Message(obj);
       expect(JSON.stringify(mess)).to.equal(JSON.stringify(obj));
@@ -165,4 +167,49 @@ describe('UNIT Message', function () {
       expect(mess.data).to.deep.equal(data);
     });
   });
+
+  describe('addNotification()', function () {
+    it('should add attribute on notification object if pass key and value', function () {
+      var mess = new Message();
+      mess.addNotification('title', 'hello');
+      mess.addNotification('icon', 'ic_launcher');
+      mess.addNotification('body', 'world');
+      expect(mess.notification.title).to.equal('hello');
+      expect(mess.notification.icon).to.equal('ic_launcher');
+      expect(mess.notification.body).to.equal('world');
+    });
+
+    it('should set the notification property to the object passed in', function () {
+      var mess = new Message();
+      var obj = {
+        title: 'hello',
+        icon: 'ic_launcher',
+        body: 'world'
+      };
+      mess.addNotification(obj);
+      expect(mess.notification).to.deep.equal(obj);
+    });
+  });
+
+  describe('addNotificationWithKeyValue()', function () {
+    it('should add properties to the message notification object given a key and value', function () {
+      var mess = new Message();
+      mess.addNotificationWithKeyValue('title', 'hello');
+      expect(mess.notification.title).to.equal('hello');
+    });
+  });
+
+  describe('addNotificationWithObject()', function () {
+    it('should set the notification property to the object passed in', function () {
+      var mess = new Message();
+      var obj = {
+        title: 'hello',
+        icon: 'ic_launcher',
+        body: 'world'
+      };
+      mess.addNotificationWithObject(obj);
+      expect(mess.notification).to.deep.equal(obj);
+    });
+  });
+
 });
