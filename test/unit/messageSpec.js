@@ -191,25 +191,4 @@ describe('UNIT Message', function () {
     });
   });
 
-  describe('addNotificationWithKeyValue()', function () {
-    it('should add properties to the message notification object given a key and value', function () {
-      var mess = new Message();
-      mess.addNotificationWithKeyValue('title', 'hello');
-      expect(mess.notification.title).to.equal('hello');
-    });
-  });
-
-  describe('addNotificationWithObject()', function () {
-    it('should set the notification property to the object passed in', function () {
-      var mess = new Message();
-      var obj = {
-        title: 'hello',
-        icon: 'ic_launcher',
-        body: 'world'
-      };
-      mess.addNotificationWithObject(obj);
-      expect(mess.notification).to.deep.equal(obj);
-    });
-  });
-
 });
