@@ -4,6 +4,9 @@ Changelog
 **0.10.0**
  * Deprecated `Message#addDataWithKeyValue` and `Message#addDataWithObject`:
    both of these now print a message to the log when used.
+ * Fixed some typos and improved the README.
+ * Updated dependencies.
+ * Limited files included in package as a dependency (test-files are no longer gotten with `npm install`).
  * Added `Message#addNotification`, which allows the user to use the new [Notification Payload API](https://developers.google.com/cloud-messaging/server-ref#notification-payload-support).
    This allows the server to define a notification that will be shown directly on the receiving device.
 
