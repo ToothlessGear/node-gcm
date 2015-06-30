@@ -192,6 +192,7 @@ Any help is much appreciated!
  * [Simen Bekkhus](https://github.com/SimenB)
  * [Alexander Johansson](https://github.com/KATT)
  * [Ashwin R](https://github.com/ashrko619)
+ * [kaija](https://github.com/kaija)
 
 ## License 
 
