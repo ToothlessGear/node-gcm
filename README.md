@@ -118,7 +118,7 @@ message.addNotification('icon', 'ic_launcher');
 
 // as object
 message.addNotification({
-	title: 'Alert!!!',
+  title: 'Alert!!!',
   body: 'Abnormal data access',
   icon: 'ic_launcher'
 });
