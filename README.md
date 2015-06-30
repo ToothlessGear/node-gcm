@@ -167,33 +167,6 @@ Make the PR *early* so maintainers and other contributors get a chance to give i
 
 Any help is much appreciated!
 
-## Contributors
- * [monkbroc](https://github.com/monkbroc)
- * [zlyinfinite](https://github.com/zlyinfinite)
- * [Yann Biancheri](https://github.com/yannooo)
- * [Hamid Palo](https://github.com/hamidp)
- * [Dotan J.Nahum](https://github.com/jondot)
- * [Olivier Poitrey](https://github.com/rs)
- * [Max Rabin](https://github.com/maxrabin)
- * [George Miroshnykov](https://github.com/laggyluke)
- * [Alejandro Garcia](https://github.com/Alegege)
- * [Ismael Gorissen](https://github.com/igorissen)
- * [Joris Verbogt](https://github.com/silentjohnny)
- * [goelvivek](https://github.com/goelvivek)
- * [Lars Jacob](https://github.com/jaclar)
- * [Roman Iakovlev](https://github.com/RomanIakovlev) 
- * [Roman Skvazh](https://github.com/rskvazh)
- * [Jeremy Goldstein](https://github.com/jg10)
- * [Adam Patacchiola](https://github.com/surespot)
- * [Ivan Longin](https://github.com/ilongin)
- * [Paul Bininda](https://github.com/pbininda)
- * [Niels Roesen Abildgaard](https://github.com/hypesystem)
- * [Nonemoticoner](https://github.com/Nonemoticoner)
- * [Simen Bekkhus](https://github.com/SimenB)
- * [Alexander Johansson](https://github.com/KATT)
- * [Ashwin R](https://github.com/ashrko619)
- * [kaija](https://github.com/kaija)
-
 ## License 
 
 (The MIT License)
