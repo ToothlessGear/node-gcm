@@ -3,14 +3,17 @@
 node-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](http://developer.android.com/guide/google/gcm/index.html), which replaces Cloud 2 Device Messaging (C2DM).
 
 ## Installation
+
 ```bash
 $ npm install node-gcm
 ```
+
 ##Requirements
 
 An Android device running 2.2 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
 
 ## Example application
+
 According to below **Usage** reference, we could create such application:
 
 ```js
@@ -145,6 +148,7 @@ message.addNotification({
 Notice notification payload defined in [GCM Connection Server Reference](https://developers.google.com/cloud-messaging/server-ref#table1)
 
 ## Debug
+
 To enable debug mode (print requests and responses to and from GCM),
 set the `DEBUG` environment flag when running your app (assuming you use `node app.js` to run your app):
 
