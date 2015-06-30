@@ -105,7 +105,7 @@ Notice that [you can *at most* send notifications to 1000 registration ids at a 
 This is due to [a restriction](http://developer.android.com/training/cloudsync/gcm.html) on the side of the GCM API.
 
 
-#Notification usage
+## Notification usage
 
 ```js
 
@@ -125,7 +125,7 @@ message.addNotification({
 
 ```
 
-## Notification payload option table
+### Notification payload option table
 
 |Parameter|Platform|Usage|Description|
 |---|---|---|---|
@@ -142,20 +142,7 @@ message.addNotification({
 |title_loc_args|iOS|Optional, JSON array as string|Indicates the string value to replace format specifiers in title string for localization. On iOS, this corresponds to "title-loc-args" in APNS payload.|
 |title_loc_key|iOS|Optional, string|Indicates the key to the title string for localization. On iOS, this corresponds to "title-loc-key" in APNS payload.|
 
-
-###Appendix 1:
-
-```java
-<intent-filter>
-<action android:name="OPEN_ACTIVITY_1" />
-<category android:name="android.intent.category.DEFAULT" />
-</intent-filter>
-```
-
-
-
 Notice notification payload defined in [GCM Connection Server Reference](https://developers.google.com/cloud-messaging/server-ref#table1)
-
 
 ## Debug
 To enable debug mode (print requests and responses to and from GCM),
