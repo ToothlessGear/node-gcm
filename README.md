@@ -101,9 +101,61 @@ sender.send(message, registrationIds, 10, function (err, result) {
   else    console.log(result);
 });
 ```
-
 Notice that [you can *at most* send notifications to 1000 registration ids at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
 This is due to [a restriction](http://developer.android.com/training/cloudsync/gcm.html) on the side of the GCM API.
+
+
+#Notification usage
+
+```js
+
+var message = new gcm.Message();
+
+// Add notification payload as key value
+message.addNotification('title', 'Alert!!!');
+message.addNotification('body', 'Abnormal data access');
+message.addNotification('icon', 'ic_launcher');
+
+// as object
+message.addNotification({
+	title: 'Alert!!!',
+  body: 'Abnormal data access',
+  icon: 'ic_launcher'
+});
+
+```
+
+## Notification payload option table
+
+|Parameter|Platform|Usage|Description|
+|---|---|---|---|
+|title|Android, iOS (Watch)|equired (Android), Optional (iOS), string|Indicates notification title. This field is not visible on iOS phones and tablets.|
+|body|Android, iOS|Optional, string|Indicates notification body text.|
+|icon|Android|Required, string|Indicates notification icon. On Android: sets value to myicon for drawable resource myicon.png.|
+|sound|Android, iOS|Optional, string|Indicates sound to be played. Supports only default currently.|
+|badge|iOS|Optional, string|Indicates the badge on client app home icon.|
+|tag|Android|Optional, string|Indicates whether each notification message results in a new entry on the notification center on Android. If not set, each request creates a new notification. If set, and a notification with the same tag is already being shown, the new notification replaces the existing one in notification center.|
+|color|Android|Optional, string|Indicates color of the icon, expressed in #rrggbb format|
+|click_action|Android, iOS|Optional, string|The action associated with a user click on the notification. On Android, if this is set, an activity with a matching intent filter is launched when user clicks the notification. For example, if one of your Activities includes the intent filter: (Appendix:1)Set click_action to OPEN_ACTIVITY_1 to open it. If set, corresponds to category in APNS payload.|
+|body_loc_key|iOS|Optional, string|Indicates the key to the body string for localization. On iOS, this corresponds to "loc-key" in APNS payload.|
+|body_loc_args|iOS|Optional, JSON array as string|Indicates the string value to replace format specifiers in body string for localization. On iOS, this corresponds to "loc-args" in APNS payload.|
+|title_loc_args|iOS|Optional, JSON array as string|Indicates the string value to replace format specifiers in title string for localization. On iOS, this corresponds to "title-loc-args" in APNS payload.|
+|title_loc_key|iOS|Optional, string|Indicates the key to the title string for localization. On iOS, this corresponds to "title-loc-key" in APNS payload.|
+
+
+###Appendix 1:
+
+```java
+<intent-filter>
+<action android:name="OPEN_ACTIVITY_1" />
+<category android:name="android.intent.category.DEFAULT" />
+</intent-filter>
+```
+
+
+
+Notice notification payload defined in [GCM Connection Server Reference](https://developers.google.com/cloud-messaging/server-ref#table1)
+
 
 ## Debug
 To enable debug mode (print requests and responses to and from GCM),
