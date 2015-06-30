@@ -51,7 +51,7 @@
     "lib/"
   ],
   "scripts": {
-    "test": "sh node_modules/.bin/mocha -R spec test/**/*Spec.js"
+    "test": "mocha test/**/*Spec.js"
   },
   "dependencies": {
     "request": "^2.27.0",
