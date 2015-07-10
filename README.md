@@ -132,7 +132,7 @@ message.addNotification({
 
 |Parameter|Platform|Usage|Description|
 |---|---|---|---|
-|title|Android, iOS (Watch)|equired (Android), Optional (iOS), string|Indicates notification title. This field is not visible on iOS phones and tablets.|
+|title|Android, iOS (Watch)|Required (Android), Optional (iOS), string|Indicates notification title. This field is not visible on iOS phones and tablets.|
 |body|Android, iOS|Optional, string|Indicates notification body text.|
 |icon|Android|Required, string|Indicates notification icon. On Android: sets value to myicon for drawable resource myicon.png.|
 |sound|Android, iOS|Optional, string|Indicates sound to be played. Supports only default currently.|
