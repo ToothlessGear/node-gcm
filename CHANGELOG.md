@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**0.11.0**
+ * Added support for the [new parameters](https://developers.google.com/cloud-messaging/server-ref):
+   `priority`, `content_available`, `restricted_package_name`.
+ * If only a single registration id is passed to `Sender#send*`, it will be sent in the `to` field.
+   This is in accordance with the best practice of the current documentation, and allows users to send messages to notification keys.
+
 **0.10.0**
  * Deprecated `Message#addDataWithKeyValue` and `Message#addDataWithObject`:
    both of these now print a message to the log when used.
