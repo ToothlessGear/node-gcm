@@ -105,7 +105,7 @@ describe('UNIT Sender', function () {
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, ["registration id 1", "registration id 2"], function () {});
       var body = JSON.parse(args.options.body);
-      expect(body[Constants.JSON_REGISTRATION_IDS]).to.deep.equal(["registration id 1", "registration id 2"]);
+      expect(body.registration_ids).to.deep.equal(["registration id 1", "registration id 2"]);
     });
 
     it('should pass an error into callback if request returns an error', function () {
