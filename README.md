@@ -10,7 +10,11 @@ $ npm install node-gcm
 
 ## Requirements
 
-An Android device running 2.2 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
+This library provides the server-side implementation of GCM.
+You need to generate an API key ([Sender ID](https://developers.google.com/cloud-messaging/gcm#senderid)).
+
+GCM notifications can be sent to both [Android](https://developers.google.com/cloud-messaging/android/start) and [iOS](https://developers.google.com/cloud-messaging/ios/start).
+If you are new to GCM you should probably look into the [documentation](https://developers.google.com/cloud-messaging/gcm).
 
 ## Example application
 
