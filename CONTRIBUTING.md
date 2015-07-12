@@ -1,4 +1,5 @@
-# Contributing
+Contributing
+============
 
 We appreciate any help we can get!
 If you spot something that is wrong, please create an [issue](https://github.com/ToothlessGear/node-gcm/issues/new).
