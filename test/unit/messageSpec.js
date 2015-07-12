@@ -75,14 +75,20 @@ describe('UNIT Message', function () {
     it('should add properties to the message data object given a key and value', function () {
       var mess = new Message();
       mess.addData('myKey', 'Message');
-      expect(mess.data.myKey).to.equal('Message');
+
+      var json = mess.toJson();
+
+      expect(json.data.myKey).to.equal('Message');
     });
 
     it('should only set values on data object, not top level message', function () {
       var mess = new Message();
       mess.addData('collapseKey', 'Message');
-      expect(mess.collapseKey).to.not.equal('Message');
-      expect(mess.data.collapseKey).to.equal('Message');
+
+      var json = mess.toJson();
+
+      expect(json.collapse_key).to.not.equal('Message');
+      expect(json.data.collapseKey).to.equal('Message');
     });
 
     it('should set the data property to the object passed in', function () {
@@ -92,7 +98,10 @@ describe('UNIT Message', function () {
         key: 'value'
       };
       mess.addData(obj);
-      expect(mess.data).to.deep.equal(obj);
+
+      var json = mess.toJson();
+
+      expect(json.data).to.deep.equal(obj);
     });
 
     it('should overwrite data object when an object is passed in', function () {
@@ -102,7 +111,10 @@ describe('UNIT Message', function () {
       };
       var mess = new Message({ data: { message: 'bye', prop: 'none' } });
       mess.addData(data);
-      expect(mess.data).to.deep.equal(data);
+
+      var json = mess.toJson();
+
+      expect(json.data).to.deep.equal(data);
     });
 
     it('should not overwrite data if not passed an object', function () {
@@ -112,7 +124,10 @@ describe('UNIT Message', function () {
       };
       var mess = new Message({ data: data });
       mess.addData('adding');
-      expect(mess.data).to.deep.equal(data);
+
+      var json = mess.toJson();
+
+      expect(json.data).to.deep.equal(data);
     });
 
     it('should not overwrite data if passed an empty object', function () {
@@ -122,7 +137,10 @@ describe('UNIT Message', function () {
       };
       var mess = new Message({ data: data });
       mess.addData({});
-      expect(mess.data).to.deep.equal(data);
+
+      var json = mess.toJson();
+
+      expect(json.data).to.deep.equal(data);
     });
 
     it.skip('should do something if not called properly');
@@ -132,14 +150,20 @@ describe('UNIT Message', function () {
     it('should add properties to the message data object given a key and value', function () {
       var mess = new Message();
       mess.addDataWithKeyValue('myKey', 'Message');
-      expect(mess.data.myKey).to.equal('Message');
+
+      var json = mess.toJson();
+
+      expect(json.data.myKey).to.equal('Message');
     });
 
     it('should only set values on data object, not top level message', function () {
       var mess = new Message();
       mess.addDataWithKeyValue('collapseKey', 'Message');
-      expect(mess.collapseKey).to.not.equal('Message');
-      expect(mess.data.collapseKey).to.equal('Message');
+
+      var json = mess.toJson();
+
+      expect(json.collapse_key).to.not.equal('Message');
+      expect(json.data.collapseKey).to.equal('Message');
     });
 
     it.skip('should do something if not called properly');
@@ -153,7 +177,10 @@ describe('UNIT Message', function () {
         key: 'value'
       };
       mess.addDataWithObject(obj);
-      expect(mess.data).to.deep.equal(obj);
+
+      var json = mess.toJson();
+
+      expect(json.data).to.deep.equal(obj);
     });
 
     it('should overwrite data object when an object is passed in', function () {
@@ -163,7 +190,10 @@ describe('UNIT Message', function () {
       };
       var mess = new Message({ data: { message: 'bye', prop: 'none' } });
       mess.addDataWithObject(data);
-      expect(mess.data).to.deep.equal(data);
+
+      var json = mess.toJson();
+
+      expect(json.data).to.deep.equal(data);
     });
 
     it('should not overwrite data if not passed an object', function () {
@@ -173,7 +203,10 @@ describe('UNIT Message', function () {
       };
       var mess = new Message({ data: data });
       mess.addDataWithObject('adding');
-      expect(mess.data).to.deep.equal(data);
+
+      var json = mess.toJson();
+
+      expect(json.data).to.deep.equal(data);
     });
 
     it('should not overwrite data if passed an empty object', function () {
@@ -183,7 +216,10 @@ describe('UNIT Message', function () {
       };
       var mess = new Message({ data: data });
       mess.addDataWithObject({});
-      expect(mess.data).to.deep.equal(data);
+
+      var json = mess.toJson();
+
+      expect(json.data).to.deep.equal(data);
     });
   });
 
@@ -193,9 +229,12 @@ describe('UNIT Message', function () {
       mess.addNotification('title', 'hello');
       mess.addNotification('icon', 'ic_launcher');
       mess.addNotification('body', 'world');
-      expect(mess.notification.title).to.equal('hello');
-      expect(mess.notification.icon).to.equal('ic_launcher');
-      expect(mess.notification.body).to.equal('world');
+
+      var json = mess.toJson();
+
+      expect(json.notification.title).to.equal('hello');
+      expect(json.notification.icon).to.equal('ic_launcher');
+      expect(json.notification.body).to.equal('world');
     });
 
     it('should set the notification property to the object passed in', function () {
@@ -206,7 +245,10 @@ describe('UNIT Message', function () {
         body: 'world'
       };
       mess.addNotification(obj);
-      expect(mess.notification).to.deep.equal(obj);
+
+      var json = mess.toJson();
+
+      expect(json.notification).to.deep.equal(obj);
     });
   });
   
