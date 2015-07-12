@@ -14,7 +14,7 @@ describe('UNIT Message', function () {
 
     it('should call new on constructor if user does not', function () {
       var mess = Message();
-      expect(mess).to.not.be.undefined;
+      expect(mess).to.not.be.an("undefined");
       expect(mess).to.be.instanceOf(Message);
     });
 
