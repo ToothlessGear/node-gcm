@@ -107,6 +107,15 @@ describe('UNIT Sender', function () {
       var body = JSON.parse(args.options.body);
       expect(body.registration_ids).to.deep.equal(["registration id 1", "registration id 2"]);
     });
+    
+    it('should set the to field if a single reg (or other) id is passed in', function() {
+      var sender = new Sender('myKey');
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, "registration id 1", function () {});
+      var body = JSON.parse(args.options.body);
+      expect(body.to).to.deep.equal("registration id 1");
+      expect(body.registration_ids).to.be.an("undefined");
+    })
 
     it('should pass an error into callback if request returns an error', function () {
       var callback = sinon.spy(),
