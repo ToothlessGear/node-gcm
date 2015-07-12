@@ -39,5 +39,37 @@ You get the gist: pretty much anything goes, but remember an adequate amount of 
 Submitting a Pull Request
 -------------------------
 
+A pull request is the most tangible way to contribute.
+You change some code, submit a request, and poof, you're a contributor (granted that your code is useful).
+
+When submitting a pull request there are a couple of things to watch out for:
+
+- Your commits will be read by others.
+  It will be easier to understand them if you keep them clear and concise.
+  Do **one thing in each commit**.
+- Your code will be read by others.
+  Strive to make it as clear as possible, while still following the code conventions seen elsewhere in the code.
+- If you have several ideas for changes, create several pull requests.
+  It is in no way a given that we will find all of your proposals for change perfect in the first go, so if you want your changes in quickly separate them into several pull requests.
+  For example, one pull request could refactor the way we send messages, and the next could add a new type of message.
+  Doing both in one PR will likely make discussion of the code longer.
+- You should write tests for your changes.
+- Anything you contribute will be subject to the [license](LICENSE.md).
+
+**A good pull request would be...**
+
+- **A bug fix**, fixing a bug you found, or fixing a bug someone else reported in an issue.
+- **A new feature** from the [GCM reference](https://developers.google.com/cloud-messaging/server-ref) that had not yet been included in the library, or a new feature that you would like to introduce.
+  Bear in mind that new features may be subject to a lot of discussion, depending on how good your initial arguments are.
+  It is important in an open source library like this to move in the *right* direction, not just any direction.
+  Otherwise, the library would quickly become messy and hard to use.
+- **Some refactoring** of code that you think could be improved.
+  Refactoring takes many forms.
+  You could change the name of a variable for clarity, juggle around some code to get something that is more easily understandable, or anything else you think will improve the code base.
+- **Improving documentation**, either by introducing a new section or fixing some typos.
+  No fix is too small!
+
+When you're creating a pull request don't forget to add yourself to the list of collaborators in [package.json](package.json).
+
 Become a Collaborator!
 ----------------------
