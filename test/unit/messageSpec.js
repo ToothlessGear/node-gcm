@@ -190,5 +190,55 @@ describe('UNIT Message', function () {
       expect(mess.notification).to.deep.equal(obj);
     });
   });
+  
+  describe('toJson()', function() {
+    it('should return well-formed data for GCM if it is valid', function() {
+      var m = new Message({
+        delayWhileIdle: true,
+        dryRun: true,
+        data: {
+          hello: "world"
+        }
+      });
+
+      var json = m.toJson();
+
+      expect(json.delay_while_idle).to.equal(true);
+      expect(json.dry_run).to.equal(true);
+      expect(json.data.hello).to.equal("world");
+      expect(json.delayWhileIdle).to.be.an("undefined");
+      expect(json.dryRun).to.be.an("undefined");
+    });
+    
+    it('should return well-formed data for GCM if it describes a notification', function() {
+      var notificationData = {
+        title: "Hello, World",
+        icon: 'ic_launcher',
+        body: "This is a quick notification."
+      };
+
+      var m = new Message({ delayWhileIdle: true });
+      m.addNotification(notificationData);
+
+      var json = m.toJson();
+
+      expect(json.delay_while_idle).to.equal(true);
+      expect(json.notification).not.to.be.an("undefined");
+      expect(json.notification).to.deep.equal(notificationData);
+    });
+    
+    it('should ignore non-standard fields when serializing', function() {
+      var m = new Message({
+        timeToLive: 60 * 60 * 24,
+        wrongField: "should be excluded",
+        alsoThisFieldIsWrong: "and should not show up"
+      });
+
+      var json = m.toJson();
+
+      expect(json.time_to_live).to.equal(60 * 60 * 24);
+      expect(Object.keys(json).length).to.equal(1);
+    });
+  });
 
 });
