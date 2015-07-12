@@ -108,9 +108,9 @@ sender.send(message, registrationIds, 10, function (err, result) {
   else    console.log(result);
 });
 ```
+
 Notice that [you can *at most* send notifications to 1000 registration ids at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
 This is due to [a restriction](http://developer.android.com/training/cloudsync/gcm.html) on the side of the GCM API.
-
 
 ## Notification usage
 
