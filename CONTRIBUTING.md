@@ -10,6 +10,26 @@ If you want to fix something, feel free to submit a [Pull Request](https://githu
 Creating an issue
 -----------------
 
+Nothing is too small for an issue.
+Issues are a great way to start a discussion of which direction the project should move in, what it should and should not cover, etc.
+
+When submitting an issue, remember to be thorough and precise with the question you are asking.
+
+**A good issue would be...**
+
+- **A bug report**, including details of the conditions under which the bug is experienced.  
+  Please be specific with the exact environment you are using.
+  If the client-side might be relevant, remember to include details about what kind of app you are writing.
+- **A feature request**.  
+  If we are missing some feature from the [GCM reference](https://developers.google.com/cloud-messaging/server-ref), please let us know.
+  Remember to include a link to the relevant section in the reference.  
+  A feature request may also be a request for a new kind of abstraction that would make it easier to work with notifications.
+- **An open question**.  
+  If you are wondering about a particular use case for the library, or if there is something you find unclear, there are probably plenty more people like you.
+  Let us know, and together we can find a way to make better documentation, so fewer people will be in your position in the future.
+
+You get the gist: pretty much anything goes, but remember an adequate amount of details.
+
 Submitting a Pull Request
 -------------------------
 
