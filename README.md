@@ -84,12 +84,6 @@ message.addData({
 	key2: 'message2'
 });
 
-// Change the message variables
-message.collapseKey = 'demo';
-message.delayWhileIdle = true;
-message.timeToLive = 3;
-message.dryRun = true;
-
 // Set up the sender with you API key
 var sender = new gcm.Sender('insert Google Server API Key here');
 
