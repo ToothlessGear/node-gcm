@@ -30,7 +30,19 @@ describe('UNIT Message', function () {
         notification: {}
       };
       var mess = new Message(obj);
-      expect(JSON.stringify(mess)).to.equal(JSON.stringify(obj));
+
+      var json = mess.toJson();
+
+      expect(json).to.deep.equal({
+        collapse_key: "Message",
+        delay_while_idle: true,
+        time_to_live: 100,
+        dry_run: true,
+        data: {
+          score: 98
+        },
+        notification: {}
+      });
     });
 
     it('should only set properties passed into constructor', function () {
