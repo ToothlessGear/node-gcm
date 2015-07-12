@@ -55,9 +55,19 @@ describe('UNIT Message', function () {
         notification: {}
       };
       var mess = new Message(obj);
-      expect(JSON.stringify(mess)).to.equal(JSON.stringify(obj));
-      expect(mess.timeToLive).to.be.undefined;
-      expect(mess.dryRun).to.be.undefined;
+
+      var json = mess.toJson();
+
+      expect(json).to.deep.equal({
+        collapse_key: "Message",
+        delay_while_idle: true,
+        data: {
+          score: 98
+        },
+        notification: {}
+      });
+      expect(json.time_to_live).to.be.an("undefined");
+      expect(mess.dry_run).to.be.an("undefined");
     });
   });
 
