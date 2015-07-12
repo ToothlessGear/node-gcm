@@ -7,4 +7,11 @@ If you want to fix something, feel free to submit a [Pull Request](https://githu
 
 **But before you do so** please read these guidelines for contributing.
 
-...
+Creating an issue
+-----------------
+
+Submitting a Pull Request
+-------------------------
+
+Become a Collaborator!
+----------------------
