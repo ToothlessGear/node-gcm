@@ -6,13 +6,10 @@ var Message = require('../../lib/message'),
 
 describe('UNIT Message', function () {
   describe('constructor', function () {
-    it('should create an empty message with a data object if not passed an object', function () {
+    it('can be instantiated with no state', function () {
       var mess = new Message();
-      expect(mess.collapseKey).to.be.undefined;
-      expect(mess.delayWhileIdle).to.be.undefined;
-      expect(mess.timeToLive).to.be.undefined;
-      expect(mess.dryRun).to.be.undefined;
-      expect(mess.data).to.deep.equal({});
+      var json = mess.toJson();
+      expect(json).to.deep.equal({});
     });
 
     it('should call new on constructor if user does not', function () {
