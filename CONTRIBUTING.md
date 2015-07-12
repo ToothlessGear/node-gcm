@@ -73,3 +73,10 @@ When you're creating a pull request don't forget to add yourself to the list of 
 
 Become a Collaborator!
 ----------------------
+
+A collaborator can merge pull requests, close issues and push to the master branch.
+Collaborators are the ones that make sure the project keeps going and doesn't grind to a halt.
+
+We are always interested in getting more collaborators!
+
+The best way to move towards becoming one is submitting some pull requests and maybe dropping an existing collaborator a note.
