@@ -103,9 +103,9 @@ describe('UNIT Sender', function () {
     it('should set the registration ids to reg ids passed in', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
-      sender.sendNoRetry(m, 12, function () {});
+      sender.sendNoRetry(m, ["registration id 1", "registration id 2"], function () {});
       var body = JSON.parse(args.options.body);
-      expect(body[Constants.JSON_REGISTRATION_IDS]).to.equal(12);
+      expect(body[Constants.JSON_REGISTRATION_IDS]).to.deep.equal(["registration id 1", "registration id 2"]);
     });
 
     it('should pass an error into callback if request returns an error', function () {
