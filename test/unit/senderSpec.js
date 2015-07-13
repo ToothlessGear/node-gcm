@@ -5,7 +5,8 @@ var chai = require('chai'),
     sinon = require('sinon'),
     proxyquire = require('proxyquire'),
     senderPath = '../../lib/sender',
-    Constants = require('../../lib/constants');
+    Constants = require('../../lib/constants'),
+    Message = require('../../lib/message');
 
 describe('UNIT Sender', function () {
   // Use object to set arguments passed into callback
@@ -58,7 +59,8 @@ describe('UNIT Sender', function () {
         timeout: 1000
       };
       var sender = new Sender('mykey', options);
-      sender.sendNoRetry({ data: {} }, '', function () {});
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', function () {});
       expect(args.options.proxy).to.equal(options.proxy);
       expect(args.options.maxSockets).to.equal(options.maxSockets);
       expect(args.options.timeout).to.equal(options.timeout);
@@ -66,18 +68,20 @@ describe('UNIT Sender', function () {
 
     it('should set the API key of req object if passed in API key', function () {
       var sender = new Sender('myKey');
-      sender.sendNoRetry({ data: {} }, '', function () {});
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', function () {});
       expect(args.options.headers.Authorization).to.equal('key=myKey');
     });
 
     it('should stringify body of req before it is sent', function () {
       var sender = new Sender('mykey');
-      sender.sendNoRetry({ collapseKey: 'Message', data: {} }, '', function () {});
+      var m = new Message({ collapseKey: 'Message', data: {} });
+      sender.sendNoRetry(m, '', function () {});
       expect(args.options.body).to.be.a('string');
     });
 
     it('should set properties of body with message properties', function () {
-      var mess = {
+      var mess = new Message({
         delayWhileIdle: true,
         collapseKey: 'Message',
         timeToLive: 100,
@@ -85,7 +89,7 @@ describe('UNIT Sender', function () {
         data: {
           name: 'Matt'
         }
-      };
+      });
       var sender = new Sender('mykey');
       sender.sendNoRetry(mess, '', function () {});
       var body = JSON.parse(args.options.body);
@@ -98,7 +102,8 @@ describe('UNIT Sender', function () {
 
     it('should set the registration ids to reg ids passed in', function () {
       var sender = new Sender('myKey');
-      sender.sendNoRetry({ data: {} }, 12, function () {});
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, 12, function () {});
       var body = JSON.parse(args.options.body);
       expect(body[Constants.JSON_REGISTRATION_IDS]).to.equal(12);
     });
@@ -107,7 +112,8 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs('an error', {}, {});
-      sender.sendNoRetry({ data: {} }, '', callback);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.calledWith('an error')).to.be.ok;
     });
@@ -116,7 +122,8 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, undefined, {});
-      sender.sendNoRetry({ data: {} }, '', callback);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.be.a('string');
     });
@@ -125,7 +132,8 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 500 }, {});
-      sender.sendNoRetry({ data: {} }, '', callback);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.equal(500);
     });
@@ -134,7 +142,8 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 401 }, {});
-      sender.sendNoRetry({ data: {} }, '', callback);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.equal(401);
     });
@@ -143,7 +152,8 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 400 }, {});
-      sender.sendNoRetry({ data: {} }, '', callback);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.equal(400);
     });
@@ -152,7 +162,8 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 200 }, "non-JSON string.");
-      sender.sendNoRetry({ data: {} }, '', callback);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.eq('Error parsing GCM response');
     });
@@ -165,7 +176,8 @@ describe('UNIT Sender', function () {
       };
       var sender = new Sender('myKey');
       setArgs(null, { statusCode: 200 }, JSON.stringify(resBody));
-      sender.sendNoRetry({ data: {} }, '', callback);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][1]).to.deep.equal(resBody);
     });
