@@ -1,6 +1,6 @@
 # node-gcm
 
-node-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](http://developer.android.com/guide/google/gcm/index.html), which replaces Cloud 2 Device Messaging (C2DM).
+node-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](https://developers.google.com/cloud-messaging/), which replaces Cloud 2 Device Messaging (C2DM).
 
 ## Installation
 
@@ -10,7 +10,11 @@ $ npm install node-gcm
 
 ## Requirements
 
-An Android device running 2.2 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
+This library provides the server-side implementation of GCM.
+You need to generate an API key ([Sender ID](https://developers.google.com/cloud-messaging/gcm#senderid)).
+
+GCM notifications can be sent to both [Android](https://developers.google.com/cloud-messaging/android/start) and [iOS](https://developers.google.com/cloud-messaging/ios/start).
+If you are new to GCM you should probably look into the [documentation](https://developers.google.com/cloud-messaging/gcm).
 
 ## Example application
 
@@ -52,11 +56,20 @@ var message = new gcm.Message();
 // ... or some given values
 var message = new gcm.Message({
 	collapseKey: 'demo',
+	priority: 3,
+	contentAvailable: true,
 	delayWhileIdle: true,
 	timeToLive: 3,
+	restrictedPackageName: "somePackageName",
+	dryRun: true,
 	data: {
 		key1: 'message1',
 		key2: 'message2'
+	},
+	notification: {
+		title: "Hello, World",
+		icon: "ic_launcher",
+		body: "This is a notification that will be displayed ASAP."
 	}
 });
 
@@ -70,12 +83,6 @@ message.addData({
 	key1: 'message1',
 	key2: 'message2'
 });
-
-// Change the message variables
-message.collapseKey = 'demo';
-message.delayWhileIdle = true;
-message.timeToLive = 3;
-message.dryRun = true;
 
 // Set up the sender with you API key
 var sender = new gcm.Sender('insert Google Server API Key here');
@@ -104,9 +111,9 @@ sender.send(message, registrationIds, 10, function (err, result) {
   else    console.log(result);
 });
 ```
+
 Notice that [you can *at most* send notifications to 1000 registration ids at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
 This is due to [a restriction](http://developer.android.com/training/cloudsync/gcm.html) on the side of the GCM API.
-
 
 ## Notification usage
 

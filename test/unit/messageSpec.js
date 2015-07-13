@@ -24,6 +24,9 @@ describe('UNIT Message', function () {
         delayWhileIdle: true,
         timeToLive: 100,
         dryRun: true,
+        priority: 4,
+        contentAvailable: false,
+        restrictedPackageName: "com.example.App",
         data: {
           score: 98
         },
@@ -38,6 +41,9 @@ describe('UNIT Message', function () {
         delay_while_idle: true,
         time_to_live: 100,
         dry_run: true,
+        priority: 4,
+        content_available: false,
+        restricted_package_name: "com.example.App",
         data: {
           score: 98
         },
@@ -67,7 +73,10 @@ describe('UNIT Message', function () {
         notification: {}
       });
       expect(json.time_to_live).to.be.an("undefined");
-      expect(mess.dry_run).to.be.an("undefined");
+      expect(json.dry_run).to.be.an("undefined");
+      expect(json.priority).to.be.an("undefined");
+      expect(json.content_available).to.be.an("undefined");
+      expect(json.restricted_package_name).to.be.an("undefined");
     });
   });
 
