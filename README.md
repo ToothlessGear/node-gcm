@@ -56,7 +56,7 @@ var message = new gcm.Message();
 // ... or some given values
 var message = new gcm.Message({
 	collapseKey: 'demo',
-	priority: 3,
+	priority: 'high',
 	contentAvailable: true,
 	delayWhileIdle: true,
 	timeToLive: 3,
