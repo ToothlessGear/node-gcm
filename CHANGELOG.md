@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**0.11.1**
+ * Fixed support for `priority` and corresponding documentation.
+
 **0.11.0**
  * Added support for the [new parameters](https://developers.google.com/cloud-messaging/server-ref):
    `priority`, `content_available`, `restricted_package_name`.
@@ -62,12 +65,12 @@ Changelog
  * Added dryRun message parameter
  * updated README
  * updated contributors
- 
+
 **0.9.9**
  * fix statusCode logging
  * Added a call of a callback function in case when no registration id were given
  * updated contributors
- 
+
 **0.9.8**
  * Added support for sending POSTs to GCM through http/https proxies.
  * updated contributors
@@ -76,7 +79,7 @@ Changelog
  * move callback outside of try catch block
  * updated README
  * updated contributors
- 
+
 **0.9.6:**
  * fixed undefined "data" var
  * made constructor argument optional
