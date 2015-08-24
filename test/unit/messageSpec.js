@@ -24,7 +24,7 @@ describe('UNIT Message', function () {
         delayWhileIdle: true,
         timeToLive: 100,
         dryRun: true,
-        priority: 4,
+        priority: 'high',
         contentAvailable: false,
         restrictedPackageName: "com.example.App",
         data: {
@@ -41,7 +41,7 @@ describe('UNIT Message', function () {
         delay_while_idle: true,
         time_to_live: 100,
         dry_run: true,
-        priority: 4,
+        priority: 'high',
         content_available: false,
         restricted_package_name: "com.example.App",
         data: {
