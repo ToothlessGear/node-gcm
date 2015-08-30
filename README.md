@@ -59,7 +59,7 @@ var message = new gcm.Message({
 	priority: 'high',
 	contentAvailable: true,
 	delayWhileIdle: true,
-	timeToLive: 3,
+	timeToLive: 3000,
 	restrictedPackageName: "somePackageName",
 	dryRun: true,
 	data: {
