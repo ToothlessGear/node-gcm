@@ -32,13 +32,14 @@ var regIds = ['YOUR_REG_ID_HERE'];
 // Set up the sender with you API key
 var sender = new gcm.Sender('YOUR_API_KEY_HERE');
 
-//Now the sender can be used to send messages
-sender.send(message, regIds, function (err, result) {
+// Now the sender can be used to send messages
+sender.send(message, { registrationIds: regIds }, function (err, result) {
 	if(err) console.error(err);
 	else 	console.log(result);
 });
 
-sender.sendNoRetry(message, regIds, function (err, result) {
+// Send to a topic, with no retry this time
+sender.sendNoRetry(message, { topic: '/topics/global' }, function (err, result) {
 	if(err) console.error(err);
 	else 	console.log(result);
 });
@@ -94,19 +95,19 @@ registrationIds.push('regId2');
 
 // Send the message
 // ... trying only once
-sender.sendNoRetry(message, registrationIds, function(err, result) {
+sender.sendNoRetry(message, { registrationIds: registrationIds }, function(err, result) {
   if(err) console.error(err);
   else    console.log(result);
 });
 
 // ... or retrying
-sender.send(message, registrationIds, function (err, result) {
+sender.send(message, { registrationIds: registrationIds }, function (err, result) {
   if(err) console.error(err);
   else    console.log(result);
 });
 
 // ... or retrying a specific number of times (10)
-sender.send(message, registrationIds, 10, function (err, result) {
+sender.send(message, { registrationIds: registrationIds }, 10, function (err, result) {
   if(err) console.error(err);
   else    console.log(result);
 });

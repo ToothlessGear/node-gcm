@@ -100,14 +100,23 @@ describe('UNIT Sender', function () {
       expect(body[Constants.PARAM_PAYLOAD_KEY]).to.deep.equal(mess.data);
     });
 
-    it('should set the registration ids to reg ids passed in', function () {
+    it('should set the registration ids to reg ids implicitly passed in', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, ["registration id 1", "registration id 2"], function () {});
       var body = JSON.parse(args.options.body);
       expect(body.registration_ids).to.deep.equal(["registration id 1", "registration id 2"]);
     });
-    
+
+    it('should set the registration ids to reg ids explicitly passed in', function () {
+      var sender = new Sender('myKey');
+      var m = new Message({ data: {} });
+      var regIds = ["registration id 1", "registration id 2"];
+      sender.sendNoRetry(m, { registrationIds: regIds }, function () {});
+      var body = JSON.parse(args.options.body);
+      expect(body.registration_ids).to.deep.equal(regIds);
+    });
+
     it('should set the to field if a single reg (or other) id is passed in', function() {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
@@ -116,6 +125,32 @@ describe('UNIT Sender', function () {
       expect(body.to).to.deep.equal("registration id 1");
       expect(body.registration_ids).to.be.an("undefined");
     })
+
+    it('should set the to field if a topic is passed in', function() {
+      var sender = new Sender('myKey');
+      var m = new Message({ data: {} });
+      var topic = '/topics/tests';
+      sender.sendNoRetry(m, { topic: topic }, function () {});
+      var body = JSON.parse(args.options.body);
+      expect(body.to).to.deep.equal(topic);
+      expect(body.registration_ids).to.be.an("undefined");
+    })
+
+    it('should pass an error into callback if recipient is an empty object', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('string');
+    });
+
+    it('should pass an error into callback if recipient keys are invalid', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('string');
+    });
 
     it('should pass an error into callback if request returns an error', function () {
       var callback = sinon.spy(),
@@ -243,6 +278,24 @@ describe('UNIT Sender', function () {
       };
       var sender = new Sender('myKey');
       sender.send({}, [], 0, callback);
+    });
+
+    it('should pass an error into callback if recipient is an empty object', function (done) {
+      var callback = function(error) {
+        expect(error).to.be.a('string');
+        done();
+      };
+      var sender = new Sender('myKey');
+      sender.send({}, {}, 0, callback);
+    });
+
+    it('should pass an error into callback if recipient keys are invalid', function (done) {
+      var callback = function(error) {
+        expect(error).to.be.a('string');
+        done();
+      };
+      var sender = new Sender('myKey');
+      sender.send({}, { invalid: ['regId'] }, 0, callback);
     });
 
     it('should pass the message and the regId to sendNoRetry on call', function () {
