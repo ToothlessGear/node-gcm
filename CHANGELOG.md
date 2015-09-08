@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**0.12.0**
+ * Added support of explicit recipients (`registration_ids`, `topic`, `notification_key`) in Sender.
+
 **0.11.1**
  * Fixed support for `priority` and corresponding documentation.
 
