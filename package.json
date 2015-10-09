@@ -1,101 +1,39 @@
 {
   "name": "node-gcm",
   "description": "a Node.JS wrapper library-port for Google Cloud Messaging for Android",
-  "version": "0.9.15",
+  "version": "0.12.0",
   "author": "Marcus Farkas <toothlessgear@finitebox.com>",
   "contributors": [
-    {
-      "name": "Marcus Farkas",
-      "email": "toothlessgear@finitebox.com"
-    },
-    {
-      "name": "monkbroc",
-      "email": "jvanier@gmail.com"
-    },
-    {
-      "name": "zlyinfinite",
-      "email": ""
-    },
-    {
-      "name": "Yann Biancheri",
-      "email": "yann.biancheri@gmail.com"
-    },
-    {
-      "name": "Hamid Palo",
-      "email": "hamid@fogcreek.com"
-    },
-    {
-      "name": "Dotan J. Nahum",
-      "email": "jondotan@gmail.com"
-    },
-    {
-      "name": "Max Rabin",
-      "email": "rabin.max@gmail.com"
-    },
-    {
-      "name": "Olivier Poitrey",
-      "email": "rs@dailymotion.com"
-    },
-    {
-      "name": "George Miroshnykov",
-      "email": "george.miroshnykov@gmail.com"
-    },
-    {
-      "name": "Alejandro Garcia Gil",
-      "email": "alejandro@ideaknow.com"
-    },
-    {
-      "name": "Ismael Gorissen",
-      "email": "ismael.gorissen@gmail.com"
-    },
-    {
-      "name": "Joris Verbogt",
-      "email": "joris@notifica.re"
-    },
-    {
-      "name": "goelvivek",
-      "email": "goelvivek2011@gmail.com"
-    },
-    {
-      "name": "Lars Jacob",
-      "email": "lars@jaclar.net"
-    },
-    {
-      "name": "Roman Iakovlev",
-      "email": "roman.iakovlev@here.com"
-    },
-    {
-      "name": "Roman Skvazh",
-      "email": "roman.skvazh@gmail.com"
-    },
-    {
-      "name": "Jeremy Goldstein",
-      "email": "jg-dev@live.com"
-    },
-    {
-      "name": "Adam Patacchiola",
-      "email": "adam@2fours.com"
-    },
-    {
-      "name": "Ivan Longin",
-      "email": "ivan.longin@infobip.com"
-    },
-    {
-      "name": "Paul Bininda",
-      "email": "paul@bininda.com"
-    },
-    {
-      "name": "Matt Merkes",
-      "email": "matt.merkes@gmail.com"
-    },
-    {
-      "name": "Niels Roesen Abildgaard",
-      "email": "niels.abildgaard@gmail.com"
-    },
-    {
-      "name": "Nonemoticoner",
-      "email": "nonemoticoner@gmail.com"
-    }
+    "Marcus Farkas <toothlessgear@finitebox.com>",
+    "monkbroc <jvanier@gmail.com> (https://github.com/monkbroc)",
+    "zlyinfinite (https://github.com/zlyinfinite)",
+    "Yann Biancheri <yann.biancheri@gmail.com> (https://github.com/yannooo)",
+    "Hamid Palo <hamid@fogcreek.com> (https://github.com/hamidp)",
+    "Dotan J. Nahum <jondotan@gmail.com> (https://github.com/jondot)",
+    "Max Rabin <rabin.max@gmail.com> (https://github.com/maxrabin)",
+    "Olivier Poitrey <rs@dailymotion.com> (https://github.com/rs)",
+    "George Miroshnykov <george.miroshnykov@gmail.com> (https://github.com/laggyluke)",
+    "Alejandro Garcia Gil <alejandro@ideaknow.com> (https://github.com/Alegege)",
+    "Ismael Gorissen <ismael.gorissen@gmail.com> (https://github.com/igorissen)",
+    "Joris Verbogt <joris@notifica.re> (https://github.com/silentjohnny)",
+    "goelvivek <goelvivek2011@gmail.com> (https://github.com/goelvivek)",
+    "Lars Jacob <lars@jaclar.net> (https://github.com/jaclar)",
+    "Roman Iakovlev <roman.iakovlev@here.com> (https://github.com/RomanIakovlev) ",
+    "Roman Skvazh <roman.skvazh@gmail.com> (https://github.com/rskvazh)",
+    "Jeremy Goldstein <jg-dev@live.com> (https://github.com/jg10)",
+    "Adam Patacchiola <adam@2fours.com> (https://github.com/surespot)",
+    "Ivan Longin <ivan.longin@infobip.com> (https://github.com/ilongin)",
+    "Paul Bininda <paul@bininda.com> (https://github.com/pbininda)",
+    "Matt Merkes <matt.merkes@gmail.com>",
+    "Niels Roesen Abildgaard <niels.abildgaard@gmail.com> (https://github.com/hypesystem)",
+    "Nonemoticoner <nonemoticoner@gmail.com> (https://github.com/Nonemoticoner)",
+    "Simen Bekkhus <sbekkhus91@gmail.com> (https://github.com/SimenB)",
+    "Alexander Johansson <alex@dice.fm> (https://github.com/KATT)",
+    "Ashwin R <ashrko619@gmail.com> (https://github.com/ashrko619)",
+    "Kaija Chang <kaija.chang@gmail.com> (https://github.com/kaija)",
+    "Mo Kamioner <mkamioner@gmail.com> (https://github.com/mkamioner)",
+    "Bastien Léonard <bastien.leonard@gmail.com> (https://github.com/bastienleonard)",
+    "Elad Nava <eladnava@gmail.com> (https://github.com/eladnava)"
   ],
   "repository": {
     "type": "git",
@@ -112,21 +50,33 @@
     "gcm"
   ],
   "main": "index",
+  "files": [
+    "index.js",
+    "lib/"
+  ],
   "scripts": {
-    "test": "sh node_modules/.bin/mocha -R spec test/**/*Spec.js"
+    "test": "mocha test/**/*Spec.js"
   },
   "dependencies": {
     "request": "^2.27.0",
     "debug": "^0.8.1"
   },
   "devDependencies": {
-    "chai": "^1.9.1",
-    "mocha": "^1.21.0",
-    "proxyquire": "^1.0.1",
-    "sinon": "^1.10.3"
+    "chai": "^2.2.0",
+    "mocha": "^2.2.4",
+    "proxyquire": "^1.4.0",
+    "sinon": "^1.14.1"
   },
   "optionalDependencies": {},
   "engines": {
     "node": ">= 0.10.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/ToothlessGear/node-gcm/issues"
+  },
+  "homepage": "https://github.com/ToothlessGear/node-gcm",
+  "directories": {
+    "test": "test"
+  },
+  "license": "MIT"
 }
