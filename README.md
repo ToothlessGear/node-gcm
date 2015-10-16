@@ -27,13 +27,13 @@ var message = new gcm.Message();
 
 message.addData('key1', 'msg1');
 
-var regIds = ['YOUR_REG_ID_HERE'];
+var regTokens = ['YOUR_REG_TOKEN_HERE'];
 
 // Set up the sender with you API key
 var sender = new gcm.Sender('YOUR_API_KEY_HERE');
 
 // Now the sender can be used to send messages
-sender.send(message, { registrationIds: regIds }, function (err, result) {
+sender.send(message, { registrationTokens: regTokens }, function (err, result) {
 	if(err) console.error(err);
 	else 	console.log(result);
 });
@@ -88,32 +88,32 @@ message.addData({
 // Set up the sender with you API key
 var sender = new gcm.Sender('insert Google Server API Key here');
 
-// Add the registration IDs of the devices you want to send to
-var registrationIds = [];
-registrationIds.push('regId1');
-registrationIds.push('regId2');
+// Add the registration tokens of the devices you want to send to
+var registrationTokens = [];
+registrationTokens.push('regToken1');
+registrationTokens.push('regToken2');
 
 // Send the message
 // ... trying only once
-sender.sendNoRetry(message, { registrationIds: registrationIds }, function(err, result) {
+sender.sendNoRetry(message, { registrationTokens: registrationTokens }, function(err, result) {
   if(err) console.error(err);
   else    console.log(result);
 });
 
 // ... or retrying
-sender.send(message, { registrationIds: registrationIds }, function (err, result) {
+sender.send(message, { registrationTokens: registrationTokens }, function (err, result) {
   if(err) console.error(err);
   else    console.log(result);
 });
 
 // ... or retrying a specific number of times (10)
-sender.send(message, { registrationIds: registrationIds }, 10, function (err, result) {
+sender.send(message, { registrationTokens: registrationTokens }, 10, function (err, result) {
   if(err) console.error(err);
   else    console.log(result);
 });
 ```
 
-Notice that [you can *at most* send notifications to 1000 registration ids at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
+Notice that [you can *at most* send notifications to 1000 registration tokens at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
 This is due to [a restriction](http://developer.android.com/training/cloudsync/gcm.html) on the side of the GCM API.
 
 ## Notification usage
