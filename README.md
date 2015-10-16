@@ -1,6 +1,6 @@
 # node-gcm
 
-node-gcm is a Node.JS library for [**Google Cloud Messaging for Android**](https://developers.google.com/cloud-messaging/), which replaces Cloud 2 Device Messaging (C2DM).
+node-gcm is a Node.JS library for [**Google Cloud Messaging**](https://developers.google.com/cloud-messaging/).
 
 ## Installation
 
