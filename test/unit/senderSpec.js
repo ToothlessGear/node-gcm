@@ -112,7 +112,7 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var regIds = ["registration id 1", "registration id 2"];
-      sender.sendNoRetry(m, { registrationIds: regIds }, function () {});
+      sender.sendNoRetry(m, { registrationTokens: regIds }, function () {});
       var body = JSON.parse(args.options.body);
       expect(body.registration_ids).to.deep.equal(regIds);
     });
