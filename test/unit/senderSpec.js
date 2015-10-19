@@ -112,9 +112,18 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var regIds = ["registration id 1", "registration id 2"];
-      sender.sendNoRetry(m, { registrationTokens: regIds }, function () {});
+      sender.sendNoRetry(m, { registrationIds: regIds }, function () {});
       var body = JSON.parse(args.options.body);
       expect(body.registration_ids).to.deep.equal(regIds);
+    });
+
+    it('should set the registration ids to reg tokens explicitly passed in', function () {
+      var sender = new Sender('myKey');
+      var m = new Message({ data: {} });
+      var regTokens = ["registration id 1", "registration id 2"];
+      sender.sendNoRetry(m, { registrationTokens: regTokens }, function () {});
+      var body = JSON.parse(args.options.body);
+      expect(body.registration_ids).to.deep.equal(regTokens);
     });
 
     it('should set the to field if a single reg (or other) id is passed in', function() {
