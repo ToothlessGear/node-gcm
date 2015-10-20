@@ -100,29 +100,38 @@ describe('UNIT Sender', function () {
       expect(body[Constants.PARAM_PAYLOAD_KEY]).to.deep.equal(mess.data);
     });
 
-    it('should set the registration ids to reg ids implicitly passed in', function () {
+    it('should set the registration_ids to reg tokens implicitly passed in', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
-      sender.sendNoRetry(m, ["registration id 1", "registration id 2"], function () {});
+      sender.sendNoRetry(m, ["registration token 1", "registration token 2"], function () {});
       var body = JSON.parse(args.options.body);
-      expect(body.registration_ids).to.deep.equal(["registration id 1", "registration id 2"]);
+      expect(body.registration_ids).to.deep.equal(["registration token 1", "registration token 2"]);
     });
 
-    it('should set the registration ids to reg ids explicitly passed in', function () {
+    it('should set the registration_ids to reg tokens explicitly passed in', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
-      var regIds = ["registration id 1", "registration id 2"];
-      sender.sendNoRetry(m, { registrationIds: regIds }, function () {});
+      var regTokens = ["registration token 1", "registration token 2"];
+      sender.sendNoRetry(m, { registrationIds: regTokens }, function () {});
       var body = JSON.parse(args.options.body);
-      expect(body.registration_ids).to.deep.equal(regIds);
+      expect(body.registration_ids).to.deep.equal(regTokens);
     });
 
-    it('should set the to field if a single reg (or other) id is passed in', function() {
+    it('should set the registration_ids to reg tokens explicitly passed in', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
-      sender.sendNoRetry(m, "registration id 1", function () {});
+      var regTokens = ["registration token 1", "registration token 2"];
+      sender.sendNoRetry(m, { registrationTokens: regTokens }, function () {});
       var body = JSON.parse(args.options.body);
-      expect(body.to).to.deep.equal("registration id 1");
+      expect(body.registration_ids).to.deep.equal(regTokens);
+    });
+
+    it('should set the to field if a single reg (or other) token is passed in', function() {
+      var sender = new Sender('myKey');
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, "registration token 1", function () {});
+      var body = JSON.parse(args.options.body);
+      expect(body.to).to.deep.equal("registration token 1");
       expect(body.registration_ids).to.be.an("undefined");
     })
 
@@ -241,10 +250,10 @@ describe('UNIT Sender', function () {
 
     before( function () {
       restore.sendNoRetry = Sender.prototype.sendNoRetry;
-      Sender.prototype.sendNoRetry = function (message, reg_ids, callback) {
+      Sender.prototype.sendNoRetry = function (message, reg_tokens, callback) {
         console.log('Firing send');
         args.message = message;
-        args.reg_ids = reg_ids;
+        args.reg_tokens = reg_tokens;
         args.tries++;
         var nextResult;
         if(!args.result) {
@@ -269,9 +278,9 @@ describe('UNIT Sender', function () {
       Sender.prototype.sendNoRetry = restore.sendNoRetry;
     });
 
-    it.skip('should do something if passed not an array for regIds');
+    it.skip('should do something if passed not an array for regTokens');
 
-    it('should pass an error into callback if array has no regIds', function (done) {
+    it('should pass an error into callback if array has no regTokens', function (done) {
       var callback = function(error) {
         expect(error).to.be.a('string');
         done();
@@ -295,32 +304,32 @@ describe('UNIT Sender', function () {
         done();
       };
       var sender = new Sender('myKey');
-      sender.send({}, { invalid: ['regId'] }, 0, callback);
+      sender.send({}, { invalid: ['regToken'] }, 0, callback);
     });
 
-    it('should pass the message and the regId to sendNoRetry on call', function () {
+    it('should pass the message and the regToken to sendNoRetry on call', function () {
       var sender = new Sender('myKey'),
           message = { data: {} },
-          regId = [24];
+          regToken = [24];
       setArgs(null, {});
-      sender.send(message, regId, 0, function () {});
+      sender.send(message, regToken, 0, function () {});
       expect(args.message).to.equal(message);
-      expect(args.reg_ids).to.equal(regId);
+      expect(args.reg_tokens).to.equal(regToken);
       expect(args.tries).to.equal(1);
     });
 
-    it('should pass the message and the regIds to sendNoRetry on call', function () {
+    it('should pass the message and the regTokens to sendNoRetry on call', function () {
       var sender = new Sender('myKey'),
           message = { data: {} },
-          regIds = [24, 34, 44];
+          regTokens = [24, 34, 44];
       setArgs(null, {});
-      sender.send(message, regIds, 0, function () {});
+      sender.send(message, regTokens, 0, function () {});
       expect(args.message).to.equal(message);
-      expect(args.reg_ids).to.equal(regIds);
+      expect(args.reg_tokens).to.equal(regTokens);
       expect(args.tries).to.equal(1);
     });
 
-    it('should pass the result into callback if successful for id', function () {
+    it('should pass the result into callback if successful for token', function () {
       var callback = sinon.spy(),
           result = { success: true },
           sender = new Sender('myKey');
@@ -331,7 +340,7 @@ describe('UNIT Sender', function () {
       expect(args.tries).to.equal(1);
     });
 
-    it('should pass the result into callback if successful for ids', function () {
+    it('should pass the result into callback if successful for tokens', function () {
       var callback = sinon.spy(),
           result = { success: true },
           sender = new Sender('myKey');
@@ -342,7 +351,7 @@ describe('UNIT Sender', function () {
       expect(args.tries).to.equal(1);
     });
 
-    it('should pass the error into callback if failure and no retry for id', function () {
+    it('should pass the error into callback if failure and no retry for token', function () {
       var callback = sinon.spy(),
           error = 'my error',
           sender = new Sender('myKey');
@@ -353,7 +362,7 @@ describe('UNIT Sender', function () {
       expect(args.tries).to.equal(1);
     });
 
-    it('should pass the error into callback if failure and no retry for ids', function () {
+    it('should pass the error into callback if failure and no retry for tokens', function () {
       var callback = sinon.spy(),
           error = 'my error',
           sender = new Sender('myKey');
@@ -376,12 +385,12 @@ describe('UNIT Sender', function () {
       sender.send({ data: {}}, [1], 1, callback);
     });
 
-    it('should retry if not all regIds were successfully sent', function (done) {
+    it('should retry if not all regTokens were successfully sent', function (done) {
       var callback = function () {
         expect(args.tries).to.equal(3);
-        // Last call of sendNoRetry should be for only failed regIds
-        expect(args.reg_ids.length).to.equal(1);
-        expect(args.reg_ids[0]).to.equal(3);
+        // Last call of sendNoRetry should be for only failed regTokens
+        expect(args.reg_tokens.length).to.equal(1);
+        expect(args.reg_tokens[0]).to.equal(3);
         done();
       };
       var sender = new Sender('myKey');
@@ -392,11 +401,11 @@ describe('UNIT Sender', function () {
       }, callback);
     });
 
-    it('should retry all regIds in event of an error', function (done) {
+    it('should retry all regTokens in event of an error', function (done) {
       var start = new Date();
       var callback = function () {
         expect(args.tries).to.equal(2);
-        expect(args.reg_ids.length).to.equal(3);
+        expect(args.reg_tokens.length).to.equal(3);
         done();
       };
       var sender = new Sender('myKey');

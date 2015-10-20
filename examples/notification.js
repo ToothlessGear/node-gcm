@@ -8,12 +8,12 @@ message.addNotification('icon', 'ic_launcher');
 message.addNotification('body', 'World');
 
 
-//Replace your mobile device registration Id here
-var regIds = ['ecG3ps_bNBk:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXl7TDJkW'];
+//Add your mobile device registration tokens here
+var regTokens = ['ecG3ps_bNBk:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXl7TDJkW'];
 //Replace your developer API key with GCM enabled here
 var sender = new gcm.Sender('AIza*******************5O6FM');
 
-sender.send(message, regIds, function (err, result) {
+sender.send(message, regTokens, function (err, result) {
     if(err) {
       console.error(err);
     } else {
