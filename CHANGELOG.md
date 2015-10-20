@@ -10,7 +10,7 @@ Changelog
 **0.11.0**
  * Added support for the [new parameters](https://developers.google.com/cloud-messaging/server-ref):
    `priority`, `content_available`, `restricted_package_name`.
- * If only a single registration id is passed to `Sender#send*`, it will be sent in the `to` field.
+ * If only a single registration token is passed to `Sender#send*`, it will be sent in the `to` field.
    This is in accordance with the best practice of the current documentation, and allows users to send messages to notification keys.
  * It is no longer possible to change internal state of `Message`s by changing the variables directly.
    For example, `message.collapseKey = "New Key"` is now illegal (won't work).
@@ -31,7 +31,7 @@ Changelog
  * Updated *Contributing* section in README
  * Rewrote `Sender#send`, so it returns the correct result ordered as expected, even after retrying.
    The initial backoff time can now be specified, by passing an options object to the function.
- * Updated `Sender#send` and `Sender#sendNoRetry` to allow passing a single Registration ID without wrapping it in an array.
+ * Updated `Sender#send` and `Sender#sendNoRetry` to allow passing a single Registration Token without wrapping it in an array.
 
 **0.9.14**
  * `Message#addData` is now multi-purpose (works as either `Message#addDataWithObject` or `Message#addDataWithKeyValue`)
@@ -71,7 +71,7 @@ Changelog
 
 **0.9.9**
  * fix statusCode logging
- * Added a call of a callback function in case when no registration id were given
+ * Added a call of a callback function in case when no registration tokens were given
  * updated contributors
 
 **0.9.8**
