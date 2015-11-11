@@ -1,6 +1,11 @@
 Changelog
 =========
 
+**0.12.1**
+ * Updates to the README
+ * Changed terminology from "Registration ID" to "Registration Token" to be consistent with the GCM documentation.
+ * Updated GCM service endpoint (was changed by Google, old one is deprecated)
+
 **0.12.0**
  * Added support of explicit recipients (`registration_ids`, `topic`, `notification_key`) in Sender.
 
