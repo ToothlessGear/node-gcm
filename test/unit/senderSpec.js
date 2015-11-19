@@ -52,7 +52,23 @@ describe('UNIT Sender', function () {
       };
     };
 
-    it('should set proxy, maxSockets, and/or timeout of req object if passed into constructor', function () {
+    it('should set proxy, maxSockets, timeout and/or strictSsl of req object if passed into constructor', function () {
+      var options = {
+        proxy: 'http://myproxy.com',
+        maxSockets: 100,
+        timeout: 1000,
+        strictSsl: false
+      };
+      var sender = new Sender('mykey', options);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', function () {});
+      expect(args.options.proxy).to.equal(options.proxy);
+      expect(args.options.maxSockets).to.equal(options.maxSockets);
+      expect(args.options.timeout).to.equal(options.timeout);
+      expect(args.options.strictSSL).to.equal(options.strictSsl);
+    });
+    
+    if('should not set strictSsl of req object if not passed into constructor', function () {
       var options = {
         proxy: 'http://myproxy.com',
         maxSockets: 100,
@@ -61,9 +77,20 @@ describe('UNIT Sender', function () {
       var sender = new Sender('mykey', options);
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', function () {});
-      expect(args.options.proxy).to.equal(options.proxy);
-      expect(args.options.maxSockets).to.equal(options.maxSockets);
-      expect(args.options.timeout).to.equal(options.timeout);
+      expect(args.options.strictSSL).to.be.an('undefined');
+    });
+
+  if('should not set strictSsl of req object if the one passed into constructor is not a boolean', function () {
+      var options = {
+        proxy: 'http://myproxy.com',
+        maxSockets: 100,
+        timeout: 1000,
+        strictSsl: "hi"
+      };
+      var sender = new Sender('mykey', options);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', function () {});
+      expect(args.options.strictSSL).to.be.an('undefined');
     });
 
     it('should set the API key of req object if passed in API key', function () {
