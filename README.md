@@ -33,15 +33,15 @@ var regTokens = ['YOUR_REG_TOKEN_HERE'];
 var sender = new gcm.Sender('YOUR_API_KEY_HERE');
 
 // Now the sender can be used to send messages
-sender.send(message, { registrationTokens: regTokens }, function (err, result) {
+sender.send(message, { registrationTokens: regTokens }, function (err, response) {
 	if(err) console.error(err);
-	else 	console.log(result);
+	else 	console.log(response);
 });
 
 // Send to a topic, with no retry this time
-sender.sendNoRetry(message, { topic: '/topics/global' }, function (err, result) {
+sender.sendNoRetry(message, { topic: '/topics/global' }, function (err, response) {
 	if(err) console.error(err);
-	else 	console.log(result);
+	else 	console.log(response);
 });
 ```
 
@@ -95,21 +95,21 @@ registrationTokens.push('regToken2');
 
 // Send the message
 // ... trying only once
-sender.sendNoRetry(message, { registrationTokens: registrationTokens }, function(err, result) {
+sender.sendNoRetry(message, { registrationTokens: registrationTokens }, function(err, response) {
   if(err) console.error(err);
-  else    console.log(result);
+  else    console.log(response);
 });
 
 // ... or retrying
-sender.send(message, { registrationTokens: registrationTokens }, function (err, result) {
+sender.send(message, { registrationTokens: registrationTokens }, function (err, response) {
   if(err) console.error(err);
-  else    console.log(result);
+  else    console.log(response);
 });
 
 // ... or retrying a specific number of times (10)
-sender.send(message, { registrationTokens: registrationTokens }, 10, function (err, result) {
+sender.send(message, { registrationTokens: registrationTokens }, 10, function (err, response) {
   if(err) console.error(err);
-  else    console.log(result);
+  else    console.log(response);
 });
 ```
 
