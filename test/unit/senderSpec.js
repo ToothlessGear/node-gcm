@@ -267,10 +267,10 @@ describe('UNIT Sender', function () {
     var restore = {},
         backoff = Constants.BACKOFF_INITIAL_DELAY;
     // Set args passed into sendNoRetry
-    function setArgs(err, result) {
+    function setArgs(err, response) {
       args = {
         err: err,
-        result: result,
+        response: response,
         tries: 0
       };
     };
@@ -282,22 +282,22 @@ describe('UNIT Sender', function () {
         args.message = message;
         args.reg_tokens = reg_tokens;
         args.tries++;
-        var nextResult;
-        if(!args.result) {
-          nextResult = args.result;
+        var nextResponse;
+        if(!args.response) {
+          nextResponse = args.response;
         }
-        else if(args.result.length > 1) {
-          nextResult = args.result.slice(0,1)[0];
-          args.result = args.result.slice(1,args.result.length);
+        else if(args.response.length > 1) {
+          nextResponse = args.response.slice(0,1)[0];
+          args.response = args.response.slice(1,args.response.length);
         }
-        else if(args.result.length == 1) {
-          args.result = args.result[0];
-          nextResult = args.result;
+        else if(args.response.length == 1) {
+          args.response = args.response[0];
+          nextResponse = args.response;
         }
         else {
-          nextResult = args.result;
+          nextResponse = args.response;
         }
-        callback( args.err, nextResult );
+        callback( args.err, nextResponse );
       };
     });
 
@@ -356,25 +356,25 @@ describe('UNIT Sender', function () {
       expect(args.tries).to.equal(1);
     });
 
-    it('should pass the result into callback if successful for token', function () {
+    it('should pass the response into callback if successful for token', function () {
       var callback = sinon.spy(),
-          result = { success: true },
+          response = { success: true },
           sender = new Sender('myKey');
-      setArgs(null, result);
+      setArgs(null, response);
       sender.send({}, [1], 0, callback);
       expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][1]).to.equal(result);
+      expect(callback.args[0][1]).to.equal(response);
       expect(args.tries).to.equal(1);
     });
 
-    it('should pass the result into callback if successful for tokens', function () {
+    it('should pass the response into callback if successful for tokens', function () {
       var callback = sinon.spy(),
-          result = { success: true },
+          response = { success: true },
           sender = new Sender('myKey');
-      setArgs(null, result);
+      setArgs(null, response);
       sender.send({}, [1, 2, 3], 0, callback);
       expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][1]).to.equal(result);
+      expect(callback.args[0][1]).to.equal(response);
       expect(args.tries).to.equal(1);
     });
 
@@ -441,11 +441,11 @@ describe('UNIT Sender', function () {
     });
 
     it('should update the failures and successes correctly when retrying', function (done) {
-      var callback = function(error, result) {
+      var callback = function(error, response) {
         expect(error).to.equal(null);
-        expect(result.canonical_ids).to.equal(1);
-        expect(result.success).to.equal(2);
-        expect(result.failure).to.equal(0);
+        expect(response.canonical_ids).to.equal(1);
+        expect(response.success).to.equal(2);
+        expect(response.failure).to.equal(0);
         done();
       };
       var sender = new Sender('myKey');
@@ -457,11 +457,11 @@ describe('UNIT Sender', function () {
     });
 
     it('should update the failures and successes correctly when retrying and failing some', function (done) {
-      var callback = function(error, result) {
+      var callback = function(error, response) {
         expect(error).to.equal(null);
-        expect(result.canonical_ids).to.equal(0);
-        expect(result.success).to.equal(1);
-        expect(result.failure).to.equal(2);
+        expect(response.canonical_ids).to.equal(0);
+        expect(response.success).to.equal(1);
+        expect(response.failure).to.equal(2);
         done();
       };
       var sender = new Sender('myKey');

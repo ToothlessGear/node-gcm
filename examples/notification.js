@@ -13,10 +13,10 @@ var regTokens = ['ecG3ps_bNBk:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 //Replace your developer API key with GCM enabled here
 var sender = new gcm.Sender('AIza*******************5O6FM');
 
-sender.send(message, regTokens, function (err, result) {
+sender.send(message, regTokens, function (err, response) {
     if(err) {
       console.error(err);
     } else {
-      console.log(result);
+      console.log(response);
     }
 });
