@@ -59,8 +59,9 @@
     "test": "mocha test/**/*Spec.js"
   },
   "dependencies": {
-    "request": "^2.27.0",
-    "debug": "^0.8.1"
+    "debug": "^0.8.1",
+    "lodash": "^3.10.1",
+    "request": "^2.27.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",
