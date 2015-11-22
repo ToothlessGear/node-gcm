@@ -155,6 +155,29 @@ message.addNotification({
 
 Notice notification payload defined in [GCM Connection Server Reference](https://developers.google.com/cloud-messaging/server-ref#table1)
 
+## Custom GCM request options
+
+You can provide custom `request` options such as `proxy` and `timeout` for the GCM request. For more information, refer to [the complete list of request options](https://github.com/request/request#requestoptions-callback). Note that the following options cannot be overriden: `method`, `uri`, `body`, as well as the following headers: `Authorization`, `Content-Type`, and `Content-Length`.
+
+```js
+// Set custom request options
+var requestOptions = {
+	proxy: 'http://127.0.0.1:8888',
+	timeout: 5000
+};
+
+// Set up the sender with your API key and request options
+var sender = new gcm.Sender('YOUR_API_KEY_HERE', requestOptions);
+
+// Prepare a GCM message...
+
+// Send it to GCM endpoint with modified request options
+sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+    if(err) console.error(err);
+    else     console.log(response);
+});
+```
+
 ## Debug
 
 To enable debug mode (print requests and responses to and from GCM),
