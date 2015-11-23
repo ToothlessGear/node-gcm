@@ -1,6 +1,11 @@
 Changelog
 =========
 
+**0.13.0**
+ * It is now possible to set *any* option that can be set in [request](https://github.com/request/request).
+   See the [Custom GCM request options](https://github.com/ToothlessGear/node-gcm#custom-gcm-request-options) section of the README.
+ * We have changed the recommended name for what the `Sender` returns from `result` to `response`.
+
 **0.12.1**
  * Updates to the README
  * Changed terminology from "Registration ID" to "Registration Token" to be consistent with the GCM documentation.
