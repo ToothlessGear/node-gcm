@@ -52,12 +52,12 @@ describe('UNIT Sender', function () {
       };
     };
 
-    it('should set proxy, maxSockets, timeout and/or strictSsl of req object if passed into constructor', function () {
+    it('should set proxy, maxSockets, timeout and/or strictSSL of req object if passed into constructor', function () {
       var options = {
         proxy: 'http://myproxy.com',
         maxSockets: 100,
         timeout: 1000,
-        strictSsl: false
+        strictSSL: false
       };
       var sender = new Sender('mykey', options);
       var m = new Message({ data: {} });
@@ -65,10 +65,52 @@ describe('UNIT Sender', function () {
       expect(args.options.proxy).to.equal(options.proxy);
       expect(args.options.maxSockets).to.equal(options.maxSockets);
       expect(args.options.timeout).to.equal(options.timeout);
-      expect(args.options.strictSSL).to.equal(options.strictSsl);
+      expect(args.options.strictSSL).to.equal(options.strictSSL);
+    });
+
+    it('should not override internal request params if passed into constructor (except timeout)', function () {
+      var options = {
+        method: 'GET',
+        headers: {
+            Authorization: 'test'
+        },
+        uri: 'http://example.com',
+        body: 'test'
+      };
+      var sender = new Sender('mykey', options);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', function () {});
+      expect(args.options.method).to.not.equal(options.method);
+      expect(args.options.headers).to.not.deep.equal(options.headers);
+      expect(args.options.uri).to.not.equal(options.uri);
+      expect(args.options.body).to.not.equal(options.body);
+    });
+
+    it('should not override internal request headers if passed into constructor', function () {
+      var options = {
+        headers: {
+            Authorization: 'test'
+        }
+      };
+      var sender = new Sender('mykey', options);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', function () {});
+      expect(args.options.headers.Authorization).to.not.equal(options.headers.Auhtorization);
+    });
+
+    it('should allow extending request headers if passed into constructor', function () {
+      var options = {
+        headers: {
+            Custom: true
+        }
+      };
+      var sender = new Sender('mykey', options);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', function () {});
+      expect(args.options.headers.Custom).to.deep.equal(options.headers.Custom);
     });
     
-    if('should not set strictSsl of req object if not passed into constructor', function () {
+    if('should not set strictSSL of req object if not passed into constructor', function () {
       var options = {
         proxy: 'http://myproxy.com',
         maxSockets: 100,
@@ -80,12 +122,12 @@ describe('UNIT Sender', function () {
       expect(args.options.strictSSL).to.be.an('undefined');
     });
 
-  if('should not set strictSsl of req object if the one passed into constructor is not a boolean', function () {
+  if('should not set strictSSL of req object if the one passed into constructor is not a boolean', function () {
       var options = {
         proxy: 'http://myproxy.com',
         maxSockets: 100,
         timeout: 1000,
-        strictSsl: "hi"
+        strictSSL: "hi"
       };
       var sender = new Sender('mykey', options);
       var m = new Message({ data: {} });
