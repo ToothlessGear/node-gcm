@@ -75,7 +75,7 @@ describe('UNIT Sender', function () {
             Authorization: 'test'
         },
         uri: 'http://example.com',
-        body: 'test'
+        json: { test: true }
       };
       var sender = new Sender('mykey', options);
       var m = new Message({ data: {} });
@@ -83,7 +83,7 @@ describe('UNIT Sender', function () {
       expect(args.options.method).to.not.equal(options.method);
       expect(args.options.headers).to.not.deep.equal(options.headers);
       expect(args.options.uri).to.not.equal(options.uri);
-      expect(args.options.body).to.not.equal(options.body);
+      expect(args.options.json).to.not.equal(options.json);
     });
 
     it('should not override internal request headers if passed into constructor', function () {
@@ -142,11 +142,11 @@ describe('UNIT Sender', function () {
       expect(args.options.headers.Authorization).to.equal('key=myKey');
     });
 
-    it('should stringify body of req before it is sent', function () {
+    it('should send a JSON object as the body of the request', function () {
       var sender = new Sender('mykey');
       var m = new Message({ collapseKey: 'Message', data: {} });
       sender.sendNoRetry(m, '', function () {});
-      expect(args.options.body).to.be.a('string');
+      expect(args.options.json).to.be.a('object');
     });
 
     it('should set properties of body with message properties', function () {
@@ -161,7 +161,7 @@ describe('UNIT Sender', function () {
       });
       var sender = new Sender('mykey');
       sender.sendNoRetry(mess, '', function () {});
-      var body = JSON.parse(args.options.body);
+      var body = args.options.json;
       expect(body[Constants.PARAM_DELAY_WHILE_IDLE]).to.equal(mess.delayWhileIdle);
       expect(body[Constants.PARAM_COLLAPSE_KEY]).to.equal(mess.collapseKey);
       expect(body[Constants.PARAM_TIME_TO_LIVE]).to.equal(mess.timeToLive);
@@ -173,7 +173,7 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, ["registration token 1", "registration token 2"], function () {});
-      var body = JSON.parse(args.options.body);
+      var body = args.options.json;
       expect(body.registration_ids).to.deep.equal(["registration token 1", "registration token 2"]);
     });
 
@@ -182,7 +182,7 @@ describe('UNIT Sender', function () {
       var m = new Message({ data: {} });
       var regTokens = ["registration token 1", "registration token 2"];
       sender.sendNoRetry(m, { registrationIds: regTokens }, function () {});
-      var body = JSON.parse(args.options.body);
+      var body = args.options.json;
       expect(body.registration_ids).to.deep.equal(regTokens);
     });
 
@@ -191,7 +191,7 @@ describe('UNIT Sender', function () {
       var m = new Message({ data: {} });
       var regTokens = ["registration token 1", "registration token 2"];
       sender.sendNoRetry(m, { registrationTokens: regTokens }, function () {});
-      var body = JSON.parse(args.options.body);
+      var body = args.options.json;
       expect(body.registration_ids).to.deep.equal(regTokens);
     });
 
@@ -199,7 +199,7 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, "registration token 1", function () {});
-      var body = JSON.parse(args.options.body);
+      var body = args.options.json;
       expect(body.to).to.deep.equal("registration token 1");
       expect(body.registration_ids).to.be.an("undefined");
     })
@@ -209,7 +209,7 @@ describe('UNIT Sender', function () {
       var m = new Message({ data: {} });
       var topic = '/topics/tests';
       sender.sendNoRetry(m, { topic: topic }, function () {});
-      var body = JSON.parse(args.options.body);
+      var body = args.options.json;
       expect(body.to).to.deep.equal(topic);
       expect(body.registration_ids).to.be.an("undefined");
     })
@@ -282,12 +282,13 @@ describe('UNIT Sender', function () {
 
     it('should pass an error into the callback if resBody cannot be parsed', function () {
       var callback = sinon.spy(),
-          sender = new Sender('myKey');
-      setArgs(null, { statusCode: 200 }, "non-JSON string.");
+          sender = new Sender('myKey'),
+          parseError = {error: 'Failed to parse JSON'};
+      setArgs(parseError, null, null);
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', callback);
       expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.eq('Error parsing GCM response');
+      expect(callback.args[0][0]).to.deep.equal(parseError);
     });
 
     it('should pass in parsed resBody into callback on success', function () {
@@ -297,7 +298,7 @@ describe('UNIT Sender', function () {
         success: true
       };
       var sender = new Sender('myKey');
-      setArgs(null, { statusCode: 200 }, JSON.stringify(resBody));
+      setArgs(null, { statusCode: 200 }, resBody);
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', callback);
       expect(callback.calledOnce).to.be.ok;
