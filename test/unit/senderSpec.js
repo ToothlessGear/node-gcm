@@ -219,15 +219,55 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {}, callback);
       expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('string');
+      expect(callback.args[0][0]).to.be.a('object');
     });
 
     it('should pass an error into callback if recipient keys are invalid', function () {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {invalid: true}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('object');
+    });
+
+    it('should pass an error into callback if registrationIds is not an array', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {registrationIds: 'string'}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('object');
+    });
+    
+    it('should pass an error into callback if registrationTokens is not an array', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {registrationTokens: 'string'}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('object');
+    });
+    
+    it('should pass an error into callback if topic is not a string', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {topic: ['array']}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('object');
+    });
+    
+    it('should pass an error into callback if notificationKey is not a string', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {notificationKey: ['array']}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('object');
+    });
+    
+    it('should pass an error into callback if no recipient provided', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {}, callback);
       expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('string');
+      expect(callback.args[0][0]).to.be.a('object');
     });
 
     it('should pass an error into callback if request returns an error', function () {
@@ -360,7 +400,7 @@ describe('UNIT Sender', function () {
 
     it('should pass an error into callback if recipient is an empty object', function (done) {
       var callback = function(error) {
-        expect(error).to.be.a('string');
+        expect(error).to.be.a('object');
         done();
       };
       var sender = new Sender('myKey');
@@ -369,7 +409,7 @@ describe('UNIT Sender', function () {
 
     it('should pass an error into callback if recipient keys are invalid', function (done) {
       var callback = function(error) {
-        expect(error).to.be.a('string');
+        expect(error).to.be.a('object');
         done();
       };
       var sender = new Sender('myKey');
