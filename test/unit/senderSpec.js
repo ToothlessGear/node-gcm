@@ -403,8 +403,6 @@ describe('UNIT Sender', function () {
       Sender.prototype.sendNoRetry = restore.sendNoRetry;
     });
 
-    it.skip('should do something if passed not an array for regTokens');
-
     it('should pass an error into callback if array has no regTokens', function (done) {
       var callback = function(error) {
         expect(error).to.be.a('string');
