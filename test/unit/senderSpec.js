@@ -262,6 +262,22 @@ describe('UNIT Sender', function () {
       expect(callback.args[0][0]).to.be.a('object');
     });
     
+    it('should pass an error into callback if topic is empty', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {topic: ''}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('object');
+    });
+    
+    it('should pass an error into callback if notificationKey is empty', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {notificationKey: ''}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('object');
+    });
+    
     it('should pass an error into callback if no recipient provided', function () {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
