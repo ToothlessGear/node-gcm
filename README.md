@@ -112,6 +112,19 @@ sender.send(message, { registrationTokens: registrationTokens }, 10, function (e
   else    console.log(response);
 });
 ```
+## Recipients
+
+You can send push notifications to various recipient types by providing one of the following recipient keys:
+
+
+|Key|Type|Description|
+|---|---|---|
+|topic|String|A [GCM PubSub](https://developers.google.com/cloud-messaging/topic-messaging) topic.
+|notificationKey|String|Deprecated. A key that groups multiple registration tokens linked to the same user.
+|registrationIds|String[]|Deprecated. Use registrationTokens instead.|
+|registrationTokens|String[]|A list of registration tokens. Must contain at least 1 and at most 1000 registration tokens.|
+
+If you provide an incorrect recipient key or object type, an `Error` object will be returned to your callback.
 
 Notice that [you can *at most* send notifications to 1000 registration tokens at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
 This is due to [a restriction](http://developer.android.com/training/cloudsync/gcm.html) on the side of the GCM API.
