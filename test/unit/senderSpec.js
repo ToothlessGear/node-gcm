@@ -204,6 +204,16 @@ describe('UNIT Sender', function () {
       expect(body.registration_ids).to.be.an("undefined");
     })
 
+    it('should set the to field if a single reg token is passed in as a string', function() {
+      var sender = new Sender('myKey');
+      var m = new Message({ data: {} });
+      var token = "registration token 1";
+      sender.sendNoRetry(m, token, function () {});
+      var body = JSON.parse(args.options.body);
+      expect(body.to).to.deep.equal(token);
+      expect(body.registration_ids).to.be.an("undefined");
+    })
+
     it('should set the to field if a single reg token is passed inside the recipient array', function() {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
