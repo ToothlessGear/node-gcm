@@ -163,7 +163,8 @@ You can provide custom `request` options such as `proxy` and `timeout` for the G
 // Set custom request options
 var requestOptions = {
 	proxy: 'http://127.0.0.1:8888',
-	timeout: 5000
+	timeout: 5000,
+	Authorization: 'key=YOUR_AUTHORIZATION_KEY_HERE'
 };
 
 // Set up the sender with your API key and request options
