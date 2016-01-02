@@ -209,7 +209,7 @@ describe('UNIT Sender', function () {
       var m = new Message({ data: {} });
       var token = "registration token 1";
       sender.sendNoRetry(m, token, function () {});
-      var body = JSON.parse(args.options.body);
+      var body = args.options.json;
       expect(body.to).to.deep.equal(token);
       expect(body.registration_ids).to.be.an("undefined");
     })
@@ -219,7 +219,7 @@ describe('UNIT Sender', function () {
       var m = new Message({ data: {} });
       var token = "registration token 1";
       sender.sendNoRetry(m, [ token ], function () {});
-      var body = JSON.parse(args.options.body);
+      var body = args.options.json;
       expect(body.to).to.deep.equal(token);
       expect(body.registration_ids).to.be.an("undefined");
     })
@@ -229,7 +229,7 @@ describe('UNIT Sender', function () {
       var m = new Message({ data: {} });
       var token = "registration token 1";
       sender.sendNoRetry(m, { registrationTokens: token }, function () {});
-      var body = JSON.parse(args.options.body);
+      var body = args.options.json;
       expect(body.to).to.deep.equal(token);
       expect(body.registration_ids).to.be.an("undefined");
     })
@@ -239,7 +239,7 @@ describe('UNIT Sender', function () {
       var m = new Message({ data: {} });
       var token = "registration token 1";
       sender.sendNoRetry(m, { registrationIDs: token }, function () {});
-      var body = JSON.parse(args.options.body);
+      var body = args.options.json;
       expect(body.to).to.deep.equal(token);
       expect(body.registration_ids).to.be.an("undefined");
     })
