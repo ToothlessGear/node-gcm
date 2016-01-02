@@ -230,6 +230,14 @@ describe('UNIT Sender', function () {
       expect(callback.args[0][0]).to.be.a('object');
     });
 
+    it('should pass an error into callback if provided more than one recipient key', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {registrationIds: ['string'], topic: 'string'}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('object');
+    });
+
     it('should pass an error into callback if registrationIds is not an array', function () {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
