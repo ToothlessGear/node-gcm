@@ -1,6 +1,13 @@
 Changelog
 =========
 
+**0.13.1**
+ * Improvements to the way we set the recipient arguments before sending requests to GCM.
+   We now prefer the `to` field whenever applicable.
+ * Simplified parsing of recipient objects, and added documentation of supported keys in [README](https://github.com/ToothlessGear/node-gcm/blob/master/README.md#recipients).
+ * Sender#send will now fail faster (never retry) if a 4xx error code is returned from GCM: something was wrong with the request.
+ * Fixed support for using node-gcm through a proxy.
+
 **0.13.0**
  * It is now possible to set *any* option that can be set in [request](https://github.com/request/request).
    See the [Custom GCM request options](https://github.com/ToothlessGear/node-gcm#custom-gcm-request-options) section of the README.
