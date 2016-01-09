@@ -191,6 +191,18 @@ sender.send(message, { registrationTokens: regTokens }, function (err, response)
 });
 ```
 
+## GCM client compatibility
+
+As of January 9th, 2016, there are a few known compatibility issues with 3rd-party GCM client libraries:
+
+### phonegap-plugin-push
+
+* [No support for subscribing to PubSub topics](https://github.com/phonegap/phonegap-plugin-push/issues/79)
+* [Requirement for `data` payload object when sending a `notification` object](https://github.com/phonegap/phonegap-plugin-push/issues/387)
+* [Requirement for all 3 `notification` fields when sending a `notification` object (title, icon, message)](https://github.com/ToothlessGear/node-gcm/issues/180)
+
+These issues are out of this project's context and can only be fixed by the respective 3rd-party project maintainers.
+
 ## Debug
 
 To enable debug mode (print requests and responses to and from GCM),
