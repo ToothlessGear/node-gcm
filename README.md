@@ -1,4 +1,5 @@
 # node-gcm
+[![npm](https://badge.fury.io/js/node-gcm.svg)](https://www.npmjs.com/package/node-gcm)
 
 node-gcm is a Node.JS library for [**Google Cloud Messaging**](https://developers.google.com/cloud-messaging/).
 
