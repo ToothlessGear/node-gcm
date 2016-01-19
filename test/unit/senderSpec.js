@@ -254,6 +254,16 @@ describe('UNIT Sender', function () {
       expect(body.registration_ids).to.be.an("undefined");
     })
 
+    it('should set the to field if a to recipient is passed in', function() {
+      var sender = new Sender('myKey');
+      var m = new Message({ data: {} });
+      var token = "registration token 1";
+      sender.sendNoRetry(m, { to: token }, function () {});
+      var body = args.options.json;
+      expect(body.to).to.deep.equal(token);
+      expect(body.registration_ids).to.be.an("undefined");
+    })
+
     it('should pass an error into callback if recipient is an empty object', function () {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
@@ -294,6 +304,14 @@ describe('UNIT Sender', function () {
       expect(callback.args[0][0]).to.be.a('object');
     });
     
+    it('should pass an error into callback if to is not a string', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {to: ['array']}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('object');
+    });
+    
     it('should pass an error into callback if topic is not a string', function () {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
@@ -306,6 +324,14 @@ describe('UNIT Sender', function () {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {notificationKey: ['array']}, callback);
+      expect(callback.calledOnce).to.be.ok;
+      expect(callback.args[0][0]).to.be.a('object');
+    });
+    
+    it('should pass an error into callback if to is empty', function () {
+      var callback = sinon.spy();
+      var sender = new Sender('myKey');
+      sender.sendNoRetry(new Message(), {to: ''}, callback);
       expect(callback.calledOnce).to.be.ok;
       expect(callback.args[0][0]).to.be.a('object');
     });

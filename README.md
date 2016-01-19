@@ -119,7 +119,8 @@ You can send push notifications to various recipient types by providing one of t
 
 |Key|Type|Description|
 |---|---|---|
-|topic|String|A [GCM PubSub](https://developers.google.com/cloud-messaging/topic-messaging) topic.
+|to|String|A single [registration token](https://developers.google.com/cloud-messaging/android/client#sample-register), [notification key](https://developers.google.com/cloud-messaging/notifications), or [topic](https://developers.google.com/cloud-messaging/topic-messaging).
+|topic|String|A single publish/subscribe topic.
 |notificationKey|String|Deprecated. A key that groups multiple registration tokens linked to the same user.
 |registrationIds|String[]|Deprecated. Use registrationTokens instead.|
 |registrationTokens|String[]|A list of registration tokens. Must contain at least 1 and at most 1000 registration tokens.|
