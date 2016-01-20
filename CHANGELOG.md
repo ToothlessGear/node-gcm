@@ -1,6 +1,11 @@
 Changelog
 =========
 
+**0.14.0**
+ * Added support for `to` recipient keys.
+   This means that it is now possible to explicitly set something that should go in the `to` field in the request sent to GCM.
+ * Added some compatibility documentation.
+
 **0.13.1**
  * Improvements to the way we set the recipient arguments before sending requests to GCM.
    We now prefer the `to` field whenever applicable.
