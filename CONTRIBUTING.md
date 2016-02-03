@@ -80,3 +80,13 @@ Collaborators are the ones that make sure the project keeps going and doesn't gr
 We are always interested in getting more collaborators!
 
 The best way to move towards becoming one is submitting some pull requests and maybe dropping an existing collaborator a note.
+
+Get Started!
+----------------------
+After cloning the repo run `npm install`
+
+To run the tests install mocha
+`npm install -g mocha`
+
+run the tests
+`mocha test/unit/`
