@@ -81,12 +81,13 @@ We are always interested in getting more collaborators!
 
 The best way to move towards becoming one is submitting some pull requests and maybe dropping an existing collaborator a note.
 
-Get Started!
+Development
 ----------------------
-After cloning the repo run `npm install`
+After forking the repo in your account you can clone it with
 
-To run the tests install mocha
-`npm install -g mocha`
+`git clone https://github.com/<your-username>/node-gcm.git`
+
+`cd node-gcm` and run  `npm install` to install the dependencies
 
 run the tests
-`mocha test/unit/`
+`npm test`
