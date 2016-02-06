@@ -122,7 +122,7 @@ describe('UNIT Sender', function () {
       expect(args.options.strictSSL).to.be.an('undefined');
     });
 
-  if('should not set strictSSL of req object if the one passed into constructor is not a boolean', function () {
+    if('should not set strictSSL of req object if the one passed into constructor is not a boolean', function () {
       var options = {
         proxy: 'http://myproxy.com',
         maxSockets: 100,
