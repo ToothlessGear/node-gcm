@@ -110,7 +110,7 @@ describe('UNIT Sender', function () {
       expect(args.options.headers.Custom).to.deep.equal(options.headers.Custom);
     });
     
-    if('should not set strictSSL of req object if not passed into constructor', function () {
+    it('should not set strictSSL of req object if not passed into constructor', function () {
       var options = {
         proxy: 'http://myproxy.com',
         maxSockets: 100,
@@ -122,7 +122,7 @@ describe('UNIT Sender', function () {
       expect(args.options.strictSSL).to.be.an('undefined');
     });
 
-    if('should not set strictSSL of req object if the one passed into constructor is not a boolean', function () {
+    it('should not set strictSSL of req object if the one passed into constructor is not a boolean', function () {
       var options = {
         proxy: 'http://myproxy.com',
         maxSockets: 100,
