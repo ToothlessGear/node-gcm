@@ -216,7 +216,7 @@ DEBUG=node-gcm node app.js
 
 ## Development
 
-See the development [development](https://github.com/ToothlessGear/node-gcm/blob/master/CONTRIBUTING.md#development) section to start contributing. 
+See the [development](https://github.com/ToothlessGear/node-gcm/blob/master/CONTRIBUTING.md#development) section to start contributing. 
 Please read [guidelines for contributing](https://github.com/ToothlessGear/node-gcm/blob/master/CONTRIBUTING.md) before creating an issue or a PR. 
 
 ## Donate
