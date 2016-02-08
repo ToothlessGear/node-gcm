@@ -83,11 +83,23 @@ The best way to move towards becoming one is submitting some pull requests and m
 
 Development
 ----------------------
+
 After forking the repo in your account you can clone it with
 
-`git clone https://github.com/<your-username>/node-gcm.git`
+```bash
+git clone https://github.com/<your-username>/node-gcm.git
+```
 
-`cd node-gcm` and run  `npm install` to install the dependencies
+```bash
+cd node-gcm
+``` 
+
+Install the dependencies  
+```js 
+npm install
+``` 
 
 run the tests
-`npm test`
+```js  
+npm test
+```

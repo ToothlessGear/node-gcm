@@ -214,6 +214,11 @@ set the `DEBUG` environment flag when running your app (assuming you use `node a
 DEBUG=node-gcm node app.js
 ```
 
+## Development
+
+See the development [development](https://github.com/ToothlessGear/node-gcm/blob/master/CONTRIBUTING.md#development) section to start contributing. 
+Please read [guidelines for contributing](https://github.com/ToothlessGear/node-gcm/blob/master/CONTRIBUTING.md) before creating an issue or a PR. 
+
 ## Donate
 
  Bitcoin: [13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ](https://blockchain.info/address/13iTQf7tDhrKgibw2Y3U5SyPJa7R8sQmHQ)
