@@ -11,6 +11,7 @@ If you want to fix something, feel free to submit a [Pull Request](https://githu
 
 - [Creating an issue](#creating-an-issue)
 - [Submitting a Pull Request](#submitting-a-pull-request)
+- [Development](#development)
 - [Become a Collaborator!](#become-a-collaborator)
 
 Creating an issue
@@ -70,6 +71,29 @@ When submitting a pull request there are a couple of things to watch out for:
   No fix is too small!
 
 When you're creating a pull request don't forget to add yourself to the list of collaborators in [package.json](package.json).
+
+Development
+----------------------
+
+After forking the repo in your account you can clone it with
+
+```bash
+git clone https://github.com/<your-username>/node-gcm.git
+```
+
+```bash
+cd node-gcm
+``` 
+
+Install the dependencies  
+```js 
+npm install
+``` 
+
+run the tests
+```js  
+npm test
+```
 
 Become a Collaborator!
 ----------------------
