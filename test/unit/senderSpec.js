@@ -122,19 +122,6 @@ describe('UNIT Sender', function () {
       expect(args.options.strictSSL).to.be.an('undefined');
     });
 
-    it('should not set strictSSL of req object if the one passed into constructor is not a boolean', function () {
-      var options = {
-        proxy: 'http://myproxy.com',
-        maxSockets: 100,
-        timeout: 1000,
-        strictSSL: "hi"
-      };
-      var sender = new Sender('mykey', options);
-      var m = new Message({ data: {} });
-      sender.sendNoRetry(m, '', function () {});
-      expect(args.options.strictSSL).to.be.an('undefined');
-    });
-
     it('should set the API key of req object if passed in API key', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
