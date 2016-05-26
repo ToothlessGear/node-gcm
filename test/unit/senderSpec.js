@@ -43,7 +43,6 @@ describe('UNIT Sender', function () {
   });
 
   describe('sendNoRetry()', function () {
-    // Set arguments passed in request proxy
     function setArgs(err, res, resBody) {
       args = {
         err: err,
@@ -51,8 +50,11 @@ describe('UNIT Sender', function () {
         resBody: resBody
       };
     };
+    before(function() {
+        setArgs(null, { statusCode: 200 }, {});
+    });
 
-    it('should set proxy, maxSockets, timeout and/or strictSSL of req object if passed into constructor', function () {
+    it('should set proxy, maxSockets, timeout and/or strictSSL of req object if passed into constructor', function (done) {
       var options = {
         proxy: 'http://myproxy.com',
         maxSockets: 100,
@@ -62,13 +64,16 @@ describe('UNIT Sender', function () {
       var sender = new Sender('mykey', options);
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', function () {});
-      expect(args.options.proxy).to.equal(options.proxy);
-      expect(args.options.maxSockets).to.equal(options.maxSockets);
-      expect(args.options.timeout).to.equal(options.timeout);
-      expect(args.options.strictSSL).to.equal(options.strictSSL);
+      setTimeout(function() {
+        expect(args.options.proxy).to.equal(options.proxy);
+        expect(args.options.maxSockets).to.equal(options.maxSockets);
+        expect(args.options.timeout).to.equal(options.timeout);
+        expect(args.options.strictSSL).to.equal(options.strictSSL);
+        done();
+      }, 10);
     });
 
-    it('should not override internal request params if passed into constructor (except timeout)', function () {
+    it('should not override internal request params if passed into constructor (except timeout)', function (done) {
       var options = {
         method: 'GET',
         headers: {
@@ -80,13 +85,16 @@ describe('UNIT Sender', function () {
       var sender = new Sender('mykey', options);
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', function () {});
-      expect(args.options.method).to.not.equal(options.method);
-      expect(args.options.headers).to.not.deep.equal(options.headers);
-      expect(args.options.uri).to.not.equal(options.uri);
-      expect(args.options.json).to.not.equal(options.json);
+      setTimeout(function() {
+        expect(args.options.method).to.not.equal(options.method);
+        expect(args.options.headers).to.not.deep.equal(options.headers);
+        expect(args.options.uri).to.not.equal(options.uri);
+        expect(args.options.json).to.not.equal(options.json);
+        done();
+      }, 10);
     });
 
-    it('should not override internal request headers if passed into constructor', function () {
+    it('should not override internal request headers if passed into constructor', function (done) {
       var options = {
         headers: {
             Authorization: 'test'
@@ -95,10 +103,13 @@ describe('UNIT Sender', function () {
       var sender = new Sender('mykey', options);
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', function () {});
-      expect(args.options.headers.Authorization).to.not.equal(options.headers.Auhtorization);
+      setTimeout(function() {
+        expect(args.options.headers.Authorization).to.not.equal(options.headers.Auhtorization);
+        done();
+      }, 10);
     });
 
-    it('should allow extending request headers if passed into constructor', function () {
+    it('should allow extending request headers if passed into constructor', function (done) {
       var options = {
         headers: {
             Custom: true
@@ -107,10 +118,13 @@ describe('UNIT Sender', function () {
       var sender = new Sender('mykey', options);
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', function () {});
-      expect(args.options.headers.Custom).to.deep.equal(options.headers.Custom);
+      setTimeout(function() {
+        expect(args.options.headers.Custom).to.deep.equal(options.headers.Custom);
+        done();
+      }, 10);
     });
-    
-    it('should not set strictSSL of req object if not passed into constructor', function () {
+
+    it('should not set strictSSL of req object if not passed into constructor', function (done) {
       var options = {
         proxy: 'http://myproxy.com',
         maxSockets: 100,
@@ -119,24 +133,33 @@ describe('UNIT Sender', function () {
       var sender = new Sender('mykey', options);
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', function () {});
-      expect(args.options.strictSSL).to.be.an('undefined');
+      setTimeout(function() {
+        expect(args.options.strictSSL).to.be.an('undefined');
+        done();
+      }, 10);
     });
 
-    it('should set the API key of req object if passed in API key', function () {
+    it('should set the API key of req object if passed in API key', function (done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', function () {});
-      expect(args.options.headers.Authorization).to.equal('key=myKey');
+      setTimeout(function() {
+        expect(args.options.headers.Authorization).to.equal('key=myKey');
+        done();
+      }, 10);
     });
 
-    it('should send a JSON object as the body of the request', function () {
+    it('should send a JSON object as the body of the request', function (done) {
       var sender = new Sender('mykey');
       var m = new Message({ collapseKey: 'Message', data: {} });
       sender.sendNoRetry(m, '', function () {});
-      expect(args.options.json).to.be.a('object');
+      setTimeout(function() {
+        expect(args.options.json).to.be.a('object');
+        done();
+      }, 10);
     });
 
-    it('should set properties of body with message properties', function () {
+    it('should set properties of body with message properties', function (done) {
       var mess = new Message({
         delayWhileIdle: true,
         collapseKey: 'Message',
@@ -148,267 +171,341 @@ describe('UNIT Sender', function () {
       });
       var sender = new Sender('mykey');
       sender.sendNoRetry(mess, '', function () {});
-      var body = args.options.json;
-      expect(body[Constants.PARAM_DELAY_WHILE_IDLE]).to.equal(mess.delayWhileIdle);
-      expect(body[Constants.PARAM_COLLAPSE_KEY]).to.equal(mess.collapseKey);
-      expect(body[Constants.PARAM_TIME_TO_LIVE]).to.equal(mess.timeToLive);
-      expect(body[Constants.PARAM_DRY_RUN]).to.equal(mess.dryRun);
-      expect(body[Constants.PARAM_PAYLOAD_KEY]).to.deep.equal(mess.data);
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body[Constants.PARAM_DELAY_WHILE_IDLE]).to.equal(mess.delayWhileIdle);
+        expect(body[Constants.PARAM_COLLAPSE_KEY]).to.equal(mess.collapseKey);
+        expect(body[Constants.PARAM_TIME_TO_LIVE]).to.equal(mess.timeToLive);
+        expect(body[Constants.PARAM_DRY_RUN]).to.equal(mess.dryRun);
+        expect(body[Constants.PARAM_PAYLOAD_KEY]).to.deep.equal(mess.data);
+        done();
+      }, 10);
     });
 
-    it('should set the registration_ids to reg tokens implicitly passed in', function () {
+    it('should set the registration_ids to reg tokens implicitly passed in', function (done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, ["registration token 1", "registration token 2"], function () {});
-      var body = args.options.json;
-      expect(body.registration_ids).to.deep.equal(["registration token 1", "registration token 2"]);
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.registration_ids).to.deep.equal(["registration token 1", "registration token 2"]);
+        done();
+      }, 10);
     });
 
-    it('should set the registration_ids to reg tokens explicitly passed in', function () {
+    it('should set the registration_ids to reg tokens explicitly passed in', function (done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var regTokens = ["registration token 1", "registration token 2"];
       sender.sendNoRetry(m, { registrationIds: regTokens }, function () {});
-      var body = args.options.json;
-      expect(body.registration_ids).to.deep.equal(regTokens);
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.registration_ids).to.deep.equal(regTokens);
+        done();
+      }, 10);
     });
 
-    it('should set the registration_ids to reg tokens explicitly passed in', function () {
+    it('should set the registration_ids to reg tokens explicitly passed in', function (done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var regTokens = ["registration token 1", "registration token 2"];
       sender.sendNoRetry(m, { registrationTokens: regTokens }, function () {});
-      var body = args.options.json;
-      expect(body.registration_ids).to.deep.equal(regTokens);
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.registration_ids).to.deep.equal(regTokens);
+        done();
+      }, 10);
     });
 
-    it('should set the to field if a single reg (or other) token is passed in', function() {
+    it('should set the to field if a single reg (or other) token is passed in', function(done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, "registration token 1", function () {});
-      var body = args.options.json;
-      expect(body.to).to.deep.equal("registration token 1");
-      expect(body.registration_ids).to.be.an("undefined");
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.to).to.deep.equal("registration token 1");
+        expect(body.registration_ids).to.be.an("undefined");
+        done();
+      }, 10);
     })
 
-    it('should set the to field if a single reg token is passed in as a string', function() {
+    it('should set the to field if a single reg token is passed in as a string', function(done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var token = "registration token 1";
       sender.sendNoRetry(m, token, function () {});
-      var body = args.options.json;
-      expect(body.to).to.deep.equal(token);
-      expect(body.registration_ids).to.be.an("undefined");
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.to).to.deep.equal(token);
+        expect(body.registration_ids).to.be.an("undefined");
+        done();
+      }, 10);
     })
 
-    it('should set the to field if a single reg token is passed inside the recipient array', function() {
+    it('should set the to field if a single reg token is passed inside the recipient array', function(done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var token = "registration token 1";
       sender.sendNoRetry(m, [ token ], function () {});
-      var body = args.options.json;
-      expect(body.to).to.deep.equal(token);
-      expect(body.registration_ids).to.be.an("undefined");
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.to).to.deep.equal(token);
+        expect(body.registration_ids).to.be.an("undefined");
+        done();
+      }, 10);
     })
 
-    it('should set the to field if a single reg token is passed inside the registrationTokens array', function() {
+    it('should set the to field if a single reg token is passed inside the registrationTokens array', function(done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var token = "registration token 1";
       sender.sendNoRetry(m, { registrationTokens: token }, function () {});
-      var body = args.options.json;
-      expect(body.to).to.deep.equal(token);
-      expect(body.registration_ids).to.be.an("undefined");
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.to).to.deep.equal(token);
+        expect(body.registration_ids).to.be.an("undefined");
+        done();
+      }, 10);
     })
 
-    it('should set the to field if a single reg token is passed inside the registrationIDs array', function() {
+    it('should set the to field if a single reg token is passed inside the registrationIDs array', function(done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var token = "registration token 1";
       sender.sendNoRetry(m, { registrationIDs: token }, function () {});
-      var body = args.options.json;
-      expect(body.to).to.deep.equal(token);
-      expect(body.registration_ids).to.be.an("undefined");
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.to).to.deep.equal(token);
+        expect(body.registration_ids).to.be.an("undefined");
+        done();
+      }, 10);
     })
 
-    it('should set the to field if a topic is passed in', function() {
+    it('should set the to field if a topic is passed in', function(done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var topic = '/topics/tests';
       sender.sendNoRetry(m, { topic: topic }, function () {});
-      var body = args.options.json;
-      expect(body.to).to.deep.equal(topic);
-      expect(body.registration_ids).to.be.an("undefined");
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.to).to.deep.equal(topic);
+        expect(body.registration_ids).to.be.an("undefined");
+        done();
+      }, 10);
     })
 
-    it('should set the to field if a to recipient is passed in', function() {
+    it('should set the to field if a to recipient is passed in', function(done) {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var token = "registration token 1";
       sender.sendNoRetry(m, { to: token }, function () {});
-      var body = args.options.json;
-      expect(body.to).to.deep.equal(token);
-      expect(body.registration_ids).to.be.an("undefined");
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.to).to.deep.equal(token);
+        expect(body.registration_ids).to.be.an("undefined");
+        done();
+      }, 10);
     })
 
-    it('should pass an error into callback if recipient is an empty object', function () {
+    it('should pass an error into callback if recipient is an empty object', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
 
-    it('should pass an error into callback if recipient keys are invalid', function () {
+    it('should pass an error into callback if recipient keys are invalid', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {invalid: true}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
 
-    it('should pass an error into callback if provided more than one recipient key', function () {
+    it('should pass an error into callback if provided more than one recipient key', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {registrationIds: ['string'], topic: 'string'}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
 
-    it('should pass an error into callback if registrationIds is not an array', function () {
+    it('should pass an error into callback if registrationIds is not an array', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {registrationIds: 'string'}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
-    
-    it('should pass an error into callback if registrationTokens is not an array', function () {
+
+    it('should pass an error into callback if registrationTokens is not an array', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {registrationTokens: 'string'}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
-    
-    it('should pass an error into callback if to is not a string', function () {
+
+    it('should pass an error into callback if to is not a string', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {to: ['array']}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
-    
-    it('should pass an error into callback if topic is not a string', function () {
+
+    it('should pass an error into callback if topic is not a string', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {topic: ['array']}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
-    
-    it('should pass an error into callback if notificationKey is not a string', function () {
+
+    it('should pass an error into callback if notificationKey is not a string', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {notificationKey: ['array']}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
-    
-    it('should pass an error into callback if to is empty', function () {
+
+    it('should pass an error into callback if to is empty', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {to: ''}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
-    
-    it('should pass an error into callback if topic is empty', function () {
+
+    it('should pass an error into callback if topic is empty', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {topic: ''}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
-    
-    it('should pass an error into callback if notificationKey is empty', function () {
+
+    it('should pass an error into callback if notificationKey is empty', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {notificationKey: ''}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
-    
-    it('should pass an error into callback if no recipient provided', function () {
+
+    it('should pass an error into callback if no recipient provided', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
       sender.sendNoRetry(new Message(), {}, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('object');
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.be.a('object');
+        done();
+      }, 10);
     });
 
-    it('should pass an error into callback if request returns an error', function () {
+    it('should pass an error into callback if request returns an error', function (done) {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs('an error', {}, {});
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.calledWith('an error')).to.be.ok;
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.calledWith('an error')).to.be.ok;
+        done();
+      }, 10);
     });
 
-    it('should pass an error into callback if response does not exist', function () {
-      var callback = sinon.spy(),
-          sender = new Sender('myKey');
-      setArgs(null, undefined, {});
-      var m = new Message({ data: {} });
-      sender.sendNoRetry(m, '', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.be.a('string');
-    });
-
-    it('should return the status code as an error if returned a 500', function () {
+    it('should return the status code as an error if returned a 500', function (done) {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 500 }, {});
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.equal(500);
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.equal(500);
+        done();
+      }, 10);
     });
 
-    it('should return the status code as an error if returned a 401', function () {
+    it('should return the status code as an error if returned a 401', function (done) {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 401 }, {});
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.equal(401);
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.equal(401);
+        done();
+      }, 10);
     });
 
-    it('should return the status code as an error if returned a 400', function () {
+    it('should return the status code as an error if returned a 400', function (done) {
       var callback = sinon.spy(),
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 400 }, {});
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.equal(400);
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.equal(400);
+        done();
+      }, 10);
     });
 
-    it('should pass an error into the callback if resBody cannot be parsed', function () {
+    it('should pass an error into the callback if resBody cannot be parsed', function (done) {
       var callback = sinon.spy(),
           sender = new Sender('myKey'),
           parseError = {error: 'Failed to parse JSON'};
       setArgs(parseError, null, null);
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.deep.equal(parseError);
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.deep.equal(parseError);
+        done();
+      }, 10);
     });
 
-    it('should pass in parsed resBody into callback on success', function () {
+    it('should pass in parsed resBody into callback on success', function (done) {
       var callback = sinon.spy();
       var resBody = {
         message: 'woohoo!',
@@ -418,8 +515,11 @@ describe('UNIT Sender', function () {
       setArgs(null, { statusCode: 200 }, resBody);
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][1]).to.deep.equal(resBody);
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][1]).to.deep.equal(resBody);
+        done();
+      }, 10);
     });
   });
 
@@ -457,7 +557,7 @@ describe('UNIT Sender', function () {
         else {
           nextResponse = args.response;
         }
-        callback( args.err, nextResponse );
+        callback( args.err, nextResponse, args.reg_tokens );
       };
     });
 
@@ -465,31 +565,34 @@ describe('UNIT Sender', function () {
       Sender.prototype.sendNoRetry = restore.sendNoRetry;
     });
 
-    it('should pass an error into callback if array has no regTokens', function (done) {
+    it('should pass reg tokens to sendNoRetry, even if it is an empty array', function (done) {
+      var emptyRegTokenArray = [];
       var callback = function(error) {
-        expect(error).to.be.a('string');
+        expect(args.reg_tokens).to.equal(emptyRegTokenArray);
         done();
       };
       var sender = new Sender('myKey');
-      sender.send({}, [], 0, callback);
+      sender.send({}, emptyRegTokenArray, 0, callback);
     });
 
-    it('should pass an error into callback if recipient is an empty object', function (done) {
+    it('should pass reg tokens to sendNoRetry, even if it is an empty object', function (done) {
+      var emptyRegTokenObject = {};
       var callback = function(error) {
-        expect(error).to.be.a('object');
+        expect(args.reg_tokens).to.equal(emptyRegTokenObject);
         done();
       };
       var sender = new Sender('myKey');
-      sender.send({}, {}, 0, callback);
+      sender.send({}, emptyRegTokenObject, 0, callback);
     });
 
-    it('should pass an error into callback if recipient keys are invalid', function (done) {
+    it('should pass reg tokens to sendNoRetry, even if some keys are invalid', function (done) {
+      var invalidRegTokenObject = { invalid: ['regToken'] };
       var callback = function(error) {
-        expect(error).to.be.a('object');
+        expect(args.reg_tokens).to.equal(invalidRegTokenObject);
         done();
       };
       var sender = new Sender('myKey');
-      sender.send({}, { invalid: ['regToken'] }, 0, callback);
+      sender.send({}, invalidRegTokenObject, 0, callback);
     });
 
     it('should pass the message and the regToken to sendNoRetry on call', function () {
