@@ -65,7 +65,6 @@ describe('UNIT Sender', function () {
       var m = new Message({ data: {} });
       sender.sendNoRetry(m, '', function () {});
       setTimeout(function() {
-        console.log("arg", args.options);
         expect(args.options.proxy).to.equal(options.proxy);
         expect(args.options.maxSockets).to.equal(options.maxSockets);
         expect(args.options.timeout).to.equal(options.timeout);
