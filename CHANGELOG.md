@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**0.14.1**
+ * Major refactorings of internals.
+ * Marked some constants, Result, and MulticastResult as deprecated.
+ * Changed to using new Firebase Cloud Messaging URL.
+ * Small README fixes.
+
 **0.14.0**
  * Added support for `to` recipient keys.
    This means that it is now possible to explicitly set something that should go in the `to` field in the request sent to GCM.
