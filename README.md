@@ -1,7 +1,13 @@
 # node-gcm
 [![npm](https://badge.fury.io/js/node-gcm.svg)](https://www.npmjs.com/package/node-gcm)
 
-node-gcm is a Node.JS library for [**Google Cloud Messaging**](https://developers.google.com/cloud-messaging/).
+The goal of this project is providing the best and most easily used interface for Google's Cloud Messaging service (now called Firebase Cloud Messaging, FCM).
+We appreciate all the help we can get!
+If you want to help out, check out the [Guidelines for Contributing](CONTRIBUTING.md) section.
+
+If you are developing an open-source project with a broader scope (like a full Firebase suite), we would love for you to use node-gcm internally.
+
+See the [official FCM documentation](https://firebase.google.com/docs/cloud-messaging/) for more information.
 
 ## Installation
 
@@ -205,11 +211,6 @@ set the `DEBUG` environment flag when running your app (assuming you use `node a
 ```bash
 DEBUG=node-gcm node app.js
 ```
-
-## Development
-
-See the [development](https://github.com/ToothlessGear/node-gcm/blob/master/CONTRIBUTING.md#development) section to start contributing. 
-Please read [guidelines for contributing](https://github.com/ToothlessGear/node-gcm/blob/master/CONTRIBUTING.md) before creating an issue or a PR. 
 
 ## Donate
 
