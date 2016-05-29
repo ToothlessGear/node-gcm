@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "debug": "^0.8.1",
-    "lodash": "^3.10.1",
+    "lodash.defaultsdeep": "^4.4.0",
     "request": "^2.27.0"
   },
   "devDependencies": {
