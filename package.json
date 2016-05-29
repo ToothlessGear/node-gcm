@@ -1,6 +1,6 @@
 {
   "name": "node-gcm",
-  "description": "a Node.JS wrapper library-port for Google Cloud Messaging for Android",
+  "description": "Easy interface for Google's Cloud Messaging service (now Firebase Cloud Messaging)",
   "version": "0.14.1",
   "author": "Marcus Farkas <toothlessgear@finitebox.com>",
   "contributors": [
