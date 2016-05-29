@@ -178,6 +178,31 @@ describe('UNIT Sender', function () {
       }, 10);
     });
 
+    it('should ignore properties of body that are unknown or invalid types', function(done) {
+        var mess = {
+        delay_while_idle: "a string",
+        collapse_key: true,
+        time_to_live: 100,
+        dry_run: true,
+        data: {
+          name: 'Matt'
+        },
+        unknown_property: "hello"
+      };
+      var sender = new Sender('mykey');
+      sender.sendNoRetry(mess, '', function () {});
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.delay_while_idle).to.equal(undefined);
+        expect(body.collapse_key).to.equal(undefined);
+        expect(body.time_to_live).to.equal(mess.time_to_live);
+        expect(body.dry_run).to.equal(mess.dry_run);
+        expect(body.data).to.deep.equal(mess.data);
+        expect(body.unknown_property).to.equal(undefined);
+        done();
+      }, 10);
+    });
+
     it('should set the registration_ids to reg tokens implicitly passed in', function (done) {
       var sender = new Sender('myKey');
       var m = { data: {} };
