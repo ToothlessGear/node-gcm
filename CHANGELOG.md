@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**0.14.2**
+ * Updated README, added note on v1 development
+
 **0.14.1**
  * Major refactorings of internals.
  * Marked some constants, Result, and MulticastResult as deprecated.
