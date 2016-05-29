@@ -155,83 +155,6 @@ describe('UNIT Message', function () {
     it.skip('should do something if not called properly');
   });
 
-  describe('addDataWithKeyValue()', function () {
-    it('should add properties to the message data object given a key and value', function () {
-      var mess = new Message();
-      mess.addDataWithKeyValue('myKey', 'Message');
-
-      var json = mess.toJson();
-
-      expect(json.data.myKey).to.equal('Message');
-    });
-
-    it('should only set values on data object, not top level message', function () {
-      var mess = new Message();
-      mess.addDataWithKeyValue('collapseKey', 'Message');
-
-      var json = mess.toJson();
-
-      expect(json.collapse_key).to.not.equal('Message');
-      expect(json.data.collapseKey).to.equal('Message');
-    });
-
-    it.skip('should do something if not called properly');
-  });
-
-  describe('addDataWithObject()', function () {
-    it('should set the data property to the object passed in', function () {
-      var mess = new Message();
-      var obj = {
-        message: 'hello',
-        key: 'value'
-      };
-      mess.addDataWithObject(obj);
-
-      var json = mess.toJson();
-
-      expect(json.data).to.deep.equal(obj);
-    });
-
-    it('should overwrite data object when an object is passed in', function () {
-      var data = {
-        message: 'hello',
-        key: 'value'
-      };
-      var mess = new Message({ data: { message: 'bye', prop: 'none' } });
-      mess.addDataWithObject(data);
-
-      var json = mess.toJson();
-
-      expect(json.data).to.deep.equal(data);
-    });
-
-    it('should not overwrite data if not passed an object', function () {
-      var data = {
-        message: 'hello',
-        key: 'value'
-      };
-      var mess = new Message({ data: data });
-      mess.addDataWithObject('adding');
-
-      var json = mess.toJson();
-
-      expect(json.data).to.deep.equal(data);
-    });
-
-    it('should not overwrite data if passed an empty object', function () {
-      var data = {
-        message: 'hello',
-        key: 'value'
-      };
-      var mess = new Message({ data: data });
-      mess.addDataWithObject({});
-
-      var json = mess.toJson();
-
-      expect(json.data).to.deep.equal(data);
-    });
-  });
-
   describe('addNotification()', function () {
     it('should add attribute on notification object if pass key and value', function () {
       var mess = new Message();
@@ -260,7 +183,7 @@ describe('UNIT Message', function () {
       expect(json.notification).to.deep.equal(obj);
     });
   });
-  
+
   describe('toJson()', function() {
     it('should return well-formed data for GCM if it is valid', function() {
       var m = new Message({
@@ -279,7 +202,7 @@ describe('UNIT Message', function () {
       expect(json.delayWhileIdle).to.be.an("undefined");
       expect(json.dryRun).to.be.an("undefined");
     });
-    
+
     it('should return well-formed data for GCM if it describes a notification', function() {
       var notificationData = {
         title: "Hello, World",
@@ -296,7 +219,7 @@ describe('UNIT Message', function () {
       expect(json.notification).not.to.be.an("undefined");
       expect(json.notification).to.deep.equal(notificationData);
     });
-    
+
     it('should ignore non-standard fields when serializing', function() {
       var m = new Message({
         timeToLive: 60 * 60 * 24,
