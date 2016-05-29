@@ -9,8 +9,10 @@ If you are developing an open-source project with a broader scope (like a full F
 
 See the [official FCM documentation](https://firebase.google.com/docs/cloud-messaging/) for more information.
 
-We are currently working on version 1.0.0 of the project, and it is available in an early alpha version.
+This is the README for the `v1` branch, and it is currently work in progress.
+Version 1.0.0 is only available in an alpha version.
 Follow [PR #238](https://github.com/ToothlessGear/node-gcm/pull/238) to see current status.
+We currently recommend you use the mainline version of node-gcm (found on the master branch) for production.
 
 ## Installation
 
