@@ -100,7 +100,6 @@ gcm.send(message, { registrationTokens: registrationTokens }, 10, function (err,
 
 You can send push notifications to various recipient types by providing one of the following recipient keys:
 
-
 |Key|Type|Description|
 |---|---|---|
 |to|String|A single [registration token](https://developers.google.com/cloud-messaging/android/client#sample-register), [notification key](https://developers.google.com/cloud-messaging/notifications), or [topic](https://developers.google.com/cloud-messaging/topic-messaging).
@@ -117,21 +116,13 @@ This is due to [a restriction](http://developer.android.com/training/cloudsync/g
 ## Notification usage
 
 ```js
-
-var message = new gcm.Message();
-
-// Add notification payload as key value
-message.addNotification('title', 'Alert!!!');
-message.addNotification('body', 'Abnormal data access');
-message.addNotification('icon', 'ic_launcher');
-
-// as object
-message.addNotification({
-  title: 'Alert!!!',
-  body: 'Abnormal data access',
-  icon: 'ic_launcher'
-});
-
+var message = {
+    notification: {
+        title: 'Alert!!!',
+        body: 'Abnormal data access',
+        icon: 'ic_launcher'
+    }
+};
 ```
 
 ### Notification payload option table
@@ -164,13 +155,13 @@ var requestOptions = {
 	timeout: 5000
 };
 
-// Set up the sender with your API key and request options
-var sender = new gcm.Sender('YOUR_API_KEY_HERE', requestOptions);
+// Set up gcm with your API key and request options
+var gcm = require("node-gcm")('YOUR_API_KEY_HERE', requestOptions);
 
 // Prepare a GCM message...
 
 // Send it to GCM endpoint with modified request options
-sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+gcm.send(message, { registrationTokens: regTokens }, function (err, response) {
     if(err) console.error(err);
     else     console.log(response);
 });
