@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**1.0.0-alpha.0**
+ * Removed deprecated things: constants, Result, MulticastResult, Message#addDataWith...
+
 **0.14.2**
  * Updated README, added note on v1 development
 
