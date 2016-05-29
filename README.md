@@ -33,17 +33,14 @@ If you are new to GCM you should probably look into the [documentation](https://
 According to below **Usage** reference, we could create such application:
 
 ```js
-var gcm = require('node-gcm');
+var gcm = require('node-gcm')('YOUR_API_KEY_HERE');
 
-var message = new gcm.Message({
+var message = {
     data: { key1: 'msg1' }
-});
-
-// Set up the sender with you API key, prepare your recipients' registration tokens.
-var sender = new gcm.Sender('YOUR_API_KEY_HERE');
+};
 var regTokens = ['YOUR_REG_TOKEN_HERE'];
 
-sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+gcm.send(message, { registrationTokens: regTokens }, function (err, response) {
 	if(err) console.error(err);
 	else 	console.log(response);
 });
