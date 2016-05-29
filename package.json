@@ -50,7 +50,12 @@
     "notifications",
     "android",
     "c2dm",
-    "gcm"
+    "gcm",
+    "fcm",
+    "firebase",
+    "ios",
+    "apn",
+    "messaging"
   ],
   "main": "index",
   "files": [
