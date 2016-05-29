@@ -49,21 +49,17 @@ gcm.send(message, { registrationTokens: regTokens }, function (err, response) {
 ## Usage
 
 ```js
-var gcm = require('node-gcm');
+var gcm = require('node-gcm')('insert Google Server API Key here');
 
-// Create a message
-// ... with default values
-var message = new gcm.Message();
-
-// ... or some given values
-var message = new gcm.Message({
-	collapseKey: 'demo',
+// Create a message (all possible values shown)
+var message = {
+	collapse_key: 'demo',
 	priority: 'high',
-	contentAvailable: true,
-	delayWhileIdle: true,
-	timeToLive: 3,
-	restrictedPackageName: "somePackageName",
-	dryRun: true,
+	content_available: true,
+	delay_while_idle: true,
+	time_to_live: 3,
+	restricted_package_name: "somePackageName",
+	dry_run: true,
 	data: {
 		key1: 'message1',
 		key2: 'message2'
@@ -73,21 +69,7 @@ var message = new gcm.Message({
 		icon: "ic_launcher",
 		body: "This is a notification that will be displayed ASAP."
 	}
-});
-
-// Change the message data
-// ... as key-value
-message.addData('key1','message1');
-message.addData('key2','message2');
-
-// ... or as a data object (overwrites previous data object)
-message.addData({
-	key1: 'message1',
-	key2: 'message2'
-});
-
-// Set up the sender with you API key
-var sender = new gcm.Sender('insert Google Server API Key here');
+};
 
 // Add the registration tokens of the devices you want to send to
 var registrationTokens = [];
@@ -96,23 +78,24 @@ registrationTokens.push('regToken2');
 
 // Send the message
 // ... trying only once
-sender.sendNoRetry(message, { registrationTokens: registrationTokens }, function(err, response) {
+gcm.sendNoRetry(message, { registrationTokens: registrationTokens }, function(err, response) {
   if(err) console.error(err);
   else    console.log(response);
 });
 
 // ... or retrying
-sender.send(message, { registrationTokens: registrationTokens }, function (err, response) {
+gcm.send(message, { registrationTokens: registrationTokens }, function (err, response) {
   if(err) console.error(err);
   else    console.log(response);
 });
 
 // ... or retrying a specific number of times (10)
-sender.send(message, { registrationTokens: registrationTokens }, 10, function (err, response) {
+gcm.send(message, { registrationTokens: registrationTokens }, 10, function (err, response) {
   if(err) console.error(err);
   else    console.log(response);
 });
 ```
+
 ## Recipients
 
 You can send push notifications to various recipient types by providing one of the following recipient keys:
