@@ -33,17 +33,14 @@ If you are new to GCM you should probably look into the [documentation](https://
 According to below **Usage** reference, we could create such application:
 
 ```js
-var gcm = require('node-gcm');
+var gcm = require('node-gcm')('YOUR_API_KEY_HERE');
 
-var message = new gcm.Message({
+var message = {
     data: { key1: 'msg1' }
-});
-
-// Set up the sender with you API key, prepare your recipients' registration tokens.
-var sender = new gcm.Sender('YOUR_API_KEY_HERE');
+};
 var regTokens = ['YOUR_REG_TOKEN_HERE'];
 
-sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+gcm.send(message, { registrationTokens: regTokens }, function (err, response) {
 	if(err) console.error(err);
 	else 	console.log(response);
 });
@@ -52,21 +49,17 @@ sender.send(message, { registrationTokens: regTokens }, function (err, response)
 ## Usage
 
 ```js
-var gcm = require('node-gcm');
+var gcm = require('node-gcm')('insert Google Server API Key here');
 
-// Create a message
-// ... with default values
-var message = new gcm.Message();
-
-// ... or some given values
-var message = new gcm.Message({
-	collapseKey: 'demo',
+// Create a message (all possible values shown)
+var message = {
+	collapse_key: 'demo',
 	priority: 'high',
-	contentAvailable: true,
-	delayWhileIdle: true,
-	timeToLive: 3,
-	restrictedPackageName: "somePackageName",
-	dryRun: true,
+	content_available: true,
+	delay_while_idle: true,
+	time_to_live: 3,
+	restricted_package_name: "somePackageName",
+	dry_run: true,
 	data: {
 		key1: 'message1',
 		key2: 'message2'
@@ -76,21 +69,7 @@ var message = new gcm.Message({
 		icon: "ic_launcher",
 		body: "This is a notification that will be displayed ASAP."
 	}
-});
-
-// Change the message data
-// ... as key-value
-message.addData('key1','message1');
-message.addData('key2','message2');
-
-// ... or as a data object (overwrites previous data object)
-message.addData({
-	key1: 'message1',
-	key2: 'message2'
-});
-
-// Set up the sender with you API key
-var sender = new gcm.Sender('insert Google Server API Key here');
+};
 
 // Add the registration tokens of the devices you want to send to
 var registrationTokens = [];
@@ -99,27 +78,27 @@ registrationTokens.push('regToken2');
 
 // Send the message
 // ... trying only once
-sender.sendNoRetry(message, { registrationTokens: registrationTokens }, function(err, response) {
+gcm.sendNoRetry(message, { registrationTokens: registrationTokens }, function(err, response) {
   if(err) console.error(err);
   else    console.log(response);
 });
 
 // ... or retrying
-sender.send(message, { registrationTokens: registrationTokens }, function (err, response) {
+gcm.send(message, { registrationTokens: registrationTokens }, function (err, response) {
   if(err) console.error(err);
   else    console.log(response);
 });
 
 // ... or retrying a specific number of times (10)
-sender.send(message, { registrationTokens: registrationTokens }, 10, function (err, response) {
+gcm.send(message, { registrationTokens: registrationTokens }, 10, function (err, response) {
   if(err) console.error(err);
   else    console.log(response);
 });
 ```
+
 ## Recipients
 
 You can send push notifications to various recipient types by providing one of the following recipient keys:
-
 
 |Key|Type|Description|
 |---|---|---|
@@ -137,21 +116,13 @@ This is due to [a restriction](http://developer.android.com/training/cloudsync/g
 ## Notification usage
 
 ```js
-
-var message = new gcm.Message();
-
-// Add notification payload as key value
-message.addNotification('title', 'Alert!!!');
-message.addNotification('body', 'Abnormal data access');
-message.addNotification('icon', 'ic_launcher');
-
-// as object
-message.addNotification({
-  title: 'Alert!!!',
-  body: 'Abnormal data access',
-  icon: 'ic_launcher'
-});
-
+var message = {
+    notification: {
+        title: 'Alert!!!',
+        body: 'Abnormal data access',
+        icon: 'ic_launcher'
+    }
+};
 ```
 
 ### Notification payload option table
@@ -184,13 +155,13 @@ var requestOptions = {
 	timeout: 5000
 };
 
-// Set up the sender with your API key and request options
-var sender = new gcm.Sender('YOUR_API_KEY_HERE', requestOptions);
+// Set up gcm with your API key and request options
+var gcm = require("node-gcm")('YOUR_API_KEY_HERE', requestOptions);
 
 // Prepare a GCM message...
 
 // Send it to GCM endpoint with modified request options
-sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+gcm.send(message, { registrationTokens: regTokens }, function (err, response) {
     if(err) console.error(err);
     else     console.log(response);
 });
