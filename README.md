@@ -98,7 +98,7 @@ gcm.send(message, registrationTokens, 10, function (err, response) {
 
 ## Recipients
 
-You can send a push notification to various recipient or topic, by providing a notification key, registration token og topic as a string.
+You can send a push notification to various recipient or topic, by providing a notification key, registration token or topic as a string.
 Alternatively, you can send it to several recipients at once, by providing an array of registration tokens.
 
 Notice that [you can *at most* send notifications to 1000 registration tokens at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
