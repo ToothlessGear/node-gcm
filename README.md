@@ -1,4 +1,6 @@
 # node-gcm
+
+[![Join the chat at https://gitter.im/ToothlessGear/node-gcm](https://badges.gitter.im/ToothlessGear/node-gcm.svg)](https://gitter.im/ToothlessGear/node-gcm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm](https://badge.fury.io/js/node-gcm.svg)](https://www.npmjs.com/package/node-gcm)
 
 The goal of this project is providing the best and most easily used interface for Google's Cloud Messaging service (now called Firebase Cloud Messaging, FCM).
