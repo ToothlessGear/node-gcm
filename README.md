@@ -38,9 +38,9 @@ var gcm = require('node-gcm')('YOUR_API_KEY_HERE');
 var message = {
     data: { key1: 'msg1' }
 };
-var regTokens = ['YOUR_REG_TOKEN_HERE'];
+var recipient = 'YOUR_REG_TOKEN_HERE';
 
-gcm.send(message, { registrationTokens: regTokens }, function (err, response) {
+gcm.send(message, recipient, function (err, response) {
 	if(err) console.error(err);
 	else 	console.log(response);
 });
@@ -78,19 +78,19 @@ registrationTokens.push('regToken2');
 
 // Send the message
 // ... trying only once
-gcm.sendNoRetry(message, { registrationTokens: registrationTokens }, function(err, response) {
+gcm.sendNoRetry(message, registrationTokens, function(err, response) {
   if(err) console.error(err);
   else    console.log(response);
 });
 
 // ... or retrying
-gcm.send(message, { registrationTokens: registrationTokens }, function (err, response) {
+gcm.send(message, registrationTokens, function (err, response) {
   if(err) console.error(err);
   else    console.log(response);
 });
 
 // ... or retrying a specific number of times (10)
-gcm.send(message, { registrationTokens: registrationTokens }, 10, function (err, response) {
+gcm.send(message, registrationTokens, 10, function (err, response) {
   if(err) console.error(err);
   else    console.log(response);
 });
@@ -98,17 +98,8 @@ gcm.send(message, { registrationTokens: registrationTokens }, 10, function (err,
 
 ## Recipients
 
-You can send push notifications to various recipient types by providing one of the following recipient keys:
-
-|Key|Type|Description|
-|---|---|---|
-|to|String|A single [registration token](https://developers.google.com/cloud-messaging/android/client#sample-register), [notification key](https://developers.google.com/cloud-messaging/notifications), or [topic](https://developers.google.com/cloud-messaging/topic-messaging).
-|topic|String|A single publish/subscribe topic.
-|notificationKey|String|Deprecated. A key that groups multiple registration tokens linked to the same user.
-|registrationIds|String[]|Deprecated. Use registrationTokens instead.|
-|registrationTokens|String[]|A list of registration tokens. Must contain at least 1 and at most 1000 registration tokens.|
-
-If you provide an incorrect recipient key or object type, an `Error` object will be returned to your callback.
+You can send a push notification to various recipient or topic, by providing a notification key, registration token or topic as a string.
+Alternatively, you can send it to several recipients at once, by providing an array of registration tokens.
 
 Notice that [you can *at most* send notifications to 1000 registration tokens at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
 This is due to [a restriction](http://developer.android.com/training/cloudsync/gcm.html) on the side of the GCM API.
@@ -161,9 +152,9 @@ var gcm = require("node-gcm")('YOUR_API_KEY_HERE', requestOptions);
 // Prepare a GCM message...
 
 // Send it to GCM endpoint with modified request options
-gcm.send(message, { registrationTokens: regTokens }, function (err, response) {
+gcm.send(message, regTokens, function (err, response) {
     if(err) console.error(err);
-    else     console.log(response);
+    else    console.log(response);
 });
 ```
 
