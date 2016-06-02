@@ -395,48 +395,60 @@ describe('UNIT Sender', function () {
       setArgs(null, { statusCode: 200 }, {});
     });
 
-    it('should pass the response into callback if successful for token', function () {
+    it('should pass the response into callback if successful for token', function (done) {
       var callback = sinon.spy(),
           response = { success: true },
           sender = new Sender('myKey');
       setArgs(null, response);
       sender.send({}, [1], 0, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][1]).to.equal(response);
-      expect(args.tries).to.equal(1);
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][1]).to.equal(response);
+        expect(args.tries).to.equal(1);
+        done();
+      }, 10);
     });
 
-    it('should pass the response into callback if successful for tokens', function () {
+    it('should pass the response into callback if successful for tokens', function (done) {
       var callback = sinon.spy(),
           response = { success: true },
           sender = new Sender('myKey');
       setArgs(null, response);
       sender.send({}, [1, 2, 3], 0, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][1]).to.equal(response);
-      expect(args.tries).to.equal(1);
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][1]).to.equal(response);
+        expect(args.tries).to.equal(1);
+        done();
+      }, 10);
     });
 
-    it('should pass the error into callback if failure and no retry for token', function () {
+    it('should pass the error into callback if failure and no retry for token', function (done) {
       var callback = sinon.spy(),
           error = 'my error',
           sender = new Sender('myKey');
       setArgs(error);
       sender.send({}, [1], 0, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.equal(error);
-      expect(args.tries).to.equal(1);
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.equal(error);
+        expect(args.tries).to.equal(1);
+        done();
+      }, 10);
     });
 
-    it('should pass the error into callback if failure and no retry for tokens', function () {
+    it('should pass the error into callback if failure and no retry for tokens', function (done) {
       var callback = sinon.spy(),
           error = 'my error',
           sender = new Sender('myKey');
       setArgs(error);
       sender.send({}, [1, 2, 3], 0, callback);
-      expect(callback.calledOnce).to.be.ok;
-      expect(callback.args[0][0]).to.equal(error);
-      expect(args.tries).to.equal(1);
+      setTimeout(function() {
+        expect(callback.calledOnce).to.be.ok;
+        expect(callback.args[0][0]).to.equal(error);
+        expect(args.tries).to.equal(1);
+        done();
+      }, 10);
     });
 
     it('should retry number of times passed into call and do exponential backoff', function (done) {
