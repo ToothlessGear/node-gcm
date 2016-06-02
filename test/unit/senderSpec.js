@@ -38,7 +38,7 @@ describe('UNIT Sender', function () {
     });
   });
 
-  describe('sendNoRetry()', function () {
+  describe('send() without retries', function () {
     function setArgs(err, res, resBody) {
       args = {
         err: err,
@@ -59,7 +59,7 @@ describe('UNIT Sender', function () {
       };
       var sender = new Sender('mykey', options);
       var m = { data: {} };
-      sender.sendNoRetry(m, '', function () {});
+      sender.send(m, '', { retries: 0 }, function () {});
       setTimeout(function() {
         expect(args.options.proxy).to.equal(options.proxy);
         expect(args.options.maxSockets).to.equal(options.maxSockets);
@@ -80,7 +80,7 @@ describe('UNIT Sender', function () {
       };
       var sender = new Sender('mykey', options);
       var m = { data: {} };
-      sender.sendNoRetry(m, '', function () {});
+      sender.send(m, '', { retries: 0 }, function () {});
       setTimeout(function() {
         expect(args.options.method).to.not.equal(options.method);
         expect(args.options.headers).to.not.deep.equal(options.headers);
@@ -98,7 +98,7 @@ describe('UNIT Sender', function () {
       };
       var sender = new Sender('mykey', options);
       var m = { data: {} };
-      sender.sendNoRetry(m, '', function () {});
+      sender.send(m, '', { retries: 0 }, function () {});
       setTimeout(function() {
         expect(args.options.headers.Authorization).to.not.equal(options.headers.Auhtorization);
         done();
@@ -113,7 +113,7 @@ describe('UNIT Sender', function () {
       };
       var sender = new Sender('mykey', options);
       var m = { data: {} };
-      sender.sendNoRetry(m, '', function () {});
+      sender.send(m, '', { retries: 0 }, function () {});
       setTimeout(function() {
         expect(args.options.headers.Custom).to.deep.equal(options.headers.Custom);
         done();
@@ -128,7 +128,7 @@ describe('UNIT Sender', function () {
       };
       var sender = new Sender('mykey', options);
       var m = { data: {} };
-      sender.sendNoRetry(m, '', function () {});
+      sender.send(m, '', { retries: 0 }, function () {});
       setTimeout(function() {
         expect(args.options.strictSSL).to.be.an('undefined');
         done();
@@ -138,7 +138,7 @@ describe('UNIT Sender', function () {
     it('should set the API key of req object if passed in API key', function (done) {
       var sender = new Sender('myKey');
       var m = { data: {} };
-      sender.sendNoRetry(m, '', function () {});
+      sender.send(m, '', { retries: 0 }, function () {});
       setTimeout(function() {
         expect(args.options.headers.Authorization).to.equal('key=myKey');
         done();
@@ -148,7 +148,7 @@ describe('UNIT Sender', function () {
     it('should send a JSON object as the body of the request', function (done) {
       var sender = new Sender('mykey');
       var m = { collapseKey: 'Message', data: {} };
-      sender.sendNoRetry(m, '', function () {});
+      sender.send(m, '', { retries: 0 }, function () {});
       setTimeout(function() {
         expect(args.options.json).to.be.a('object');
         done();
@@ -166,7 +166,7 @@ describe('UNIT Sender', function () {
         }
       };
       var sender = new Sender('mykey');
-      sender.sendNoRetry(mess, '', function () {});
+      sender.send(mess, '', { retries: 0 }, function () {});
       setTimeout(function() {
         var body = args.options.json;
         expect(body.delay_while_idle).to.equal(mess.delay_while_idle);
@@ -190,7 +190,7 @@ describe('UNIT Sender', function () {
         unknown_property: "hello"
       };
       var sender = new Sender('mykey');
-      sender.sendNoRetry(mess, '', function () {});
+      sender.send(mess, '', { retries: 0 }, function () {});
       setTimeout(function() {
         var body = args.options.json;
         expect(body.delay_while_idle).to.equal(undefined);
@@ -206,7 +206,7 @@ describe('UNIT Sender', function () {
     it('should set the registration_ids to reg tokens implicitly passed in', function (done) {
       var sender = new Sender('myKey');
       var m = { data: {} };
-      sender.sendNoRetry(m, ["registration token 1", "registration token 2"], function () {});
+      sender.send(m, ["registration token 1", "registration token 2"], { retries: 0 }, function () {});
       setTimeout(function() {
         var body = args.options.json;
         expect(body.registration_ids).to.deep.equal(["registration token 1", "registration token 2"]);
@@ -218,7 +218,7 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       var m = { data: {} };
       var regTokens = ["registration token 1", "registration token 2"];
-      sender.sendNoRetry(m, { registrationIds: regTokens }, function () {});
+      sender.send(m, { registrationIds: regTokens }, { retries: 0 }, function () {});
       setTimeout(function() {
         var body = args.options.json;
         expect(body.registration_ids).to.deep.equal(regTokens);
@@ -230,7 +230,7 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       var m = { data: {} };
       var regTokens = ["registration token 1", "registration token 2"];
-      sender.sendNoRetry(m, { registrationTokens: regTokens }, function () {});
+      sender.send(m, { registrationTokens: regTokens }, { retries: 0 }, function () {});
       setTimeout(function() {
         var body = args.options.json;
         expect(body.registration_ids).to.deep.equal(regTokens);
@@ -241,7 +241,7 @@ describe('UNIT Sender', function () {
     it('should set the to field if a single reg (or other) token is passed in', function(done) {
       var sender = new Sender('myKey');
       var m = { data: {} };
-      sender.sendNoRetry(m, "registration token 1", function () {});
+      sender.send(m, "registration token 1", { retries: 0 }, function () {});
       setTimeout(function() {
         var body = args.options.json;
         expect(body.to).to.deep.equal("registration token 1");
@@ -254,7 +254,7 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       var m = { data: {} };
       var token = "registration token 1";
-      sender.sendNoRetry(m, token, function () {});
+      sender.send(m, token, { retries: 0 }, function () {});
       setTimeout(function() {
         var body = args.options.json;
         expect(body.to).to.deep.equal(token);
@@ -267,7 +267,7 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       var m = { data: {} };
       var token = "registration token 1";
-      sender.sendNoRetry(m, [ token ], function () {});
+      sender.send(m, [ token ], { retries: 0 }, function () {});
       setTimeout(function() {
         var body = args.options.json;
         expect(body.registration_ids).to.deep.equal([ token ]);
@@ -279,7 +279,7 @@ describe('UNIT Sender', function () {
     it('should pass an error into callback if recipient is an empty object', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
-      sender.sendNoRetry({}, {}, callback);
+      sender.send({}, {}, { retries: 0 }, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][0]).to.be.a('object');
@@ -290,7 +290,7 @@ describe('UNIT Sender', function () {
     it('should pass an error into callback if no recipient provided', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
-      sender.sendNoRetry({}, [], callback);
+      sender.send({}, [], { retries: 0 }, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][0]).to.be.a('object');
@@ -303,7 +303,7 @@ describe('UNIT Sender', function () {
           sender = new Sender('myKey');
       setArgs('an error', {}, {});
       var m = { data: {} };
-      sender.sendNoRetry(m, '', callback);
+      sender.send(m, '', { retries: 0 }, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.calledWith('an error')).to.be.ok;
@@ -316,7 +316,7 @@ describe('UNIT Sender', function () {
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 500 }, {});
       var m = { data: {} };
-      sender.sendNoRetry(m, '', callback);
+      sender.send(m, '', { retries: 0 }, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][0]).to.equal(500);
@@ -329,7 +329,7 @@ describe('UNIT Sender', function () {
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 401 }, {});
       var m = { data: {} };
-      sender.sendNoRetry(m, '', callback);
+      sender.send(m, '', { retries: 0 }, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][0]).to.equal(401);
@@ -342,7 +342,7 @@ describe('UNIT Sender', function () {
           sender = new Sender('myKey');
       setArgs(null, { statusCode: 400 }, {});
       var m = { data: {} };
-      sender.sendNoRetry(m, '', callback);
+      sender.send(m, '', { retries: 0 }, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][0]).to.equal(400);
@@ -356,7 +356,7 @@ describe('UNIT Sender', function () {
           parseError = {error: 'Failed to parse JSON'};
       setArgs(parseError, null, null);
       var m = { data: {} };
-      sender.sendNoRetry(m, '', callback);
+      sender.send(m, '', { retries: 0 }, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][0]).to.deep.equal(parseError);
@@ -373,7 +373,7 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       setArgs(null, { statusCode: 200 }, resBody);
       var m = { data: {} };
-      sender.sendNoRetry(m, '', callback);
+      sender.send(m, '', { retries: 0 }, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][1]).to.deep.equal(resBody);
