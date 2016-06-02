@@ -45,7 +45,7 @@ describe('UNIT Sender', function () {
         res: res,
         resBody: resBody
       };
-    };
+    }
     before(function() {
         setArgs(null, { statusCode: 200 }, {});
     });
@@ -383,43 +383,16 @@ describe('UNIT Sender', function () {
   });
 
   describe('send()', function () {
-    var restore = {};
-    // Set args passed into sendNoRetry
-    function setArgs(err, response) {
+    function setArgs(err, res, resBody) {
       args = {
         err: err,
-        response: response,
-        tries: 0
+        res: res,
+        resBody: resBody
       };
-    };
+    }
 
-    before( function () {
-      restore.sendNoRetry = Sender.prototype.sendNoRetry;
-      Sender.prototype.sendNoRetry = function (message, reg_tokens, callback) {
-        args.message = message;
-        args.reg_tokens = reg_tokens;
-        args.tries++;
-        var nextResponse;
-        if(!args.response) {
-          nextResponse = args.response;
-        }
-        else if(args.response.length > 1) {
-          nextResponse = args.response.slice(0,1)[0];
-          args.response = args.response.slice(1,args.response.length);
-        }
-        else if(args.response.length == 1) {
-          args.response = args.response[0];
-          nextResponse = args.response;
-        }
-        else {
-          nextResponse = args.response;
-        }
-        callback( args.err, nextResponse, args.reg_tokens );
-      };
-    });
-
-    after( function () {
-      Sender.prototype.sendNoRetry = restore.sendNoRetry;
+    before(function() {
+      setArgs(null, { statusCode: 200 }, {});
     });
 
     it('should pass the message and the regToken to sendNoRetry on call', function () {
