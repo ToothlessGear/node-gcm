@@ -422,36 +422,6 @@ describe('UNIT Sender', function () {
       Sender.prototype.sendNoRetry = restore.sendNoRetry;
     });
 
-    it('should pass reg tokens to sendNoRetry, even if it is an empty array', function (done) {
-      var emptyRegTokenArray = [];
-      var callback = function(error) {
-        expect(args.reg_tokens).to.equal(emptyRegTokenArray);
-        done();
-      };
-      var sender = new Sender('myKey');
-      sender.send({}, emptyRegTokenArray, 0, callback);
-    });
-
-    it('should pass reg tokens to sendNoRetry, even if it is an empty object', function (done) {
-      var emptyRegTokenObject = {};
-      var callback = function(error) {
-        expect(args.reg_tokens).to.equal(emptyRegTokenObject);
-        done();
-      };
-      var sender = new Sender('myKey');
-      sender.send({}, emptyRegTokenObject, 0, callback);
-    });
-
-    it('should pass reg tokens to sendNoRetry, even if some keys are invalid', function (done) {
-      var invalidRegTokenObject = { invalid: ['regToken'] };
-      var callback = function(error) {
-        expect(args.reg_tokens).to.equal(invalidRegTokenObject);
-        done();
-      };
-      var sender = new Sender('myKey');
-      sender.send({}, invalidRegTokenObject, 0, callback);
-    });
-
     it('should pass the message and the regToken to sendNoRetry on call', function () {
       var sender = new Sender('myKey'),
           message = { data: {} },
