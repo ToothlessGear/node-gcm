@@ -395,28 +395,6 @@ describe('UNIT Sender', function () {
       setArgs(null, { statusCode: 200 }, {});
     });
 
-    it('should pass the message and the regToken to sendNoRetry on call', function () {
-      var sender = new Sender('myKey'),
-          message = { data: {} },
-          regToken = [24];
-      setArgs(null, {});
-      sender.send(message, regToken, 0, function () {});
-      expect(args.message).to.equal(message);
-      expect(args.reg_tokens).to.equal(regToken);
-      expect(args.tries).to.equal(1);
-    });
-
-    it('should pass the message and the regTokens to sendNoRetry on call', function () {
-      var sender = new Sender('myKey'),
-          message = { data: {} },
-          regTokens = [24, 34, 44];
-      setArgs(null, {});
-      sender.send(message, regTokens, 0, function () {});
-      expect(args.message).to.equal(message);
-      expect(args.reg_tokens).to.equal(regTokens);
-      expect(args.tries).to.equal(1);
-    });
-
     it('should pass the response into callback if successful for token', function () {
       var callback = sinon.spy(),
           response = { success: true },
