@@ -208,30 +208,6 @@ describe('UNIT Sender', function () {
       }, 10);
     });
 
-    it('should set the registration_ids to reg tokens explicitly passed in', function (done) {
-      var sender = new Sender('myKey');
-      var m = { data: {} };
-      var regTokens = ["registration token 1", "registration token 2"];
-      sender.send(m, { registrationIds: regTokens }, { retries: 0 }, function () {});
-      setTimeout(function() {
-        var body = args.options.json;
-        expect(body.registration_ids).to.deep.equal(regTokens);
-        done();
-      }, 10);
-    });
-
-    it('should set the registration_ids to reg tokens explicitly passed in', function (done) {
-      var sender = new Sender('myKey');
-      var m = { data: {} };
-      var regTokens = ["registration token 1", "registration token 2"];
-      sender.send(m, { registrationTokens: regTokens }, { retries: 0 }, function () {});
-      setTimeout(function() {
-        var body = args.options.json;
-        expect(body.registration_ids).to.deep.equal(regTokens);
-        done();
-      }, 10);
-    });
-
     it('should set the to field if a single reg (or other) token is passed in', function(done) {
       var sender = new Sender('myKey');
       var m = { data: {} };
