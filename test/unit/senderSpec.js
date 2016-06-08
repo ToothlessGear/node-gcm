@@ -9,10 +9,15 @@ var chai = require('chai'),
 describe('UNIT Sender', function () {
   // Use object to set arguments passed into callback
   var args = {};
-  var requestStub = function (options, callback) {
+  var requestStub = sinon.spy(function (options, callback) {
     args.options = options;
-    return callback( args.err, args.res, args.resBody );
-  };
+    var resBody = args.resBody;
+    if(Array.isArray(args.resBody)) {
+        resBody = args.resBody[0];
+        args.resBody = args.resBody.slice(1);
+    }
+    return callback( args.err, args.res, resBody );
+  });
   var Sender = proxyquire(senderPath, { 'request': requestStub });
 
   describe('constructor', function () {
@@ -46,7 +51,8 @@ describe('UNIT Sender', function () {
         resBody: resBody
       };
     }
-    before(function() {
+    beforeEach(function() {
+        requestStub.reset();
         setArgs(null, { statusCode: 200 }, {});
     });
 
@@ -391,39 +397,52 @@ describe('UNIT Sender', function () {
       };
     }
 
-    before(function() {
+    beforeEach(function() {
+      requestStub.reset();
       setArgs(null, { statusCode: 200 }, {});
     });
 
     it('should pass the response into callback if successful for token', function (done) {
       var callback = sinon.spy(),
-          response = { success: true },
+          response = {
+              success: 1,
+              failure: 0,
+              results: [
+                  { message_id: "something" }
+              ]
+            },
           sender = new Sender('myKey');
-      setArgs(null, response);
-      sender.send({}, [1], 0, callback);
+      setArgs(null, { statusCode: 200 }, response);
+      sender.send({}, [1], callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][1]).to.equal(response);
-        expect(args.tries).to.equal(1);
+        expect(requestStub.args.length).to.equal(1);
         done();
       }, 10);
     });
 
     it('should pass the response into callback if successful for tokens', function (done) {
       var callback = sinon.spy(),
-          response = { success: true },
+          response = {
+              success: 1,
+              failure: 0,
+              results: [
+                  { message_id: "something" }
+              ]
+            },
           sender = new Sender('myKey');
-      setArgs(null, response);
-      sender.send({}, [1, 2, 3], 0, callback);
+      setArgs(null, { statusCode: 200 }, response);
+      sender.send({}, [1, 2, 3], callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][1]).to.equal(response);
-        expect(args.tries).to.equal(1);
+        expect(requestStub.args.length).to.equal(1);
         done();
       }, 10);
     });
 
-    it('should pass the error into callback if failure and no retry for token', function (done) {
+    it('should pass the error into callback if failure for token', function (done) {
       var callback = sinon.spy(),
           error = 'my error',
           sender = new Sender('myKey');
@@ -432,12 +451,12 @@ describe('UNIT Sender', function () {
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][0]).to.equal(error);
-        expect(args.tries).to.equal(1);
+        expect(requestStub.args.length).to.equal(1);
         done();
       }, 10);
     });
 
-    it('should pass the error into callback if failure and no retry for tokens', function (done) {
+    it('should pass the error into callback if failure for tokens', function (done) {
       var callback = sinon.spy(),
           error = 'my error',
           sender = new Sender('myKey');
@@ -446,7 +465,7 @@ describe('UNIT Sender', function () {
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
         expect(callback.args[0][0]).to.equal(error);
-        expect(args.tries).to.equal(1);
+        expect(requestStub.args.length).to.equal(1);
         done();
       }, 10);
     });
@@ -454,25 +473,28 @@ describe('UNIT Sender', function () {
     it('should retry number of times passed into call and do exponential backoff', function (done) {
       var start = new Date();
       var callback = function () {
-        expect(args.tries).to.equal(2);
-        expect(new Date() - start).to.be.gte(1000);
+        expect(requestStub.args.length).to.equal(2);
+        expect(new Date() - start).to.be.gte(200);
         done();
       };
       var sender = new Sender('myKey');
-      setArgs('my error');
-      sender.send({ data: {}}, [1], 1, callback);
+      setArgs(null, { statusCode: 500 });
+      sender.send({ data: {}}, [1], {
+          retries: 1,
+          backoff: 200
+      }, callback);
     });
 
     it('should retry if not all regTokens were successfully sent', function (done) {
       var callback = function () {
-        expect(args.tries).to.equal(3);
-        // Last call of sendNoRetry should be for only failed regTokens
-        expect(args.reg_tokens.length).to.equal(1);
-        expect(args.reg_tokens[0]).to.equal(3);
+        expect(requestStub.args.length).to.equal(3);
+        var requestOptions = requestStub.args[2][0];
+        expect(requestOptions.json.registration_ids.length).to.equal(1);
+        expect(requestOptions.json.registration_ids[0]).to.equal(3);
         done();
       };
       var sender = new Sender('myKey');
-      setArgs(null, [{ results: [{}, { error: 'Unavailable' }, { error: 'Unavailable' }]}, { results: [ {}, { error: 'Unavailable' } ] }, { results: [ {} ] } ]);
+      setArgs(null, { statusCode: 200}, [{ results: [{}, { error: 'Unavailable' }, { error: 'Unavailable' }]}, { results: [ {}, { error: 'Unavailable' } ] }, { results: [ {} ] } ]);
       sender.send({ data: {}}, [1,2,3], {
         retries: 5,
         backoff: 100
@@ -482,8 +504,9 @@ describe('UNIT Sender', function () {
     it('should retry all regTokens in event of an error', function (done) {
       var start = new Date();
       var callback = function () {
-        expect(args.tries).to.equal(2);
-        expect(args.reg_tokens.length).to.equal(3);
+        expect(requestStub.args.length).to.equal(2);
+        var requestOptions = requestStub.args[1][0];
+        expect(requestOptions.json.registration_ids.length).to.equal(3);
         done();
       };
       var sender = new Sender('myKey');
@@ -500,7 +523,7 @@ describe('UNIT Sender', function () {
         done();
       };
       var sender = new Sender('myKey');
-      setArgs(null, [
+      setArgs(null, { statusCode: 200 }, [
         { success: 1, failure: 2, canonical_ids: 0, results: [ {}, { error: 'Unavailable' }, { error: 'Unavailable' } ] },
         { success: 1, canonical_ids: 1, failure: 0, results: [ {}, {} ] }
       ]);
@@ -516,13 +539,13 @@ describe('UNIT Sender', function () {
         done();
       };
       var sender = new Sender('myKey');
-      setArgs(null, [
+      setArgs(null, { statusCode: 200 }, [
         { success: 0, failure: 3, canonical_ids: 0, results: [ { error: 'Unavailable' }, { error: 'Unavailable' }, { error: 'Unavailable' } ] },
         { success: 1, canonical_ids: 0, failure: 2, results: [ { error: 'Unavailable' }, { error: 'Unavailable' }, {} ] },
         { success: 0, canonical_ids: 0, failure: 2, results: [ { error: 'Unavailable' }, { error: 'Unavailable' } ] }
       ]);
       sender.send({ data: {}}, [1,2,3], {
-        retries: 3,
+        retries: 2,
         backoff: 100
       }, callback);
     });
