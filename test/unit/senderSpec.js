@@ -28,19 +28,6 @@ describe('UNIT Sender', function () {
       expect(sender).to.not.be.undefined;
       expect(sender).to.be.instanceOf(gcm);
     });
-
-    it('should create a Sender with key and options passed in', function () {
-      var options = {
-        proxy: 'http://myproxy.com',
-        maxSockets: 100,
-        timeout: 100
-      };
-      var key = 'myAPIKey',
-          sender = new gcm(key, options);
-      expect(sender).to.be.instanceOf(gcm);
-      expect(sender.key).to.equal(key);
-      expect(sender.options).to.deep.equal(options);
-    });
   });
 
   describe('send() without retries', function () {
@@ -56,7 +43,7 @@ describe('UNIT Sender', function () {
         setArgs(null, { statusCode: 200 }, {});
     });
 
-    it('should set proxy, maxSockets, timeout and/or strictSSL of req object if passed into constructor', function (done) {
+    it('should set key, proxy, maxSockets, timeout and/or strictSSL of req object if passed into constructor', function (done) {
       var options = {
         proxy: 'http://myproxy.com',
         maxSockets: 100,
@@ -67,6 +54,7 @@ describe('UNIT Sender', function () {
       var m = { data: {} };
       sender.send(m, '', { retries: 0 }, function () {});
       setTimeout(function() {
+        expect(args.options.headers["Authorization"]).to.equal("key=mykey");
         expect(args.options.proxy).to.equal(options.proxy);
         expect(args.options.maxSockets).to.equal(options.maxSockets);
         expect(args.options.timeout).to.equal(options.timeout);
