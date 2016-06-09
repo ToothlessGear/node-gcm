@@ -1,19 +1,21 @@
-var gcm = require('../lib/node-gcm');
+//Replace your developer API key with GCM enabled here
+var gcm = require('../index')('AIza*******************5O6FM');
 
-var message = new gcm.Message();
-
-message.addData('hello', 'world');
-message.addNotification('title', 'Hello');
-message.addNotification('icon', 'ic_launcher');
-message.addNotification('body', 'World');
-
+var message = {
+    data: {
+        hello: 'world'
+    },
+    notification: {
+        title: 'Hello',
+        icon: 'ic_launcher',
+        body: 'World'
+    }
+};
 
 //Add your mobile device registration tokens here
 var regTokens = ['ecG3ps_bNBk:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXl7TDJkW'];
-//Replace your developer API key with GCM enabled here
-var sender = new gcm.Sender('AIza*******************5O6FM');
 
-sender.send(message, regTokens, function (err, response) {
+gcm.send(message, regTokens, function (err, response) {
     if(err) {
       console.error(err);
     } else {
