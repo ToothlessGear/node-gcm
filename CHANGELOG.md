@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**1.0.0-alpha.1**
+ * Removed the Message abstraction, now expect plain objects.
+ * Smaller lodash dependency (only depending on the part that is used).
+ * Simplified the recipient argument so it is now closer to the actual API interface.
+ * Removed `sendNoRetry` method on sender --- use `send` with the option `retries: 0` instead.
+
 **1.0.0-alpha.0**
  * Removed deprecated things: constants, Result, MulticastResult, Message#addDataWith...
 
