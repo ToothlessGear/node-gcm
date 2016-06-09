@@ -78,7 +78,7 @@ registrationTokens.push('regToken2');
 
 // Send the message
 // ... trying only once
-gcm.sendNoRetry(message, registrationTokens, function(err, response) {
+gcm.send(message, registrationTokens, { retries: 0 }, function(err, response) {
   if(err) console.error(err);
   else    console.log(response);
 });
