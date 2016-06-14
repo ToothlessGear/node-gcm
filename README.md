@@ -17,7 +17,7 @@ Follow [PR #238](https://github.com/ToothlessGear/node-gcm/pull/238) to see curr
 ## Installation
 
 ```bash
-$ npm install node-gcm
+$ npm install node-gcm --save
 ```
 
 ## Requirements
