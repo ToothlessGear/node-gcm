@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**0.14.4**
+ * Added support for multiple topics using FCM condition
+
 **0.14.2**
  * Updated README, added note on v1 development
 
