@@ -311,7 +311,7 @@ describe('UNIT Sender', function () {
       var sender = new Sender('myKey');
       var m = new Message({ data: {} });
       var topics = "'TopicA' in topics && ('TopicB' in topics || 'TopicC' in topics)";
-      sender.sendNoRetry(m, { to: topics }, function () {});
+      sender.sendNoRetry(m, { condition: topics }, function () {});
       setTimeout(function() {
         var body = args.options.json;
         expect(body.condition).to.deep.equal(topics);
