@@ -451,6 +451,8 @@ describe('UNIT Sender', function () {
 
     it('should retry if not all regTokens were successfully sent', function (done) {
       var callback = function () {
+        // These expect calls don't get reported to the test runner, they just result
+        // in a timeout.
         expect(requestStub.args.length).to.equal(3);
         var requestOptions = requestStub.args[2][0];
         expect(requestOptions.json.registration_ids.length).to.equal(1);
@@ -512,6 +514,149 @@ describe('UNIT Sender', function () {
         retries: 2,
         backoff: 100
       }, callback);
+    });
+  });
+
+  describe('send() with promise', function () {
+    function setArgs(err, res, resBody) {
+      args = {
+        err: err,
+        res: res,
+        resBody: resBody
+      };
+    }
+
+    beforeEach(function() {
+      requestStub.reset();
+      setArgs(null, { statusCode: 200 }, {});
+    });
+
+    it('should return the response in the promise if successful for token', function () {
+      var response = {
+          success: 1,
+          failure: 0,
+          results: [
+            { message_id: "something" }
+          ]
+        },
+        sender = new Sender('myKey');
+      setArgs(null, { statusCode: 200 }, response);
+      return sender.send({}, [1]).then(function(output) {
+        expect(output).to.equal(response);
+        expect(requestStub.args.length).to.equal(1);
+      });
+    });
+
+    it('should return the response in the promise if successful for tokens', function () {
+      var response = {
+          success: 1,
+          failure: 0,
+          results: [
+            { message_id: "something" }
+          ]
+        },
+        sender = new Sender('myKey');
+      setArgs(null, { statusCode: 200 }, response);
+      return sender.send({}, [1, 2, 3]).then(function(output) {
+        expect(output).to.equal(response);
+        expect(requestStub.args.length).to.equal(1);
+      });
+    });
+
+    it('should reject the promise with the appropriate error if failure for token', function () {
+      var error = 'my error',
+        sender = new Sender('myKey');
+      setArgs(error);
+      sender.send({}, [1], 0).then(function() {
+        chai.assert.fail();
+      }).catch(function(err) {
+        expect(err).to.equal(error);
+        expect(requestStub.args.length).to.equal(1);
+      });
+    });
+
+    it('should reject the promise with the appropriate error if failure for tokens', function () {
+      var error = 'my error',
+        sender = new Sender('myKey');
+      setArgs(error);
+      return sender.send({}, [1, 2, 3], 0).then(function() {
+        chai.assert.fail();
+      }).catch(function(err) {
+        expect(err).to.equal(error);
+        expect(requestStub.args.length).to.equal(1);
+      });
+    });
+
+    it('should retry number of times passed into call and do exponential backoff', function () {
+      var start = new Date();
+      var sender = new Sender('myKey');
+      setArgs(null, { statusCode: 500 });
+      return sender.send({ data: {}}, [1], {
+        retries: 1,
+        backoff: 200
+      }).catch(function() {}).then(function() {
+        expect(requestStub.args.length).to.equal(2);
+        expect(new Date() - start).to.be.gte(200);
+      });
+    });
+
+    it('should retry if not all regTokens were successfully sent', function () {
+      var sender = new Sender('myKey');
+      setArgs(
+        null,
+        { statusCode: 200},
+        [
+          { results: [{}, { error: 'Unavailable' },
+          { error: 'Unavailable' }]},
+          { results: [ {}, { error: 'Unavailable' } ] },
+          { results: [ {} ] }
+        ]);
+      return sender.send({data: {}}, [1,2,3], {
+        retries: 5,
+        backoff: 100
+      }).catch(function() {}).then(function() {
+        expect(requestStub.args.length).to.equal(3);
+        var requestOptions = requestStub.args[2][0];
+        expect(requestOptions.json.registration_ids.length).to.equal(1);
+        expect(requestOptions.json.registration_ids[0]).to.equal(3);
+      });
+    });
+
+    it('should retry all regTokens in event of an error', function () {
+      var sender = new Sender('myKey');
+      setArgs('my error');
+      return sender.send({ data: {}}, [1,2,3], 1).catch(function() {}).then(function() {
+        expect(requestStub.args.length).to.equal(2);
+        var requestOptions = requestStub.args[1][0];
+        expect(requestOptions.json.registration_ids.length).to.equal(3);
+      });
+    });
+
+    it('should update the failures and successes correctly when retrying', function () {
+      var sender = new Sender('myKey');
+      setArgs(null, { statusCode: 200 }, [
+        { success: 1, failure: 2, canonical_ids: 0, results: [ {}, { error: 'Unavailable' }, { error: 'Unavailable' } ] },
+        { success: 1, canonical_ids: 1, failure: 0, results: [ {}, {} ] }
+      ]);
+      return sender.send({ data: {}}, [1,2,3], 3).then(function(response) {
+        expect(response.canonical_ids).to.equal(1);
+        expect(response.success).to.equal(2);
+        expect(response.failure).to.equal(0);
+      });
+    });
+
+    it('should update the failures and successes correctly when retrying and failing some', function () {
+      var sender = new Sender('myKey');
+      setArgs(null, { statusCode: 200 }, [
+        { success: 0, failure: 3, canonical_ids: 0, results: [ { error: 'Unavailable' }, { error: 'Unavailable' }, { error: 'Unavailable' } ] },
+        { success: 1, canonical_ids: 0, failure: 2, results: [ { error: 'Unavailable' }, { error: 'Unavailable' }, {} ] },
+        { success: 0, canonical_ids: 0, failure: 2, results: [ { error: 'Unavailable' }, { error: 'Unavailable' } ] }
+      ]);
+      return sender.send({ data: {}}, [1,2,3], {retries: 2, backoff: 100}).then(function(response) {
+        expect(response.canonical_ids).to.equal(0);
+        expect(response.success).to.equal(1);
+        expect(response.failure).to.equal(2);
+      });
     });
   });
 });
