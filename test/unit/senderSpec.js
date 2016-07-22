@@ -307,6 +307,20 @@ describe('UNIT Sender', function () {
       }, 10);
     })
 
+    it('should set the condition field if multiple topics are passed in', function(done) {
+      var sender = new Sender('myKey');
+      var m = new Message({ data: {} });
+      var topics = "'TopicA' in topics && ('TopicB' in topics || 'TopicC' in topics)";
+      sender.sendNoRetry(m, { condition: topics }, function () {});
+      setTimeout(function() {
+        var body = args.options.json;
+        expect(body.condition).to.deep.equal(topics);
+        expect(body.to).to.be.an("undefined");
+        expect(body.registration_ids).to.be.an("undefined");
+        done();
+      }, 10);
+    })
+
     it('should pass an error into callback if recipient is an empty object', function (done) {
       var callback = sinon.spy();
       var sender = new Sender('myKey');
