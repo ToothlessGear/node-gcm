@@ -78,7 +78,7 @@ var message = new gcm.Message({
 	notification: {
 		title: "Hello, World",
 		icon: "ic_launcher",
-		body: "This is a notification that will be displayed ASAP."
+		body: "This is a notification that will be displayed if your app is in the background."
 	}
 });
 
@@ -158,6 +158,8 @@ message.addNotification({
 });
 
 ```
+
+**Note:** Notifications sent using `message.addNotification` are only displayed when your app is in the background. Consider sending the notification parameters using `message.addData` and manually building and displaying a notification in your push receiver logic.
 
 ### Notification payload option table
 
