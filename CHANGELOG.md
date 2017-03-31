@@ -3,6 +3,11 @@ Changelog
 
 **0.14.4**
  * Added support for multiple topics using FCM condition
+ * Added `--save` to npm install command in README
+ * Warn when sending a message with `data.from` in its payload
+ * Document `message.addNotification` behavior when app is in foreground
+ * Update `request` to `2.81.0` to resolve security vulnerability
+ * Support empty JSON response from Firebase Cloud Messaging due to invalid notification key
 
 **0.14.2**
  * Updated README, added note on v1 development
