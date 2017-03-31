@@ -1,7 +1,7 @@
 Changelog
 =========
 
-**0.14.4**
+**0.14.5**
  * Added support for multiple topics using FCM condition
  * Added `--save` to npm install command in README
  * Warn when sending a message with `data.from` in its payload
