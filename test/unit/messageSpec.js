@@ -26,6 +26,7 @@ describe('UNIT Message', function () {
         dryRun: true,
         priority: 'high',
         contentAvailable: false,
+        mutableContent: true,
         restrictedPackageName: "com.example.App",
         data: {
           score: 98
@@ -43,6 +44,7 @@ describe('UNIT Message', function () {
         dry_run: true,
         priority: 'high',
         content_available: false,
+        mutable_content: true,
         restricted_package_name: "com.example.App",
         data: {
           score: 98
@@ -260,7 +262,7 @@ describe('UNIT Message', function () {
       expect(json.notification).to.deep.equal(obj);
     });
   });
-  
+
   describe('toJson()', function() {
     it('should return well-formed data for GCM if it is valid', function() {
       var m = new Message({
@@ -279,7 +281,7 @@ describe('UNIT Message', function () {
       expect(json.delayWhileIdle).to.be.an("undefined");
       expect(json.dryRun).to.be.an("undefined");
     });
-    
+
     it('should return well-formed data for GCM if it describes a notification', function() {
       var notificationData = {
         title: "Hello, World",
@@ -296,7 +298,7 @@ describe('UNIT Message', function () {
       expect(json.notification).not.to.be.an("undefined");
       expect(json.notification).to.deep.equal(notificationData);
     });
-    
+
     it('should ignore non-standard fields when serializing', function() {
       var m = new Message({
         timeToLive: 60 * 60 * 24,
