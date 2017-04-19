@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**0.14.6**
+ * Support for ios mutable-content (PR #297, thanks @SemonCat)
+
 **0.14.5**
  * Added support for multiple topics using FCM condition
  * Added `--save` to npm install command in README
