@@ -139,6 +139,20 @@ If you provide an incorrect recipient key or object type, an `Error` object will
 Notice that [you can *at most* send notifications to 1000 registration tokens at a time](https://github.com/ToothlessGear/node-gcm/issues/42).
 This is due to [a restriction](http://developer.android.com/training/cloudsync/gcm.html) on the side of the GCM API.
 
+
+### Additional message options
+
+|Parameter|Usage|Description|
+|---|---|---|
+|collapseKey|Optional, string|This parameter identifies a group of messages that can be collapsed, so that only the last message gets sent when delivery can be resumed.|
+|priority|Optional, string|Sets the priority of the message. Valid values are "normal" and "high."|
+|contentAvailable|Optional, JSON boolean|On iOS, when a notification or message is sent and this is set to true, an inactive client app is awoken.|
+|timeToLive|Optional, JSON number|This parameter specifies how long (in seconds) the message should be kept in GCM storage if the device is offline. The maximum time to live supported is 4 weeks, and the default value is 4 weeks.|
+|restrictedPackageName|Optional, string|This parameter specifies the package name of the application where the registration tokens must match in order to receive the message.|
+|dryRun|Optional, JSON boolean|This parameter, when set to true, allows developers to test a request without actually sending a message.|
+|data|Optional, JSON object|This parameter specifies the custom key-value pairs of the message's payload.|
+|notification|Optional, JSON object|This parameter specifies the predefined, user-visible key-value pairs of the notification payload. See "Notification payload option table" below for more details.|
+
 ## Notification usage
 
 ```js
@@ -180,9 +194,9 @@ message.addNotification({
 
 Notice notification payload defined in [GCM Connection Server Reference](https://developers.google.com/cloud-messaging/server-ref#table1)
 
-## Custom GCM request options
+## Custom HTTP request options
 
-You can provide custom `request` options such as `proxy` and `timeout` for the GCM request. For more information, refer to [the complete list of request options](https://github.com/request/request#requestoptions-callback). Note that the following options cannot be overriden: `method`, `uri`, `body`, as well as the following headers: `Authorization`, `Content-Type`, and `Content-Length`.
+You can provide custom `request` options such as `proxy` and `timeout` for the HTTP request to the GCM API. For more information, refer to [the complete list of request options](https://github.com/request/request#requestoptions-callback). Note that the following options cannot be overriden: `method`, `uri`, `body`, as well as the following headers: `Authorization`, `Content-Type`, and `Content-Length`.
 
 ```js
 // Set custom request options
