@@ -3,7 +3,11 @@
 [![Join the chat at https://gitter.im/ToothlessGear/node-gcm](https://badges.gitter.im/ToothlessGear/node-gcm.svg)](https://gitter.im/ToothlessGear/node-gcm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm](https://badge.fury.io/js/node-gcm.svg)](https://www.npmjs.com/package/node-gcm)
 
-The goal of this project is providing the best and most easily used interface for Google's Cloud Messaging service (now called Firebase Cloud Messaging, FCM).
+The goal of this project is providing the best and most easily used interface for Firebase Cloud Messaging. (The name `gcm` comes from the older name for the service, Google Cloud Messaging.)
+
+**By April 11, 2019 users must have [migrated from GCM to FCM](https://developers.google.com/cloud-messaging/android/android-migrate-fcm).**
+If you are using this library, we've already got you covered on the server side (since version 0.14.1) --- just update to the most recent version and you are good.
+
 We appreciate all the help we can get!
 If you want to help out, check out the [Guidelines for Contributing](CONTRIBUTING.md) section.
 
