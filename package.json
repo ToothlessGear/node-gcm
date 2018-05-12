@@ -68,14 +68,14 @@
   },
   "dependencies": {
     "debug": "^3.1.0",
-    "lodash": "^3.10.1",
-    "request": "2.81.0"
+    "lodash": "^4.17.10",
+    "request": "2.85.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",
-    "mocha": "^2.2.4",
-    "proxyquire": "^1.4.0",
-    "sinon": "^1.14.1"
+    "mocha": "^5.1.1",
+    "proxyquire": "^2.0.1",
+    "sinon": "^5.0.7"
   },
   "optionalDependencies": {},
   "engines": {
