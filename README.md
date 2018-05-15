@@ -24,6 +24,8 @@ Follow [PR #238](https://github.com/ToothlessGear/node-gcm/pull/238) to see curr
 $ npm install node-gcm --save
 ```
 
+**Note:** This package requires Node v4.0 and newer.
+
 ## Requirements
 
 This library provides the server-side implementation of GCM.
