@@ -79,7 +79,7 @@
   },
   "optionalDependencies": {},
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 4"
   },
   "bugs": {
     "url": "https://github.com/ToothlessGear/node-gcm/issues"
