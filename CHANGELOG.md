@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**1.0.1**
+ * Marked required Node version v4.0
+
+**1.0.0**
+ * Dependency bump
+
 **0.14.6**
  * Support for ios mutable-content (PR #297, thanks @SemonCat)
 
