@@ -1,7 +1,11 @@
 # node-gcm
 
 [![Join the chat at https://gitter.im/ToothlessGear/node-gcm](https://badges.gitter.im/ToothlessGear/node-gcm.svg)](https://gitter.im/ToothlessGear/node-gcm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![npm](https://badge.fury.io/js/node-gcm.svg)](https://www.npmjs.com/package/node-gcm)
+[![npm](https://badge.fury.io/js/node-gcm.svg)](https://www.npmjs.com/package/node-gcm)   
+[![dependencies Status](https://david-dm.org/ToothlessGear/node-gcm/status.svg)](https://david-dm.org/ToothlessGear/node-gcm)
+[![optionalDependencies Status](https://david-dm.org/ToothlessGear/node-gcm/optional-status.svg)](https://david-dm.org/ToothlessGear/node-gcm?type=optional)
+[![devDependencies Status](https://david-dm.org/ToothlessGear/node-gcm/dev-status.svg)](https://david-dm.org/ToothlessGear/node-gcm?type=dev)
+
 
 The goal of this project is providing the best and most easily used interface for Firebase Cloud Messaging. (The name `gcm` comes from the older name for the service, Google Cloud Messaging.)
 
@@ -46,7 +50,7 @@ var sender = new gcm.Sender('YOUR_API_KEY_HERE');
 
 // Prepare a message to be sent
 var message = new gcm.Message({
-    data: { key1: 'msg1' }
+	data: { key1: 'msg1' }
 });
 
 // Specify which registration IDs to deliver the message to
@@ -110,20 +114,20 @@ registrationTokens.push('regToken2');
 // Send the message
 // ... trying only once
 sender.sendNoRetry(message, { registrationTokens: registrationTokens }, function(err, response) {
-  if(err) console.error(err);
-  else    console.log(response);
+	if(err) console.error(err);
+	else    console.log(response);
 });
 
 // ... or retrying
 sender.send(message, { registrationTokens: registrationTokens }, function (err, response) {
-  if(err) console.error(err);
-  else    console.log(response);
+	if(err) console.error(err);
+	else    console.log(response);
 });
 
 // ... or retrying a specific number of times (10)
 sender.send(message, { registrationTokens: registrationTokens }, 10, function (err, response) {
-  if(err) console.error(err);
-  else    console.log(response);
+	if(err) console.error(err);
+	else    console.log(response);
 });
 ```
 ## Recipients
@@ -162,7 +166,6 @@ This is due to [a restriction](http://developer.android.com/training/cloudsync/g
 ## Notification usage
 
 ```js
-
 var message = new gcm.Message();
 
 // Add notification payload as key value
@@ -172,11 +175,10 @@ message.addNotification('icon', 'ic_launcher');
 
 // as object
 message.addNotification({
-  title: 'Alert!!!',
-  body: 'Abnormal data access',
-  icon: 'ic_launcher'
+	title: 'Alert!!!',
+	body: 'Abnormal data access',
+	icon: 'ic_launcher'
 });
-
 ```
 
 **Note:** Notifications sent using `message.addNotification` are only displayed when your app is in the background. Consider sending the notification parameters using `message.addData` and manually building and displaying a notification in your push receiver logic.
@@ -218,8 +220,8 @@ var sender = new gcm.Sender('YOUR_API_KEY_HERE', requestOptions);
 
 // Send it to GCM endpoint with modified request options
 sender.send(message, { registrationTokens: regTokens }, function (err, response) {
-    if(err) console.error(err);
-    else     console.log(response);
+	if(err) console.error(err);
+	else    console.log(response);
 });
 ```
 
