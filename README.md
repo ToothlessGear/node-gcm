@@ -129,8 +129,8 @@ sender.send(message, { registrationTokens: registrationTokens }, 10, function (e
 // Collect device registration tokens that you couldn't send messages to
 sender.send(message, { registrationTokens: registrationTokens }, function (err, response) {  
   var failed_tokens = response.results
-    .map((res, i) => !!res.error ? registrationTokens[i] : undefined)
-    .filter(token => !!token);
+    .map((res, i) => res.error ? registrationTokens[i] : null)
+    .filter(token => token);
   console.log('These tokens are no longer ok:', failed_tokens);
 });
 ```
