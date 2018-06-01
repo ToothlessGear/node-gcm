@@ -126,11 +126,14 @@ sender.send(message, { registrationTokens: registrationTokens }, 10, function (e
   else    console.log(response);
 });
 
-// Collect device registration tokens that you couldn't send messages to
+// Q: I need to remove all "bad" token from my database, how do I do that? 
+//    The results-array does not contain any tokens!
+// A: The array of tokens used for sending will match the array of results, so you can cross-check them.
 sender.send(message, { registrationTokens: registrationTokens }, function (err, response) {  
-  var failed_tokens = response.results
-    .map((res, i) => res.error ? registrationTokens[i] : null)
-    .filter(token => token);
+  var failed_tokens = response.results                           // Array with result for each token we messaged
+    .map((res, i) => res.error ? registrationTokens[i] : null)   // If there's any kind of error, 
+                                                                 // pick _the token_ from the _other_ array
+    .filter(token => token);                                     // Remove all the null values
   console.log('These tokens are no longer ok:', failed_tokens);
 });
 ```
