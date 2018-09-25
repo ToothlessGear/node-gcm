@@ -327,7 +327,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -338,7 +338,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {invalid: true}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -349,7 +349,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {registrationIds: ['string'], topic: 'string'}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -360,7 +360,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {registrationIds: 'string'}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -371,7 +371,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {registrationTokens: 'string'}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -382,7 +382,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {to: ['array']}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -393,7 +393,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {topic: ['array']}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -404,7 +404,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {notificationKey: ['array']}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -415,7 +415,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {to: ''}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -426,7 +426,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {topic: ''}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -437,7 +437,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {notificationKey: ''}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -448,7 +448,7 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(new Message(), {}, callback);
       setTimeout(function() {
         expect(callback.calledOnce).to.be.ok;
-        expect(callback.args[0][0]).to.be.a('object');
+        expect(callback.args[0][0]).to.be.instanceOf(Error);
         done();
       }, 10);
     });
@@ -552,7 +552,6 @@ describe('UNIT Sender', function () {
     before( function () {
       restore.sendNoRetry = Sender.prototype.sendNoRetry;
       Sender.prototype.sendNoRetry = function (message, reg_tokens, callback) {
-        console.log('Firing send');
         args.message = message;
         args.reg_tokens = reg_tokens;
         args.tries++;
