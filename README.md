@@ -166,7 +166,6 @@ This is due to [a restriction](http://developer.android.com/training/cloudsync/g
 |contentAvailable|Optional, JSON boolean|On iOS, when a notification or message is sent and this is set to true, an inactive client app is awoken.|
 |mutableContent|Optional, JSON boolean|On iOS, Currently for iOS 10+ devices only. On iOS, use this field to represent mutable-content in the APNs payload. When a notification is sent and this is set to true, the content of the notification can be modified before it is displayed, using a Notification Service app extension.|
 |timeToLive|Optional, JSON number|This parameter specifies how long (in seconds) the message should be kept in GCM storage if the device is offline. The maximum time to live supported is 4 weeks, and the default value is 4 weeks.|
-|timeToLive|Optional, JSON number|This parameter specifies how long (in seconds) the message should be kept in GCM storage if the device is offline. The maximum time to live supported is 4 weeks, and the default value is 4 weeks.|
 |restrictedPackageName|Optional, string|This parameter specifies the package name of the application where the registration tokens must match in order to receive the message.|
 |dryRun|Optional, JSON boolean|This parameter, when set to true, allows developers to test a request without actually sending a message.|
 |data|Optional, JSON object|This parameter specifies the custom key-value pairs of the message's payload.|
