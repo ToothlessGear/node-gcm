@@ -212,6 +212,8 @@ message.addNotification({
 
 Notice notification payload defined in [GCM Connection Server Reference](https://developers.google.com/cloud-messaging/server-ref#table1)
 
+**Note For Android:** When using `data` for sending a mixed notification (aka `message` key is on `data` object and no `notifcation` object) then you can specify `smallIcon` and `largeIcon` insted of `icon` for both icon types. `icon` will set `smallIcon` otherwise 
+
 ## Custom HTTP request options
 
 You can provide custom `request` options such as `proxy` and `timeout` for the HTTP request to the GCM API. For more information, refer to [the complete list of request options](https://github.com/request/request#requestoptions-callback). Note that the following options cannot be overriden: `method`, `uri`, `body`, as well as the following headers: `Authorization`, `Content-Type`, and `Content-Length`.
