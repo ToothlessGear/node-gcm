@@ -29,10 +29,10 @@ $ npm install node-gcm --save
 ## Requirements
 
 This library provides the server-side implementation of GCM.
-You need to generate an [API Key](https://developers.google.com/cloud-messaging/gcm#apikey).
+You need to generate an [API Key](https://console.firebase.google.com/u/0/) (Click the gear next to FCM project name) > Project Settings > Cloud Messaging -> **Server Key**).
 
-GCM notifications can be sent to both [Android](https://developers.google.com/cloud-messaging/android/start) and [iOS](https://developers.google.com/cloud-messaging/ios/start).
-If you are new to GCM you should probably look into the [documentation](https://developers.google.com/cloud-messaging/gcm).
+GCM notifications can be sent to both [Android](https://firebase.google.com/docs/cloud-messaging/android/client) and [iOS](https://firebase.google.com/docs/cloud-messaging/ios/client).
+If you are new to GCM you should probably look into the [documentation](https://firebase.google.com/docs/cloud-messaging).
 
 ## Example application
 
@@ -141,7 +141,7 @@ You can send push notifications to various recipient types by providing one of t
 
 |Key|Type|Description|
 |---|---|---|
-|to|String|A single [registration token](https://developers.google.com/cloud-messaging/android/client#sample-register), [notification key](https://developers.google.com/cloud-messaging/notifications), or [topic](https://developers.google.com/cloud-messaging/topic-messaging).
+|to|String|A single [registration token](https://firebase.google.com/docs/cloud-messaging/android/client#sample-register), [notification key](https://firebase.google.com/docs/cloud-messaging/android/device-group), or [topic](https://firebase.google.com/docs/cloud-messaging/android/topic-messaging).
 |topic|String|A single publish/subscribe topic.
 |condition|String|Multiple topics using the [condition](https://firebase.google.com/docs/cloud-messaging/topic-messaging) parameter.
 |notificationKey|String|Deprecated. A key that groups multiple registration tokens linked to the same user.
@@ -207,7 +207,7 @@ message.addNotification({
 |title_loc_args|iOS|Optional, JSON array as string|Indicates the string value to replace format specifiers in title string for localization. On iOS, this corresponds to "title-loc-args" in APNS payload.|
 |title_loc_key|iOS|Optional, string|Indicates the key to the title string for localization. On iOS, this corresponds to "title-loc-key" in APNS payload.|
 
-Notice notification payload defined in [GCM Connection Server Reference](https://developers.google.com/cloud-messaging/server-ref#table1)
+Notice notification payload defined in [FCM Connection Server Reference](https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json)
 
 ## Custom HTTP request options
 
