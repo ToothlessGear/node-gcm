@@ -702,6 +702,22 @@ describe('UNIT Sender', function () {
       }, callback);
     });
 
+    it('should retry if some regTokens were failed with InternalServerError', function (done) {
+      var callback = function () {
+        expect(args.tries).to.equal(3);
+        // Last call of sendNoRetry should be for only failed regTokens
+        expect(args.reg_tokens.length).to.equal(1);
+        expect(args.reg_tokens[0]).to.equal(3);
+        done();
+      };
+      var sender = new Sender('myKey');
+      setArgs(null, [{ results: [{}, { error: 'InternalServerError' }, { error: 'InternalServerError' }]}, { results: [ {}, { error: 'InternalServerError' } ] }, { results: [ {} ] } ]);
+      sender.send({ data: {}}, [1,2,3], {
+        retries: 5,
+        backoff: 100
+      }, callback);
+    });
+
     it('should retry all regTokens in event of an error', function (done) {
       var start = new Date();
       var callback = function () {
@@ -730,6 +746,22 @@ describe('UNIT Sender', function () {
       sender.send({ data: {}}, [1,2,3], 3, callback);
     });
 
+    it('should update the failures and successes correctly when retrying for InternalServerError response', function (done) {
+      var callback = function(error, response) {
+        expect(error).to.equal(null);
+        expect(response.canonical_ids).to.equal(1);
+        expect(response.success).to.equal(2);
+        expect(response.failure).to.equal(0);
+        done();
+      };
+      var sender = new Sender('myKey');
+      setArgs(null, [
+        { success: 1, failure: 2, canonical_ids: 0, results: [ {}, { error: 'InternalServerError' }, { error: 'InternalServerError' } ] },
+        { success: 1, canonical_ids: 1, failure: 0, results: [ {}, {} ] }
+      ]);
+      sender.send({ data: {}}, [1,2,3], 3, callback);
+    });
+
     it('should update the failures and successes correctly when retrying and failing some', function (done) {
       var callback = function(error, response) {
         expect(error).to.equal(null);
@@ -743,6 +775,26 @@ describe('UNIT Sender', function () {
         { success: 0, failure: 3, canonical_ids: 0, results: [ { error: 'Unavailable' }, { error: 'Unavailable' }, { error: 'Unavailable' } ] },
         { success: 1, canonical_ids: 0, failure: 2, results: [ { error: 'Unavailable' }, { error: 'Unavailable' }, {} ] },
         { success: 0, canonical_ids: 0, failure: 2, results: [ { error: 'Unavailable' }, { error: 'Unavailable' } ] }
+      ]);
+      sender.send({ data: {}}, [1,2,3], {
+        retries: 3,
+        backoff: 100
+      }, callback);
+    });
+
+    it('should update the failures and successes correctly when retrying and failing some with InternalServerError response', function (done) {
+      var callback = function(error, response) {
+        expect(error).to.equal(null);
+        expect(response.canonical_ids).to.equal(0);
+        expect(response.success).to.equal(1);
+        expect(response.failure).to.equal(2);
+        done();
+      };
+      var sender = new Sender('myKey');
+      setArgs(null, [
+        { success: 0, failure: 3, canonical_ids: 0, results: [ { error: 'InternalServerError' }, { error: 'InternalServerError' }, { error: 'InternalServerError' } ] },
+        { success: 1, canonical_ids: 0, failure: 2, results: [ { error: 'InternalServerError' }, { error: 'InternalServerError' }, {} ] },
+        { success: 0, canonical_ids: 0, failure: 2, results: [ { error: 'InternalServerError' }, { error: 'InternalServerError' } ] }
       ]);
       sender.send({ data: {}}, [1,2,3], {
         retries: 3,
