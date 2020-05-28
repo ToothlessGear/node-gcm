@@ -167,7 +167,7 @@ This is due to [a restriction](https://firebase.google.com/docs/cloud-messaging/
 |dryRun|Optional, JSON boolean|This parameter, when set to true, allows developers to test a request without actually sending a message.|
 |data|Optional, JSON object|This parameter specifies the custom key-value pairs of the message's payload.|
 |notification|Optional, JSON object|This parameter specifies the predefined, user-visible key-value pairs of the notification payload. See "Notification payload option table" below for more details.|
-|fcm_options|Optional, JSON object|This parameter is used to pass FCM specific options as outlined (here)[https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#FcmOptions]|
+|fcm_options|Optional, JSON object|This parameter is used to pass FCM specific options as outlined [here](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#FcmOptions)|
 
 ## Notification usage
 
