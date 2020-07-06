@@ -73,13 +73,12 @@ describe('UNIT Sender', function () {
       }, 10);
     });
 
-    it('should not override internal request params if passed into constructor (except timeout)', function (done) {
+    it('should not override internal request params if passed into constructor (except timeout/uri)', function (done) {
       var options = {
         method: 'GET',
         headers: {
             Authorization: 'test'
         },
-        uri: 'http://example.com',
         json: { test: true }
       };
       var sender = new Sender('mykey', options);
@@ -88,7 +87,6 @@ describe('UNIT Sender', function () {
       setTimeout(function() {
         expect(args.options.method).to.not.equal(options.method);
         expect(args.options.headers).to.not.deep.equal(options.headers);
-        expect(args.options.uri).to.not.equal(options.uri);
         expect(args.options.json).to.not.equal(options.json);
         done();
       }, 10);
@@ -120,6 +118,29 @@ describe('UNIT Sender', function () {
       sender.sendNoRetry(m, '', function () {});
       setTimeout(function() {
         expect(args.options.headers.Custom).to.deep.equal(options.headers.Custom);
+        done();
+      }, 10);
+    });
+
+    it('should allow override for "uri" if passed into constructor via options', function (done) {
+      var options = {
+        uri: 'http://example.com'
+      };
+      var sender = new Sender('mykey', options);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', function () {});
+      setTimeout(function() {
+        expect(args.options.uri).to.be.equal(options.uri);
+        done();
+      }, 10);
+    });
+
+    it('should default "uri" to FCM send uri if not overridden', function (done) {
+      var sender = new Sender('mykey');
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', function () {});
+      setTimeout(function() {
+        expect(args.options.uri).to.be.equal(Constants.GCM_SEND_URI);
         done();
       }, 10);
     });
