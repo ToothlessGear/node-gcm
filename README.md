@@ -1,7 +1,6 @@
 # node-gcm
 
-[![Join the chat at https://gitter.im/ToothlessGear/node-gcm](https://badges.gitter.im/ToothlessGear/node-gcm.svg)](https://gitter.im/ToothlessGear/node-gcm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![npm](https://badge.fury.io/js/node-gcm.svg)](https://www.npmjs.com/package/node-gcm)
+[![npm version](https://badge.fury.io/js/%40parse%2Fnode-gcm.svg)](https://badge.fury.io/js/%40parse%2Fnode-gcm)
 <a href="https://github.com/parse-community/node-gcm/actions?query=workflow%3Aci+branch%3Amaster">
 	<img alt="Build status" src="https://github.com/parse-community/node-gcm/workflows/ci/badge.svg?branch=master">
 </a>
