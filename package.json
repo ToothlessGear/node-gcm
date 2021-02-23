@@ -70,8 +70,8 @@
   },
   "dependencies": {
     "debug": "^3.1.0",
-    "lodash": "^4.17.10",
-    "request": "2.87.0"
+    "lodash": "^4.17.20",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",
