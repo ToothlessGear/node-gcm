@@ -130,7 +130,7 @@ sender.send(message, { registrationTokens: registrationTokens }, 10, function (e
 //    The results-array does not contain any tokens!
 // A: The array of tokens used for sending will match the array of results, so you can cross-check them.
 sender.send(message, { registrationTokens: registrationTokens }, function (err, response) {
-  var failed_tokens = registrationTokens.filter((token, i) => response[i].error != null);
+  var failed_tokens = registrationTokens.filter((token, i) => response.results[i].error != null);
   console.log('These tokens are no longer ok:', failed_tokens);
 });
 ```
