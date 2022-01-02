@@ -1,7 +1,7 @@
 /**
  * @deprecated You are using node-gcm MulticastResult, which is deprecated.
  */
-export default class MulitcastResult {
+declare class MulticastResult {
     success: any;
     failure: any;
     canonicalIds: any;
@@ -12,3 +12,4 @@ export default class MulitcastResult {
     addResult(result: any): void;
     getTotal(): any;
 }
+export = MulticastResult;

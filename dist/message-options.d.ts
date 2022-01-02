@@ -11,7 +11,7 @@
  * Other than that, the arguments are expected to follow the indicated
  * structure.
  */
-declare const _default: {
+declare const MessageOptions: {
     collapseKey: {
         __argName: string;
         __argType: string;
@@ -53,4 +53,4 @@ declare const _default: {
         __argType: string;
     };
 };
-export default _default;
+export = MessageOptions;

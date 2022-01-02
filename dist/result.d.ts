@@ -1,4 +1,5 @@
 /**
  * @deprecated You are using node-gcm Result which is deprecated
  */
-export default function Result(): void;
+declare function Result(): void;
+export = Result;

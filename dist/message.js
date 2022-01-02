@@ -11,14 +11,10 @@ var Message = /** @class */ (function () {
         this.options = options || {};
     }
     Message.prototype.addNotification = function (objectOrKey, value) {
-        return this.handleParamSet(value !== undefined
-            ? [objectOrKey, value]
-            : [objectOrKey], "notification");
+        return this.handleParamSet(value !== undefined ? [objectOrKey, value] : [objectOrKey], 'notification');
     };
     Message.prototype.addData = function (objectOrKey, value) {
-        return this.handleParamSet(value !== undefined
-            ? [objectOrKey, value]
-            : [objectOrKey], "data");
+        return this.handleParamSet(value !== undefined ? [objectOrKey, value] : [objectOrKey], 'data');
     };
     Message.prototype.toJson = function () {
         var json = {};
@@ -26,7 +22,7 @@ var Message = /** @class */ (function () {
             var key = _a[_i];
             var optionDescription = message_options_1["default"][key];
             if (!optionDescription) {
-                return;
+                continue;
             }
             var jsonKey = optionDescription.__argName || key;
             json[jsonKey] = this.options[key];
@@ -37,14 +33,14 @@ var Message = /** @class */ (function () {
      * @deprecated Please use Message#addData instead.
      */
     Message.prototype.addDataWithKeyValue = function (key, value) {
-        console.warn("Message#addDataWithKeyValue has been deprecated. Please use Message#addData instead.");
+        console.warn('Message#addDataWithKeyValue has been deprecated. Please use Message#addData instead.');
         this.addData(key, value);
     };
     /**
      * @deprecated Please use Message#addData instead.
      */
     Message.prototype.addDataWithObject = function (obj) {
-        console.warn("Message#addDataWithObject has been deprecated. Please use Message#addData instead.");
+        console.warn('Message#addDataWithObject has been deprecated. Please use Message#addData instead.');
         this.addData(obj);
     };
     Message.prototype.handleParamSet = function (args, paramType) {
@@ -62,7 +58,7 @@ var Message = /** @class */ (function () {
         return (this.options[paramType][key] = value);
     };
     Message.prototype.setOption = function (paramType, obj) {
-        if (typeof obj === "object" && Object.keys(obj).length > 0) {
+        if (typeof obj === 'object' && Object.keys(obj).length > 0) {
             this.options[paramType] = obj;
         }
     };

@@ -2,68 +2,21 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
 var request_1 = __importDefault(require("request"));
 var lodash_defaultsdeep_1 = __importDefault(require("lodash.defaultsdeep"));
 var constants_1 = __importDefault(require("./constants"));
-var debug = require("debug")("node-gcm");
+var debug = require('debug')('node-gcm');
 var Sender = /** @class */ (function () {
     function Sender(key, options) {
-        this.sendNoRetry = function (message, recipient, callback) {
-            var _this = this;
-            if (!callback) {
-                callback = function () { };
-            }
-            getRequestBody(message, recipient, function (err, body) {
-                if (err) {
-                    return callback(err);
-                }
-                //Build request options, allowing some to be overridden
-                var request_options = (0, lodash_defaultsdeep_1["default"])({
-                    method: "POST",
-                    headers: {
-                        Authorization: "key=" + _this.key
-                    },
-                    json: body
-                }, _this.options, {
-                    uri: constants_1["default"].GCM_SEND_URI,
-                    timeout: constants_1["default"].SOCKET_TIMEOUT
-                });
-                (0, request_1["default"])(request_options, function (err, res, resBodyJSON) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    if (res.statusCode >= 500) {
-                        debug("GCM service is unavailable (500)");
-                        return callback(res.statusCode);
-                    }
-                    if (res.statusCode === 401) {
-                        debug("Unauthorized (401). Check that your API token is correct.");
-                        return callback(res.statusCode);
-                    }
-                    if (res.statusCode !== 200) {
-                        debug("Invalid request (" + res.statusCode + "): " + resBodyJSON);
-                        return callback(res.statusCode);
-                    }
-                    if (!resBodyJSON) {
-                        debug("Empty response received (" +
-                            res.statusCode +
-                            " " +
-                            res.statusMessage +
-                            ")");
-                        // Spoof error code 400 to avoid retrying the request
-                        return callback({ error: res.statusMessage, code: 400 });
-                    }
-                    callback(null, resBodyJSON, body.registration_ids || [body.to]);
-                });
-            });
-        };
+        if (!(this instanceof Sender)) {
+            return new Sender(key, options);
+        }
         this.key = key;
         this.options = options || {};
     }
     Sender.prototype.send = function (message, recipient, optionsOrCallback, callback) {
         var _a, _b;
-        if (typeof optionsOrCallback == "function") {
+        if (typeof optionsOrCallback == 'function') {
             callback = optionsOrCallback;
             optionsOrCallback = null;
         }
@@ -81,10 +34,10 @@ var Sender = /** @class */ (function () {
         this.sendNoRetry(message, recipient, function (err, response, attemptedRegTokens) {
             if (err) {
                 // Attempt to determine HTTP status code
-                var statusCode = typeof err === "number" ? err : err.code || 0;
+                var statusCode = typeof err === 'number' ? err : err.code || 0;
                 // 4xx error?
                 if (statusCode > 399 && statusCode < 500) {
-                    debug("Error 4xx -- no use retrying. Something is wrong with the request (probably authentication?)");
+                    debug('Error 4xx -- no use retrying. Something is wrong with the request (probably authentication?)');
                     return callback(err);
                 }
                 return retry(self, message, recipient, options, callback);
@@ -99,9 +52,7 @@ var Sender = /** @class */ (function () {
                 if (unsentRegTokens.length == 0) {
                     return callback(null, response);
                 }
-                debug("Retrying " +
-                    unsentRegTokens.length +
-                    " unsent registration tokens");
+                debug('Retrying ' + unsentRegTokens.length + ' unsent registration tokens');
                 retry(self, message, unsentRegTokens, options, function (err, retriedResponse) {
                     if (err) {
                         return callback(null, response);
@@ -112,13 +63,57 @@ var Sender = /** @class */ (function () {
             });
         });
     };
+    Sender.prototype.sendNoRetry = function (message, recipient, callback) {
+        var _this = this;
+        if (!callback) {
+            callback = function () { };
+        }
+        getRequestBody(message, recipient, function (err, body) {
+            if (err) {
+                return callback(err);
+            }
+            //Build request options, allowing some to be overridden
+            var request_options = (0, lodash_defaultsdeep_1["default"])({
+                method: 'POST',
+                headers: {
+                    Authorization: 'key=' + _this.key
+                },
+                json: body
+            }, _this.options, {
+                uri: constants_1["default"].GCM_SEND_URI,
+                timeout: constants_1["default"].SOCKET_TIMEOUT
+            });
+            (0, request_1["default"])(request_options, function (err, res, resBodyJSON) {
+                if (err) {
+                    return callback(err);
+                }
+                if (res.statusCode >= 500) {
+                    debug('GCM service is unavailable (500)');
+                    return callback(res.statusCode);
+                }
+                if (res.statusCode === 401) {
+                    debug('Unauthorized (401). Check that your API token is correct.');
+                    return callback(res.statusCode);
+                }
+                if (res.statusCode !== 200) {
+                    debug('Invalid request (' + res.statusCode + '): ' + resBodyJSON);
+                    return callback(res.statusCode);
+                }
+                if (!resBodyJSON) {
+                    debug('Empty response received (' + res.statusCode + ' ' + res.statusMessage + ')');
+                    // Spoof error code 400 to avoid retrying the request
+                    return callback({ error: res.statusMessage, code: 400 });
+                }
+                callback(null, resBodyJSON, body.registration_ids || [body.to]);
+            });
+        });
+    };
     return Sender;
 }());
-exports["default"] = Sender;
 function cleanOptions(options) {
-    if (!options || typeof options != "object") {
+    if (!options || typeof options != 'object') {
         var retries = 5;
-        if (typeof options == "number") {
+        if (typeof options == 'number') {
             retries = options;
         }
         return {
@@ -126,10 +121,10 @@ function cleanOptions(options) {
             backoff: constants_1["default"].BACKOFF_INITIAL_DELAY
         };
     }
-    if (typeof options.retries != "number") {
+    if (typeof options.retries != 'number') {
         options.retries = 5;
     }
-    if (typeof options.backoff != "number") {
+    if (typeof options.backoff != 'number') {
         options.backoff = constants_1["default"].BACKOFF_INITIAL_DELAY;
     }
     if (options.backoff > constants_1["default"].MAX_BACKOFF_DELAY) {
@@ -149,8 +144,7 @@ function checkForBadTokens(results, originalRecipients, callback) {
     var unsentRegTokens = [];
     var regTokenPositionMap = [];
     for (var i = 0; i < results.length; i++) {
-        if (results[i].error === "Unavailable" ||
-            results[i].error === "InternalServerError") {
+        if (results[i].error === 'Unavailable' || results[i].error === 'InternalServerError') {
             regTokenPositionMap.push(i);
             unsentRegTokens.push(originalRecipients[i]);
         }
@@ -174,13 +168,13 @@ function updateResponseMetaData(response, retriedResponse, unsentRegTokens) {
 }
 function getRequestBody(message, recipientOrCallback, callback) {
     var body = message.toJson();
-    if (typeof recipientOrCallback == "string") {
+    if (typeof recipientOrCallback == 'string') {
         body.to = recipientOrCallback;
         return nextTick(callback, null, body);
     }
     if (Array.isArray(recipientOrCallback)) {
         if (!recipientOrCallback.length) {
-            return nextTick(callback, "No recipient provided!");
+            return nextTick(callback, 'No recipient provided!');
         }
         else if (recipientOrCallback.length == 1) {
             body.to = recipientOrCallback[0];
@@ -189,7 +183,7 @@ function getRequestBody(message, recipientOrCallback, callback) {
         body.registration_ids = recipientOrCallback;
         return nextTick(callback, null, body);
     }
-    if (typeof recipientOrCallback == "object") {
+    if (typeof recipientOrCallback == 'object') {
         return extractRecipient(recipientOrCallback, function (err, recipient, param) {
             if (err) {
                 return callback(err);
@@ -198,11 +192,7 @@ function getRequestBody(message, recipientOrCallback, callback) {
             return callback(null, body);
         });
     }
-    return nextTick(callback, "Invalid recipient (" +
-        recipientOrCallback +
-        ", type " +
-        typeof recipientOrCallback +
-        ") provided!");
+    return nextTick(callback, 'Invalid recipient (' + recipientOrCallback + ', type ' + typeof recipientOrCallback + ') provided!');
 }
 function nextTick(func) {
     var args = [];
@@ -216,9 +206,7 @@ function nextTick(func) {
 function extractRecipient(recipient, callback) {
     var recipientKeys = Object.keys(recipient);
     if (recipientKeys.length !== 1) {
-        return nextTick(callback, new Error("Please specify exactly one recipient key (you specified [" +
-            recipientKeys +
-            "])"));
+        return nextTick(callback, new Error('Please specify exactly one recipient key (you specified [' + recipientKeys + '])'));
     }
     var key = recipientKeys[0];
     var value = recipient[key];
@@ -244,19 +232,20 @@ function extractRecipient(recipient, callback) {
     return nextTick(callback, null, value, param);
 }
 function getParamFromKey(key) {
-    if (key === "condition") {
-        return "condition";
+    if (key === 'condition') {
+        return 'condition';
     }
-    else if (["registrationIds", "registrationTokens"].indexOf(key) !== -1) {
-        return "registration_ids";
+    else if (['registrationIds', 'registrationTokens'].indexOf(key) !== -1) {
+        return 'registration_ids';
     }
     else {
-        return "to";
+        return 'to';
     }
 }
 function isString(x) {
-    return typeof x == "string";
+    return typeof x == 'string';
 }
 function isArray(x) {
     return Array.isArray(x);
 }
+module.exports = Sender;

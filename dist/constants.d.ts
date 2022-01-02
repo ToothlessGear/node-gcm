@@ -1,4 +1,4 @@
-declare const _default: {
+declare const Constants: {
     GCM_SEND_ENDPOINT: string;
     GCM_SEND_ENDPATH: string;
     GCM_SEND_URI: string;
@@ -32,4 +32,4 @@ declare const _default: {
     ERROR_UNAVAILABLE: string;
     ERROR_INTERNAL_SERVER_ERROR: string;
 };
-export default _default;
+export = Constants;

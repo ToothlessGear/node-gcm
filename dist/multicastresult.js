@@ -1,24 +1,23 @@
 "use strict";
-exports.__esModule = true;
 /**
  * @deprecated You are using node-gcm MulticastResult, which is deprecated.
  */
-var MulitcastResult = /** @class */ (function () {
-    function MulitcastResult() {
+var MulticastResult = /** @class */ (function () {
+    function MulticastResult() {
         this.success = undefined;
         this.failure = undefined;
         this.canonicalIds = undefined;
         this.multicastId = undefined;
         this.results = [];
         this.retryMulticastIds = [];
-        console.warn("You are using node-gcm MulticastResult, which is deprecated.");
+        console.warn('You are using node-gcm MulticastResult, which is deprecated.');
     }
-    MulitcastResult.prototype.addResult = function (result) {
+    MulticastResult.prototype.addResult = function (result) {
         this.results.push(result);
     };
-    MulitcastResult.prototype.getTotal = function () {
+    MulticastResult.prototype.getTotal = function () {
         return this.success + this.failure;
     };
-    return MulitcastResult;
+    return MulticastResult;
 }());
-exports["default"] = MulitcastResult;
+module.exports = MulticastResult;
