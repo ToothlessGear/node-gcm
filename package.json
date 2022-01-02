@@ -60,26 +60,29 @@
     "apn",
     "messaging"
   ],
-  "main": "index",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
   "files": [
-    "index.js",
-    "lib/"
+    "dist"
   ],
   "scripts": {
+    "build": "tsc",
     "test": "mocha test/**/*Spec.js"
   },
   "dependencies": {
     "debug": "^3.1.0",
-    "lodash": "^4.17.21",
+    "lodash.defaultsdeep": "^4.6.1",
     "request": "^2.88.0"
   },
   "devDependencies": {
+    "@types/lodash.defaultsdeep": "^4.6.6",
+    "@types/request": "^2.48.8",
     "chai": "^2.2.0",
     "mocha": "^9.1.0",
     "proxyquire": "^2.0.1",
-    "sinon": "^5.0.7"
+    "sinon": "^5.0.7",
+    "typescript": "^4.5.4"
   },
-  "optionalDependencies": {},
   "engines": {
     "node": ">= 4"
   },

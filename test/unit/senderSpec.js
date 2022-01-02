@@ -4,9 +4,9 @@ var chai = require('chai'),
     expect = chai.expect,
     sinon = require('sinon'),
     proxyquire = require('proxyquire'),
-    senderPath = '../../lib/sender',
-    Constants = require('../../lib/constants'),
-    Message = require('../../lib/message');
+    senderPath = '../../dist/sender',
+    Constants = require('../../dist/constants'),
+    Message = require('../../dist/message');
 
 describe('UNIT Sender', function () {
   // Use object to set arguments passed into callback

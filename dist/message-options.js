@@ -1,3 +1,4 @@
+"use strict";
 /**
  * This module defines all the arguments that may be passed to a message.
  *
@@ -11,8 +12,8 @@
  * Other than that, the arguments are expected to follow the indicated
  * structure.
  */
-
-module.exports = {
+exports.__esModule = true;
+exports["default"] = {
     collapseKey: {
         __argName: "collapse_key",
         __argType: "string"
@@ -28,7 +29,7 @@ module.exports = {
         __argName: "mutable_content",
         __argType: "boolean"
     },
-	delayWhileIdle: {
+    delayWhileIdle: {
         __argName: "delay_while_idle",
         __argType: "boolean"
     },
@@ -49,8 +50,6 @@ module.exports = {
     },
     notification: {
         __argType: "object"
-        //TODO: There are a lot of very specific arguments that could
-        //      be indicated here.
     },
     fcm_options: {
         __argType: "object"
