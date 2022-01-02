@@ -3,6 +3,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 var message_options_1 = __importDefault(require("./message-options"));
+var AndroidMessagePriority;
+(function (AndroidMessagePriority) {
+    AndroidMessagePriority["Normal"] = "NORMAL";
+    AndroidMessagePriority["High"] = "HIGH";
+})(AndroidMessagePriority || (AndroidMessagePriority = {}));
+var NotificationPriority;
+(function (NotificationPriority) {
+    NotificationPriority["Unspecified"] = "PRIORITY_UNSPECIFIED";
+    NotificationPriority["Min"] = "PRIORITY_MIN";
+    NotificationPriority["Low"] = "PRIORITY_LOW";
+    NotificationPriority["Default"] = "PRIORITY_DEFAULT";
+    NotificationPriority["High"] = "PRIORITY_HIGH";
+    NotificationPriority["Max"] = "PRIORITY_MAX";
+})(NotificationPriority || (NotificationPriority = {}));
+var Visibility;
+(function (Visibility) {
+    Visibility["Unspecified"] = "VISIBILITY_UNSPECIFIED";
+    Visibility["Private"] = "PRIVATE";
+    Visibility["Public"] = "PUBLIC";
+    Visibility["Secret"] = "SECRET";
+})(Visibility || (Visibility = {}));
 var Message = /** @class */ (function () {
     function Message(options) {
         if (!(this instanceof Message)) {
