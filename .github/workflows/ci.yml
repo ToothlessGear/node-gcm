@@ -20,21 +20,31 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '12', '14', '15', '16', '17', '18' ]
+        include:
+          - name: Node 12
+            NODE_VERSION: 12
+          - name: Node 14
+            NODE_VERSION: 14
+          - name: Node 16
+            NODE_VERSION: 16
+          - name: Node 18
+            NODE_VERSION: 18
     timeout-minutes: 30
+    env:      
+      NODE_VERSION: ${{ matrix.NODE_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: Use Node.js ${{ matrix.NODE_VERSION }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ matrix.NODE_VERSION }}
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ matrix.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-              ${{ runner.os }}-node-
+            ${{ runner.os }}-node-${{ matrix.NODE_VERSION }}-
       - run: npm ci
       - run: npm run test
