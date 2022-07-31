@@ -22,8 +22,6 @@ var Constants = {
     JSON_ERROR: 'error',
     JSON_MESSAGE_ID: 'message_id',
     UTF8: 'UTF-8',
-    //These errors could probably be structured more nicely, and could be used in the code.
-    // -- maybe just as an Error abstraction?
     ERROR_QUOTA_EXCEEDED: 'QuotaExceeded',
     ERROR_DEVICE_QUOTA_EXCEEDED: 'DeviceQuotaExceeded',
     ERROR_MISSING_REGISTRATION: 'MissingRegistration',
