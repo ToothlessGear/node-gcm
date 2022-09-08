@@ -29,7 +29,7 @@ $ npm install node-gcm --save
 ## Requirements
 
 This library provides the server-side implementation of FCM.
-You need to generate an [API Key](https://console.firebase.google.com/u/0/) (Click the gear next to FCM project name) > Project Settings > Cloud Messaging -> **Server Key**).
+You need to generate a [Legacy API Server Key](https://console.firebase.google.com/u/0/) (Click the gear next to FCM project name) > Project Settings > Cloud Messaging -> **Cloud Messaging API (Legacy)** -> Click the 3 dots -> Manage API in Google Cloud Console -> **Enable** -> Go back and refresh Firebase Cloud Messaging project settings page to view your **Server key**.
 
 FCM notifications can be sent to both [Android](https://firebase.google.com/docs/cloud-messaging/android/client) and [iOS](https://firebase.google.com/docs/cloud-messaging/ios/client).
 If you are new to FCM you should probably look into the [documentation](https://firebase.google.com/docs/cloud-messaging).
