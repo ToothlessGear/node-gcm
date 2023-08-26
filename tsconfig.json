@@ -1,0 +1,10 @@
+{
+    "include": ["src/main.ts"],
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "esModuleInterop": true,
+        "declaration": true,
+        "allowSyntheticDefaultImports": true
+    }
+}

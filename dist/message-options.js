@@ -1,3 +1,4 @@
+"use strict";
 /**
  * This module defines all the arguments that may be passed to a message.
  *
@@ -11,48 +12,46 @@
  * Other than that, the arguments are expected to follow the indicated
  * structure.
  */
-
-module.exports = {
+var MessageOptions = {
     collapseKey: {
-        __argName: "collapse_key",
-        __argType: "string"
+        __argName: 'collapse_key',
+        __argType: 'string'
     },
     priority: {
-        __argType: "string"
+        __argType: 'string'
     },
     contentAvailable: {
-        __argName: "content_available",
-        __argType: "boolean"
+        __argName: 'content_available',
+        __argType: 'boolean'
     },
     mutableContent: {
-        __argName: "mutable_content",
-        __argType: "boolean"
+        __argName: 'mutable_content',
+        __argType: 'boolean'
     },
-	delayWhileIdle: {
-        __argName: "delay_while_idle",
-        __argType: "boolean"
+    delayWhileIdle: {
+        __argName: 'delay_while_idle',
+        __argType: 'boolean'
     },
     timeToLive: {
-        __argName: "time_to_live",
-        __argType: "number"
+        __argName: 'time_to_live',
+        __argType: 'number'
     },
     restrictedPackageName: {
-        __argName: "restricted_package_name",
-        __argType: "string"
+        __argName: 'restricted_package_name',
+        __argType: 'string'
     },
     dryRun: {
-        __argName: "dry_run",
-        __argType: "boolean"
+        __argName: 'dry_run',
+        __argType: 'boolean'
     },
     data: {
-        __argType: "object"
+        __argType: 'object'
     },
     notification: {
-        __argType: "object"
-        //TODO: There are a lot of very specific arguments that could
-        //      be indicated here.
+        __argType: 'object'
     },
     fcm_options: {
-        __argType: "object"
+        __argType: 'object'
     }
 };
+module.exports = MessageOptions;

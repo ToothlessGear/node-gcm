@@ -1,4 +1,4 @@
-var gcm = require('../lib/node-gcm');
+var gcm = require('../dist/main.js');
 
 var message = new gcm.Message();
 

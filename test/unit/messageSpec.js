@@ -1,6 +1,6 @@
 "use strict";
 
-var Message = require('../../lib/message'),
+var Message = require('../../dist/message'),
     chai = require('chai'),
     expect = chai.expect;
 
