@@ -15,7 +15,7 @@ describe('UNIT Sender', function () {
     args.options = options;
     return callback( args.err, args.res, args.resBody );
   };
-  var Sender = proxyquire(senderPath, { 'request': requestStub });
+  var Sender = proxyquire(senderPath, { 'axios': requestStub });
 
   describe('constructor', function () {
     var Sender = require(senderPath);
