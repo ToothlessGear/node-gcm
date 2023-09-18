@@ -81,6 +81,25 @@ describe('UNIT Sender', function () {
       }, 10);
     });
 
+    it('should not override internal request params if passed into constructor (except timeout/uri)', function (done) {
+      var options = {
+        method: 'GET',
+        headers: {
+            Authorization: 'test'
+        },
+        json: { test: true }
+      };
+      var sender = new Sender('mykey', options);
+      var m = new Message({ data: {} });
+      sender.sendNoRetry(m, '', function () {});
+      setTimeout(function() {
+        expect(args.options.method).to.not.equal(options.method);
+        expect(args.options.headers).to.not.deep.equal(options.headers);
+        expect(args.options.json).to.not.equal(options.json);
+        done();
+      }, 10);
+    });
+
     it('should not override internal request headers if passed into constructor', function (done) {
       var options = {
         headers: {
