@@ -11,7 +11,8 @@ var chai = require('chai'),
 describe('UNIT Sender', function () {
   // Use object to set arguments passed into callback
   var args = {};
-  var requestStub = function (options, callback) {
+  // need to define a function in order to override the actual post function we are looking to mock
+  var requestStub =  () => {
     // do nothing
   };
   requestStub.post = (uri, body, options, callback) => {
