@@ -81,7 +81,7 @@
     "sinon": "^5.0.7"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">= 12"
   },
   "bugs": {
     "url": "https://github.com/ToothlessGear/node-gcm/issues"
