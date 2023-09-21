@@ -24,7 +24,7 @@ Follow [PR #238](https://github.com/ToothlessGear/node-gcm/pull/238) to see curr
 $ npm install node-gcm --save
 ```
 
-**Note:** This package requires Node v4.0 and newer.
+**Note:** This package requires Node v12.0 and newer.
 
 ## Requirements
 
