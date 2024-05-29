@@ -3,6 +3,12 @@
 [![Join the chat at https://gitter.im/ToothlessGear/node-gcm](https://badges.gitter.im/ToothlessGear/node-gcm.svg)](https://gitter.im/ToothlessGear/node-gcm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm](https://badge.fury.io/js/node-gcm.svg)](https://www.npmjs.com/package/node-gcm)
 
+**Note:** This package will stop working on June 21st, 2024, as it depends on the [Legacy FCM API](https://firebase.google.com/docs/cloud-messaging/migrate-v1). We urge you to migrate to another library that supports the FCM HTTP v1 API before the June 20th deadline, such as:
+1. [firebase-admin](https://www.npmjs.com/package/firebase-admin) (official library)
+2. [fcm-v1-http2](https://www.npmjs.com/package/fcm-v1-http2) (if scale and throughput are important to your sending requirements)
+
+----
+
 The goal of this project is providing the best and most easily used interface for Firebase Cloud Messaging. (The name `gcm` comes from the older name for the service, Google Cloud Messaging.)
 
 **By April 11, 2019 users must have [migrated from GCM to FCM](https://developers.google.com/cloud-messaging/android/android-migrate-fcm).**
